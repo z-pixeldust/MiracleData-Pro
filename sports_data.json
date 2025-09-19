@@ -1,0 +1,3710 @@
+{
+  "NBA": [
+    {
+      "full_team_name": "Atlanta Hawks",
+      "city": "Atlanta",
+      "short_name": "Hawks",
+      "abbreviation": "ATL",
+      "player_1": "Trae Young",
+      "player_2": "Dejounte Murray",
+      "player_3": "Clint Capela",
+      "player_4": "Bogdan Bogdanovic",
+      "player_5": "Jalen Johnson",
+      "primary_color": {
+        "r": 0.7843137254901961,
+        "g": 0.06274509803921569,
+        "b": 0.1803921568627451
+      },
+      "secondary_color": {
+        "r": 0.9921568627450981,
+        "g": 0.7254901960784313,
+        "b": 0.15294117647058825
+      }
+    },
+    {
+      "full_team_name": "Boston Celtics",
+      "city": "Boston",
+      "short_name": "Celtics",
+      "abbreviation": "BOS",
+      "player_1": "Jayson Tatum",
+      "player_2": "Jaylen Brown",
+      "player_3": "Kristaps Porzingis",
+      "player_4": "Derrick White",
+      "player_5": "Jrue Holiday",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.5137254901960784,
+        "b": 0.2823529411764706
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Brooklyn Nets",
+      "city": "Brooklyn",
+      "short_name": "Nets",
+      "abbreviation": "BKN",
+      "player_1": "Mikal Bridges",
+      "player_2": "Cam Thomas",
+      "player_3": "Nic Claxton",
+      "player_4": "Cameron Johnson",
+      "player_5": "Dennis Schroder",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Charlotte Hornets",
+      "city": "Charlotte",
+      "short_name": "Hornets",
+      "abbreviation": "CHA",
+      "player_1": "LaMelo Ball",
+      "player_2": "Brandon Miller",
+      "player_3": "Miles Bridges",
+      "player_4": "Nick Richards",
+      "player_5": "Terry Rozier",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.5490196078431373,
+        "b": 0.6588235294117647
+      },
+      "secondary_color": {
+        "r": 0.11372549019607843,
+        "g": 0.06274509803921569,
+        "b": 0.3764705882352941
+      }
+    },
+    {
+      "full_team_name": "Chicago Bulls",
+      "city": "Chicago",
+      "short_name": "Bulls",
+      "abbreviation": "CHI",
+      "player_1": "Zach LaVine",
+      "player_2": "DeMar DeRozan",
+      "player_3": "Nikola Vucevic",
+      "player_4": "Coby White",
+      "player_5": "Alex Caruso",
+      "primary_color": {
+        "r": 0.807843137254902,
+        "g": 0.06666666666666667,
+        "b": 0.2549019607843137
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Cleveland Cavaliers",
+      "city": "Cleveland",
+      "short_name": "Cavaliers",
+      "abbreviation": "CLE",
+      "player_1": "Donovan Mitchell",
+      "player_2": "Darius Garland",
+      "player_3": "Evan Mobley",
+      "player_4": "Jarrett Allen",
+      "player_5": "Caris LeVert",
+      "primary_color": {
+        "r": 0.5254901960784314,
+        "g": 0.0,
+        "b": 0.2196078431372549
+      },
+      "secondary_color": {
+        "r": 0.7372549019607844,
+        "g": 0.5803921568627451,
+        "b": 0.3607843137254902
+      }
+    },
+    {
+      "full_team_name": "Dallas Mavericks",
+      "city": "Dallas",
+      "short_name": "Mavericks",
+      "abbreviation": "DAL",
+      "player_1": "Luka Doncic",
+      "player_2": "Kyrie Irving",
+      "player_3": "Derrick Jones Jr.",
+      "player_4": "P.J. Washington",
+      "player_5": "Daniel Gafford",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.39215686274509803,
+        "b": 0.6941176470588235
+      },
+      "secondary_color": {
+        "r": 0.7333333333333333,
+        "g": 0.7686274509803922,
+        "b": 0.792156862745098
+      }
+    },
+    {
+      "full_team_name": "Denver Nuggets",
+      "city": "Denver",
+      "short_name": "Nuggets",
+      "abbreviation": "DEN",
+      "player_1": "Nikola Jokic",
+      "player_2": "Jamal Murray",
+      "player_3": "Aaron Gordon",
+      "player_4": "Michael Porter Jr.",
+      "player_5": "Kentavious Caldwell-Pope",
+      "primary_color": {
+        "r": 0.054901960784313725,
+        "g": 0.13333333333333333,
+        "b": 0.25098039215686274
+      },
+      "secondary_color": {
+        "r": 0.996078431372549,
+        "g": 0.7725490196078432,
+        "b": 0.1411764705882353
+      }
+    },
+    {
+      "full_team_name": "Detroit Pistons",
+      "city": "Detroit",
+      "short_name": "Pistons",
+      "abbreviation": "DET",
+      "player_1": "Cade Cunningham",
+      "player_2": "Jaden Ivey",
+      "player_3": "Ausar Thompson",
+      "player_4": "Bojan Bogdanovic",
+      "player_5": "Isaiah Stewart",
+      "primary_color": {
+        "r": 0.11372549019607843,
+        "g": 0.25882352941176473,
+        "b": 0.5411764705882353
+      },
+      "secondary_color": {
+        "r": 0.7843137254901961,
+        "g": 0.06274509803921569,
+        "b": 0.1803921568627451
+      }
+    },
+    {
+      "full_team_name": "Golden State Warriors",
+      "city": "Golden State",
+      "short_name": "Warriors",
+      "abbreviation": "GS",
+      "player_1": "Stephen Curry",
+      "player_2": "Klay Thompson",
+      "player_3": "Draymond Green",
+      "player_4": "Andrew Wiggins",
+      "player_5": "Jonathan Kuminga",
+      "primary_color": {
+        "r": 0.9921568627450981,
+        "g": 0.7254901960784313,
+        "b": 0.15294117647058825
+      },
+      "secondary_color": {
+        "r": 0.11372549019607843,
+        "g": 0.25882352941176473,
+        "b": 0.5411764705882353
+      }
+    },
+    {
+      "full_team_name": "Houston Rockets",
+      "city": "Houston",
+      "short_name": "Rockets",
+      "abbreviation": "HOU",
+      "player_1": "Jalen Green",
+      "player_2": "Alperen Sengun",
+      "player_3": "Fred VanVleet",
+      "player_4": "Dillon Brooks",
+      "player_5": "Jabari Smith Jr.",
+      "primary_color": {
+        "r": 0.807843137254902,
+        "g": 0.06666666666666667,
+        "b": 0.2549019607843137
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Indiana Pacers",
+      "city": "Indiana",
+      "short_name": "Pacers",
+      "abbreviation": "IND",
+      "player_1": "Tyrese Haliburton",
+      "player_2": "Bennedict Mathurin",
+      "player_3": "Pascall Siakam",
+      "player_4": "Myles Turner",
+      "player_5": "Aaron Nesmith",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.17647058823529413,
+        "b": 0.3843137254901961
+      },
+      "secondary_color": {
+        "r": 0.9921568627450981,
+        "g": 0.7333333333333333,
+        "b": 0.18823529411764706
+      }
+    },
+    {
+      "full_team_name": "LA Clippers",
+      "city": "LA",
+      "short_name": "Clippers",
+      "abbreviation": "LAC",
+      "player_1": "Kawhi Leonard",
+      "player_2": "Paul George",
+      "player_3": "James Harden",
+      "player_4": "Norman Powell",
+      "player_5": "Ivica Zubac",
+      "primary_color": {
+        "r": 0.07058823529411765,
+        "g": 0.09019607843137255,
+        "b": 0.24705882352941178
+      },
+      "secondary_color": {
+        "r": 0.7843137254901961,
+        "g": 0.06274509803921569,
+        "b": 0.1803921568627451
+      }
+    },
+    {
+      "full_team_name": "Los Angeles Lakers",
+      "city": "Los Angeles",
+      "short_name": "Lakers",
+      "abbreviation": "LAL",
+      "player_1": "LeBron James",
+      "player_2": "Anthony Davis",
+      "player_3": "Austin Reaves",
+      "player_4": "D'Angelo Russell",
+      "player_5": "Rui Hachimura",
+      "primary_color": {
+        "r": 0.3333333333333333,
+        "g": 0.1450980392156863,
+        "b": 0.5137254901960784
+      },
+      "secondary_color": {
+        "r": 0.9921568627450981,
+        "g": 0.7254901960784313,
+        "b": 0.15294117647058825
+      }
+    },
+    {
+      "full_team_name": "Memphis Grizzlies",
+      "city": "Memphis",
+      "short_name": "Grizzlies",
+      "abbreviation": "MEM",
+      "player_1": "Ja Morant",
+      "player_2": "Desmond Bane",
+      "player_3": "Jaren Jackson Jr.",
+      "player_4": "Marcus Smart",
+      "player_5": "Xavier Tillman",
+      "primary_color": {
+        "r": 0.36470588235294116,
+        "g": 0.4627450980392157,
+        "b": 0.6627450980392157
+      },
+      "secondary_color": {
+        "r": 0.07058823529411765,
+        "g": 0.09019607843137255,
+        "b": 0.24705882352941178
+      }
+    },
+    {
+      "full_team_name": "Miami Heat",
+      "city": "Miami",
+      "short_name": "Heat",
+      "abbreviation": "MIA",
+      "player_1": "Jimmy Butler",
+      "player_2": "Bam Adebayo",
+      "player_3": "Tyler Herro",
+      "player_4": "Terry Rozier",
+      "player_5": "Duncan Robinson",
+      "primary_color": {
+        "r": 0.596078431372549,
+        "g": 0.0,
+        "b": 0.1803921568627451
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Milwaukee Bucks",
+      "city": "Milwaukee",
+      "short_name": "Bucks",
+      "abbreviation": "MIL",
+      "player_1": "Giannis Antetokounmpo",
+      "player_2": "Damian Lillard",
+      "player_3": "Khris Middleton",
+      "player_4": "Brook Lopez",
+      "player_5": "Bobby Portis",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.2784313725490196,
+        "b": 0.10588235294117647
+      },
+      "secondary_color": {
+        "r": 0.9333333333333333,
+        "g": 0.8823529411764706,
+        "b": 0.7764705882352941
+      }
+    },
+    {
+      "full_team_name": "Minnesota Timberwolves",
+      "city": "Minnesota",
+      "short_name": "Timberwolves",
+      "abbreviation": "MIN",
+      "player_1": "Anthony Edwards",
+      "player_2": "Karl-Anthony Towns",
+      "player_3": "Rudy Gobert",
+      "player_4": "Jaden McDaniels",
+      "player_5": "Mike Conley",
+      "primary_color": {
+        "r": 0.14901960784313725,
+        "g": 0.3764705882352941,
+        "b": 0.5725490196078431
+      },
+      "secondary_color": {
+        "r": 0.4745098039215686,
+        "g": 0.7372549019607844,
+        "b": 0.2627450980392157
+      }
+    },
+    {
+      "full_team_name": "New Orleans Pelicans",
+      "city": "New Orleans",
+      "short_name": "Pelicans",
+      "abbreviation": "NO",
+      "player_1": "Zion Williamson",
+      "player_2": "Brandon Ingram",
+      "player_3": "CJ McCollum",
+      "player_4": "Trey Murphy III",
+      "player_5": "Jonas Valanciunas",
+      "primary_color": {
+        "r": 0.0392156862745098,
+        "g": 0.13333333333333333,
+        "b": 0.25098039215686274
+      },
+      "secondary_color": {
+        "r": 0.7058823529411765,
+        "g": 0.592156862745098,
+        "b": 0.35294117647058826
+      }
+    },
+    {
+      "full_team_name": "New York Knicks",
+      "city": "New York",
+      "short_name": "Knicks",
+      "abbreviation": "NY",
+      "player_1": "Jalen Brunson",
+      "player_2": "Julius Randle",
+      "player_3": "Josh Hart",
+      "player_4": "Donte DiVincenzo",
+      "player_5": "Mitchell Robinson",
+      "primary_color": {
+        "r": 0.11372549019607843,
+        "g": 0.25882352941176473,
+        "b": 0.5411764705882353
+      },
+      "secondary_color": {
+        "r": 0.9607843137254902,
+        "g": 0.5176470588235295,
+        "b": 0.14901960784313725
+      }
+    },
+    {
+      "full_team_name": "Oklahoma City Thunder",
+      "city": "Oklahoma City",
+      "short_name": "Thunder",
+      "abbreviation": "OKC",
+      "player_1": "Shai Gilgeous-Alexander",
+      "player_2": "Jalen Williams",
+      "player_3": "Chet Holmgren",
+      "player_4": "Luguentz Dort",
+      "player_5": "Josh Giddey",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.47843137254901963,
+        "b": 0.7568627450980392
+      },
+      "secondary_color": {
+        "r": 0.9372549019607843,
+        "g": 0.23137254901960785,
+        "b": 0.1411764705882353
+      }
+    },
+    {
+      "full_team_name": "Orlando Magic",
+      "city": "Orlando",
+      "short_name": "Magic",
+      "abbreviation": "ORL",
+      "player_1": "Paolo Banchero",
+      "player_2": "Franz Wagner",
+      "player_3": "Wendell Carter Jr.",
+      "player_4": "Jalen Suggs",
+      "player_5": "Cole Anthony",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.4666666666666667,
+        "b": 0.7529411764705882
+      },
+      "secondary_color": {
+        "r": 0.7686274509803922,
+        "g": 0.807843137254902,
+        "b": 0.8313725490196079
+      }
+    },
+    {
+      "full_team_name": "Philadelphia 76ers",
+      "city": "Philadelphia",
+      "short_name": "76ers",
+      "abbreviation": "PHI",
+      "player_1": "Joel Embiid",
+      "player_2": "Tyrese Maxey",
+      "player_3": "Nicolas Batum",
+      "player_4": "Kelly Oubre Jr.",
+      "player_5": "Paul Reed",
+      "primary_color": {
+        "r": 0.11372549019607843,
+        "g": 0.25882352941176473,
+        "b": 0.5411764705882353
+      },
+      "secondary_color": {
+        "r": 0.8784313725490196,
+        "g": 0.07058823529411765,
+        "b": 0.20392156862745098
+      }
+    },
+    {
+      "full_team_name": "Phoenix Suns",
+      "city": "Phoenix",
+      "short_name": "Suns",
+      "abbreviation": "PHX",
+      "player_1": "Kevin Durant",
+      "player_2": "Devin Booker",
+      "player_3": "Bradley Beal",
+      "player_4": "Grayson Allen",
+      "player_5": "Jusuf Nurkic",
+      "primary_color": {
+        "r": 0.1607843137254902,
+        "g": 0.07058823529411765,
+        "b": 0.47843137254901963
+      },
+      "secondary_color": {
+        "r": 0.8980392156862745,
+        "g": 0.3764705882352941,
+        "b": 0.12549019607843137
+      }
+    },
+    {
+      "full_team_name": "Portland Trail Blazers",
+      "city": "Portland",
+      "short_name": "Trail Blazers",
+      "abbreviation": "POR",
+      "player_1": "Anfernee Simons",
+      "player_2": "Shaedon Sharpe",
+      "player_3": "Jerami Grant",
+      "player_4": "Deandre Ayton",
+      "player_5": "Malcolm Brogdon",
+      "primary_color": {
+        "r": 0.8784313725490196,
+        "g": 0.22745098039215686,
+        "b": 0.24313725490196078
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Sacramento Kings",
+      "city": "Sacramento",
+      "short_name": "Kings",
+      "abbreviation": "SAC",
+      "player_1": "De'Aaron Fox",
+      "player_2": "Domantas Sabonis",
+      "player_3": "Keegan Murray",
+      "player_4": "Kevin Huerter",
+      "player_5": "Harrison Barnes",
+      "primary_color": {
+        "r": 0.35294117647058826,
+        "g": 0.17647058823529413,
+        "b": 0.5058823529411764
+      },
+      "secondary_color": {
+        "r": 0.41568627450980394,
+        "g": 0.47843137254901963,
+        "b": 0.5098039215686274
+      }
+    },
+    {
+      "full_team_name": "San Antonio Spurs",
+      "city": "San Antonio",
+      "short_name": "Spurs",
+      "abbreviation": "SA",
+      "player_1": "Victor Wembanyama",
+      "player_2": "Devin Vassell",
+      "player_3": "Keldon Johnson",
+      "player_4": "Jeremy Sochan",
+      "player_5": "Tre Jones",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 0.7686274509803922,
+        "g": 0.807843137254902,
+        "b": 0.8313725490196079
+      }
+    },
+    {
+      "full_team_name": "Toronto Raptors",
+      "city": "Toronto",
+      "short_name": "Raptors",
+      "abbreviation": "TOR",
+      "player_1": "Scottie Barnes",
+      "player_2": "RJ Barrett",
+      "player_3": "Immanuel Quickley",
+      "player_4": "Gary Trent Jr.",
+      "player_5": "Jakob Poeltl",
+      "primary_color": {
+        "r": 0.8509803921568627,
+        "g": 0.07058823529411765,
+        "b": 0.26666666666666666
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Utah Jazz",
+      "city": "Utah",
+      "short_name": "Jazz",
+      "abbreviation": "UTAH",
+      "player_1": "Lauri Markkanen",
+      "player_2": "Walker Kessler",
+      "player_3": "Jordan Clarkson",
+      "player_4": "Collin Sexton",
+      "player_5": "Keyonte George",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.9490196078431372,
+        "b": 0.12156862745098039
+      }
+    },
+    {
+      "full_team_name": "Washington Wizards",
+      "city": "Washington",
+      "short_name": "Wizards",
+      "abbreviation": "WSH",
+      "player_1": "Kyle Kuzma",
+      "player_2": "Jordan Poole",
+      "player_3": "Deni Avdija",
+      "player_4": "Tyus Jones",
+      "player_5": "Marvin Bagley III",
+      "primary_color": {
+        "r": 0.8901960784313725,
+        "g": 0.09411764705882353,
+        "b": 0.21568627450980393
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.16862745098039217,
+        "b": 0.3607843137254902
+      }
+    }
+  ],
+  "NFL": [
+    {
+      "full_team_name": "Arizona Cardinals",
+      "city": "Arizona",
+      "short_name": "Cardinals",
+      "abbreviation": "ARI",
+      "player_1": "Kyler Murray",
+      "player_2": "James Conner",
+      "player_3": "Marquise Brown",
+      "player_4": "Budda Baker",
+      "player_5": "Paris Johnson Jr.",
+      "primary_color": {
+        "r": 0.6431372549019608,
+        "g": 0.00784313725490196,
+        "b": 0.15294117647058825
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Atlanta Falcons",
+      "city": "Atlanta",
+      "short_name": "Falcons",
+      "abbreviation": "ATL",
+      "player_1": "Kirk Cousins",
+      "player_2": "Bijan Robinson",
+      "player_3": "Drake London",
+      "player_4": "Kyle Pitts",
+      "player_5": "Jessie Bates III",
+      "primary_color": {
+        "r": 0.6549019607843137,
+        "g": 0.09803921568627451,
+        "b": 0.18823529411764706
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Baltimore Ravens",
+      "city": "Baltimore",
+      "short_name": "Ravens",
+      "abbreviation": "BAL",
+      "player_1": "Lamar Jackson",
+      "player_2": "Zay Flowers",
+      "player_3": "Mark Andrews",
+      "player_4": "Roquan Smith",
+      "player_5": "Kyle Hamilton",
+      "primary_color": {
+        "r": 0.1607843137254902,
+        "g": 0.07058823529411765,
+        "b": 0.43529411764705883
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Buffalo Bills",
+      "city": "Buffalo",
+      "short_name": "Bills",
+      "abbreviation": "BUF",
+      "player_1": "Josh Allen",
+      "player_2": "James Cook",
+      "player_3": "Stefon Diggs",
+      "player_4": "Greg Rousseau",
+      "player_5": "Matt Milano",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.2,
+        "b": 0.5529411764705883
+      },
+      "secondary_color": {
+        "r": 0.8352941176470589,
+        "g": 0.0392156862745098,
+        "b": 0.0392156862745098
+      }
+    },
+    {
+      "full_team_name": "Carolina Panthers",
+      "city": "Carolina",
+      "short_name": "Panthers",
+      "abbreviation": "CAR",
+      "player_1": "Bryce Young",
+      "player_2": "Miles Sanders",
+      "player_3": "Adam Thielen",
+      "player_4": "Ikem Ekwonu",
+      "player_5": "Brian Burns",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.5215686274509804,
+        "b": 0.792156862745098
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Chicago Bears",
+      "city": "Chicago",
+      "short_name": "Bears",
+      "abbreviation": "CHI",
+      "player_1": "Caleb Williams",
+      "player_2": "D.J. Moore",
+      "player_3": "Roschon Johnson",
+      "player_4": "Montez Sweat",
+      "player_5": "Jaylon Johnson",
+      "primary_color": {
+        "r": 0.043137254901960784,
+        "g": 0.10980392156862745,
+        "b": 0.22745098039215686
+      },
+      "secondary_color": {
+        "r": 0.9019607843137255,
+        "g": 0.2549019607843137,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Cincinnati Bengals",
+      "city": "Cincinnati",
+      "short_name": "Bengals",
+      "abbreviation": "CIN",
+      "player_1": "Joe Burrow",
+      "player_2": "Ja'Marr Chase",
+      "player_3": "Tee Higgins",
+      "player_4": "Trey Hendrickson",
+      "player_5": "Logan Wilson",
+      "primary_color": {
+        "r": 0.984313725490196,
+        "g": 0.30980392156862746,
+        "b": 0.0784313725490196
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Cleveland Browns",
+      "city": "Cleveland",
+      "short_name": "Browns",
+      "abbreviation": "CLE",
+      "player_1": "Deshaun Watson",
+      "player_2": "Nick Chubb",
+      "player_3": "Amari Cooper",
+      "player_4": "Myles Garrett",
+      "player_5": "Denzel Ward",
+      "primary_color": {
+        "r": 0.2784313725490196,
+        "g": 0.16470588235294117,
+        "b": 0.03137254901960784
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.23529411764705882,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Dallas Cowboys",
+      "city": "Dallas",
+      "short_name": "Cowboys",
+      "abbreviation": "DAL",
+      "player_1": "Dak Prescott",
+      "player_2": "CeeDee Lamb",
+      "player_3": "Tony Pollard",
+      "player_4": "Micah Parsons",
+      "player_5": "Trevon Diggs",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.16470588235294117,
+        "b": 0.3607843137254902
+      },
+      "secondary_color": {
+        "r": 0.6901960784313725,
+        "g": 0.7176470588235294,
+        "b": 0.7372549019607844
+      }
+    },
+    {
+      "full_team_name": "Denver Broncos",
+      "city": "Denver",
+      "short_name": "Broncos",
+      "abbreviation": "DEN",
+      "player_1": "Bo Nix",
+      "player_2": "Javonte Williams",
+      "player_3": "Courtland Sutton",
+      "player_4": "Pat Surtain II",
+      "player_5": "Baron Browning",
+      "primary_color": {
+        "r": 0.0392156862745098,
+        "g": 0.13725490196078433,
+        "b": 0.2627450980392157
+      },
+      "secondary_color": {
+        "r": 0.9882352941176471,
+        "g": 0.2980392156862745,
+        "b": 0.00784313725490196
+      }
+    },
+    {
+      "full_team_name": "Detroit Lions",
+      "city": "Detroit",
+      "short_name": "Lions",
+      "abbreviation": "DET",
+      "player_1": "Jared Goff",
+      "player_2": "Amon-Ra St. Brown",
+      "player_3": "Jahmyr Gibbs",
+      "player_4": "Aidan Hutchinson",
+      "player_5": "Brian Branch",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.4627450980392157,
+        "b": 0.7137254901960784
+      },
+      "secondary_color": {
+        "r": 0.7333333333333333,
+        "g": 0.7333333333333333,
+        "b": 0.7333333333333333
+      }
+    },
+    {
+      "full_team_name": "Green Bay Packers",
+      "city": "Green Bay",
+      "short_name": "Packers",
+      "abbreviation": "GB",
+      "player_1": "Jordan Love",
+      "player_2": "Aaron Jones",
+      "player_3": "Christian Watson",
+      "player_4": "Quay Walker",
+      "player_5": "Kenny Clark",
+      "primary_color": {
+        "r": 0.12549019607843137,
+        "g": 0.3058823529411765,
+        "b": 0.19607843137254902
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.7137254901960784,
+        "b": 0.07058823529411765
+      }
+    },
+    {
+      "full_team_name": "Houston Texans",
+      "city": "Houston",
+      "short_name": "Texans",
+      "abbreviation": "HOU",
+      "player_1": "C.J. Stroud",
+      "player_2": "Nico Collins",
+      "player_3": "Stefon Diggs",
+      "player_4": "Derek Stingley Jr.",
+      "player_5": "Will Anderson Jr.",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0784313725490196,
+        "b": 0.24705882352941178
+      },
+      "secondary_color": {
+        "r": 0.7686274509803922,
+        "g": 0.07058823529411765,
+        "b": 0.18823529411764706
+      }
+    },
+    {
+      "full_team_name": "Indianapolis Colts",
+      "city": "Indianapolis",
+      "short_name": "Colts",
+      "abbreviation": "IND",
+      "player_1": "Anthony Richardson",
+      "player_2": "Jonathan Taylor",
+      "player_3": "Michael Pittman Jr.",
+      "player_4": "Zaire Franklin",
+      "player_5": "DeForest Buckner",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.23137254901960785,
+        "b": 0.4588235294117647
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Jacksonville Jaguars",
+      "city": "Jacksonville",
+      "short_name": "Jaguars",
+      "abbreviation": "JAX",
+      "player_1": "Trevor Lawrence",
+      "player_2": "Travis Etienne Jr.",
+      "player_3": "Christian Kirk",
+      "player_4": "Josh Allen",
+      "player_5": "Foyesade Oluokun",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.4549019607843137,
+        "b": 0.5294117647058824
+      },
+      "secondary_color": {
+        "r": 0.8431372549019608,
+        "g": 0.6352941176470588,
+        "b": 0.16470588235294117
+      }
+    },
+    {
+      "full_team_name": "Kansas City Chiefs",
+      "city": "Kansas City",
+      "short_name": "Chiefs",
+      "abbreviation": "KC",
+      "player_1": "Patrick Mahomes",
+      "player_2": "Isiah Pacheco",
+      "player_3": "Travis Kelce",
+      "player_4": "Chris Jones",
+      "player_5": "Trent McDuffie",
+      "primary_color": {
+        "r": 0.8901960784313725,
+        "g": 0.09411764705882353,
+        "b": 0.21568627450980393
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.7137254901960784,
+        "b": 0.07058823529411765
+      }
+    },
+    {
+      "full_team_name": "Las Vegas Raiders",
+      "city": "Las Vegas",
+      "short_name": "Raiders",
+      "abbreviation": "LV",
+      "player_1": "Aidan O'Connell",
+      "player_2": "Josh Jacobs",
+      "player_3": "Davante Adams",
+      "player_4": "Maxx Crosby",
+      "player_5": "Divine Deablo",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 0.6470588235294118,
+        "g": 0.6745098039215687,
+        "b": 0.6862745098039216
+      }
+    },
+    {
+      "full_team_name": "Los Angeles Chargers",
+      "city": "Los Angeles",
+      "short_name": "Chargers",
+      "abbreviation": "LAC",
+      "player_1": "Justin Herbert",
+      "player_2": "Austin Ekeler",
+      "player_3": "Keenan Allen",
+      "player_4": "Joey Bosa",
+      "player_5": "Khalil Mack",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.5019607843137255,
+        "b": 0.7764705882352941
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.7607843137254902,
+        "b": 0.054901960784313725
+      }
+    },
+    {
+      "full_team_name": "Los Angeles Rams",
+      "city": "Los Angeles",
+      "short_name": "Rams",
+      "abbreviation": "LAR",
+      "player_1": "Matthew Stafford",
+      "player_2": "Kyren Williams",
+      "player_3": "Cooper Kupp",
+      "player_4": "Aaron Donald",
+      "player_5": "Ernest Jones",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.20784313725490197,
+        "b": 0.5803921568627451
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.8196078431372549,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Miami Dolphins",
+      "city": "Miami",
+      "short_name": "Dolphins",
+      "abbreviation": "MIA",
+      "player_1": "Tua Tagovailoa",
+      "player_2": "Tyreek Hill",
+      "player_3": "Raheem Mostert",
+      "player_4": "Jaylen Waddle",
+      "player_5": "Bradley Chubb",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.5568627450980392,
+        "b": 0.592156862745098
+      },
+      "secondary_color": {
+        "r": 0.9882352941176471,
+        "g": 0.2980392156862745,
+        "b": 0.00784313725490196
+      }
+    },
+    {
+      "full_team_name": "Minnesota Vikings",
+      "city": "Minnesota",
+      "short_name": "Vikings",
+      "abbreviation": "MIN",
+      "player_1": "Sam Darnold",
+      "player_2": "Justin Jefferson",
+      "player_3": "T.J. Hockenson",
+      "player_4": "Jordan Addison",
+      "player_5": "Harrison Smith",
+      "primary_color": {
+        "r": 0.30980392156862746,
+        "g": 0.14901960784313725,
+        "b": 0.5137254901960784
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.7764705882352941,
+        "b": 0.1843137254901961
+      }
+    },
+    {
+      "full_team_name": "New England Patriots",
+      "city": "New England",
+      "short_name": "Patriots",
+      "abbreviation": "NE",
+      "player_1": "Drake Maye",
+      "player_2": "Rhamondre Stevenson",
+      "player_3": "Kendrick Bourne",
+      "player_4": "Kyle Dugger",
+      "player_5": "Christian Barmore",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.16470588235294117,
+        "b": 0.3607843137254902
+      },
+      "secondary_color": {
+        "r": 0.7764705882352941,
+        "g": 0.047058823529411764,
+        "b": 0.18823529411764706
+      }
+    },
+    {
+      "full_team_name": "New Orleans Saints",
+      "city": "New Orleans",
+      "short_name": "Saints",
+      "abbreviation": "NO",
+      "player_1": "Derek Carr",
+      "player_2": "Alvin Kamara",
+      "player_3": "Chris Olave",
+      "player_4": "Cameron Jordan",
+      "player_5": "Demario Davis",
+      "primary_color": {
+        "r": 0.8274509803921568,
+        "g": 0.7372549019607844,
+        "b": 0.5529411764705883
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "New York Giants",
+      "city": "New York",
+      "short_name": "Giants",
+      "abbreviation": "NYG",
+      "player_1": "Daniel Jones",
+      "player_2": "Saquon Barkley",
+      "player_3": "Darius Slayton",
+      "player_4": "Dexter Lawrence",
+      "player_5": "Kayvon Thibodeaux",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.23529411764705882,
+        "b": 0.4980392156862745
+      },
+      "secondary_color": {
+        "r": 0.788235294117647,
+        "g": 0.1411764705882353,
+        "b": 0.24705882352941178
+      }
+    },
+    {
+      "full_team_name": "New York Jets",
+      "city": "New York",
+      "short_name": "Jets",
+      "abbreviation": "NYJ",
+      "player_1": "Aaron Rodgers",
+      "player_2": "Breece Hall",
+      "player_3": "Garrett Wilson",
+      "player_4": "Quinnen Williams",
+      "player_5": "Sauce Gardner",
+      "primary_color": {
+        "r": 0.06666666666666667,
+        "g": 0.3411764705882353,
+        "b": 0.25098039215686274
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Philadelphia Eagles",
+      "city": "Philadelphia",
+      "short_name": "Eagles",
+      "abbreviation": "PHI",
+      "player_1": "Jalen Hurts",
+      "player_2": "Saquon Barkley",
+      "player_3": "A.J. Brown",
+      "player_4": "Jalen Carter",
+      "player_5": "DeVonta Smith",
+      "primary_color": {
+        "r": 0.023529411764705882,
+        "g": 0.25882352941176473,
+        "b": 0.30196078431372547
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Pittsburgh Steelers",
+      "city": "Pittsburgh",
+      "short_name": "Steelers",
+      "abbreviation": "PIT",
+      "player_1": "Russell Wilson",
+      "player_2": "Najee Harris",
+      "player_3": "George Pickens",
+      "player_4": "T.J. Watt",
+      "player_5": "Minkah Fitzpatrick",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.7137254901960784,
+        "b": 0.07058823529411765
+      }
+    },
+    {
+      "full_team_name": "San Francisco 49ers",
+      "city": "San Francisco",
+      "short_name": "49ers",
+      "abbreviation": "SF",
+      "player_1": "Brock Purdy",
+      "player_2": "Christian McCaffrey",
+      "player_3": "Brandon Aiyuk",
+      "player_4": "George Kittle",
+      "player_5": "Nick Bosa",
+      "primary_color": {
+        "r": 0.6666666666666666,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 0.7019607843137254,
+        "g": 0.6,
+        "b": 0.36470588235294116
+      }
+    },
+    {
+      "full_team_name": "Seattle Seahawks",
+      "city": "Seattle",
+      "short_name": "Seahawks",
+      "abbreviation": "SEA",
+      "player_1": "Geno Smith",
+      "player_2": "Kenneth Walker III",
+      "player_3": "D.K. Metcalf",
+      "player_4": "Devon Witherspoon",
+      "player_5": "Tyler Lockett",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.16470588235294117,
+        "b": 0.3607843137254902
+      },
+      "secondary_color": {
+        "r": 0.4117647058823529,
+        "g": 0.7450980392156863,
+        "b": 0.1568627450980392
+      }
+    },
+    {
+      "full_team_name": "Tampa Bay Buccaneers",
+      "city": "Tampa Bay",
+      "short_name": "Buccaneers",
+      "abbreviation": "TB",
+      "player_1": "Baker Mayfield",
+      "player_2": "Rachaad White",
+      "player_3": "Mike Evans",
+      "player_4": "Chris Godwin",
+      "player_5": "Vita Vea",
+      "primary_color": {
+        "r": 0.7411764705882353,
+        "g": 0.10980392156862745,
+        "b": 0.21176470588235294
+      },
+      "secondary_color": {
+        "r": 0.24313725490196078,
+        "g": 0.22745098039215686,
+        "b": 0.20784313725490197
+      }
+    },
+    {
+      "full_team_name": "Tennessee Titans",
+      "city": "Tennessee",
+      "short_name": "Titans",
+      "abbreviation": "TEN",
+      "player_1": "Will Levis",
+      "player_2": "Tony Pollard",
+      "player_3": "DeAndre Hopkins",
+      "player_4": "Jeffery Simmons",
+      "player_5": "Harold Landry",
+      "primary_color": {
+        "r": 0.29411764705882354,
+        "g": 0.5725490196078431,
+        "b": 0.8588235294117647
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.16470588235294117,
+        "b": 0.3607843137254902
+      }
+    },
+    {
+      "full_team_name": "Washington Commanders",
+      "city": "Washington",
+      "short_name": "Commanders",
+      "abbreviation": "WSH",
+      "player_1": "Jayden Daniels",
+      "player_2": "Brian Robinson Jr.",
+      "player_3": "Terry McLaurin",
+      "player_4": "Daron Payne",
+      "player_5": "Jahan Dotson",
+      "primary_color": {
+        "r": 0.35294117647058826,
+        "g": 0.0784313725490196,
+        "b": 0.0784313725490196
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.7137254901960784,
+        "b": 0.07058823529411765
+      }
+    }
+  ],
+  "MLB": [
+    {
+      "full_team_name": "Arizona Diamondbacks",
+      "city": "Arizona",
+      "short_name": "Diamondbacks",
+      "abbreviation": "ARI",
+      "player_1": "Zac Gallen",
+      "player_2": "Corbin Carroll",
+      "player_3": "Ketel Marte",
+      "player_4": "Christian Walker",
+      "player_5": "Lourdes Gurriel Jr.",
+      "primary_color": {
+        "r": 0.6666666666666666,
+        "g": 0.09411764705882353,
+        "b": 0.17254901960784313
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Atlanta Braves",
+      "city": "Atlanta",
+      "short_name": "Braves",
+      "abbreviation": "ATL",
+      "player_1": "Ronald Acu\u00f1a Jr.",
+      "player_2": "Matt Olson",
+      "player_3": "Austin Riley",
+      "player_4": "Ozzie Albies",
+      "player_5": "Spencer Strider",
+      "primary_color": {
+        "r": 0.047058823529411764,
+        "g": 0.13725490196078433,
+        "b": 0.25098039215686274
+      },
+      "secondary_color": {
+        "r": 0.7294117647058823,
+        "g": 0.047058823529411764,
+        "b": 0.1843137254901961
+      }
+    },
+    {
+      "full_team_name": "Baltimore Orioles",
+      "city": "Baltimore",
+      "short_name": "Orioles",
+      "abbreviation": "BAL",
+      "player_1": "Gunnar Henderson",
+      "player_2": "Adley Rutschman",
+      "player_3": "Grayson Rodriguez",
+      "player_4": "Anthony Santander",
+      "player_5": "Kyle Bradish",
+      "primary_color": {
+        "r": 0.8745098039215686,
+        "g": 0.27450980392156865,
+        "b": 0.00392156862745098
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Boston Red Sox",
+      "city": "Boston",
+      "short_name": "Red Sox",
+      "abbreviation": "BOS",
+      "player_1": "Rafael Devers",
+      "player_2": "Triston Casas",
+      "player_3": "Jarren Duran",
+      "player_4": "Tyler O'Neill",
+      "player_5": "Brayan Bello",
+      "primary_color": {
+        "r": 0.050980392156862744,
+        "g": 0.16862745098039217,
+        "b": 0.33725490196078434
+      },
+      "secondary_color": {
+        "r": 0.7411764705882353,
+        "g": 0.18823529411764706,
+        "b": 0.2235294117647059
+      }
+    },
+    {
+      "full_team_name": "Chicago Cubs",
+      "city": "Chicago",
+      "short_name": "Cubs",
+      "abbreviation": "CHC",
+      "player_1": "Seiya Suzuki",
+      "player_2": "Cody Bellinger",
+      "player_3": "Nico Hoerner",
+      "player_4": "Christopher Morel",
+      "player_5": "Justin Steele",
+      "primary_color": {
+        "r": 0.054901960784313725,
+        "g": 0.2,
+        "b": 0.5254901960784314
+      },
+      "secondary_color": {
+        "r": 0.8,
+        "g": 0.20392156862745098,
+        "b": 0.2
+      }
+    },
+    {
+      "full_team_name": "Chicago White Sox",
+      "city": "Chicago",
+      "short_name": "White Sox",
+      "abbreviation": "CHW",
+      "player_1": "Luis Robert Jr.",
+      "player_2": "Andrew Vaughn",
+      "player_3": "Garrett Crochet",
+      "player_4": "Paul DeJong",
+      "player_5": "Tommy Pham",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 0.7686274509803922,
+        "g": 0.807843137254902,
+        "b": 0.8313725490196079
+      }
+    },
+    {
+      "full_team_name": "Cincinnati Reds",
+      "city": "Cincinnati",
+      "short_name": "Reds",
+      "abbreviation": "CIN",
+      "player_1": "Elly De La Cruz",
+      "player_2": "Matt McLain",
+      "player_3": "Spencer Steer",
+      "player_4": "Christian Encarnacion-Strand",
+      "player_5": "Hunter Greene",
+      "primary_color": {
+        "r": 0.7764705882352941,
+        "g": 0.00392156862745098,
+        "b": 0.12156862745098039
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Cleveland Guardians",
+      "city": "Cleveland",
+      "short_name": "Guardians",
+      "abbreviation": "CLE",
+      "player_1": "Jos\u00e9 Ram\u00edrez",
+      "player_2": "Josh Naylor",
+      "player_3": "Steven Kwan",
+      "player_4": "Tanner Bibee",
+      "player_5": "Andr\u00e9s Gim\u00e9nez",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.16862745098039217,
+        "b": 0.3607843137254902
+      },
+      "secondary_color": {
+        "r": 0.8901960784313725,
+        "g": 0.09803921568627451,
+        "b": 0.21568627450980393
+      }
+    },
+    {
+      "full_team_name": "Colorado Rockies",
+      "city": "Colorado",
+      "short_name": "Rockies",
+      "abbreviation": "COL",
+      "player_1": "Ryan McMahon",
+      "player_2": "Ezequiel Tovar",
+      "player_3": "Elias D\u00edaz",
+      "player_4": "Brenton Doyle",
+      "player_5": "Austin Gomber",
+      "primary_color": {
+        "r": 0.2,
+        "g": 0.0,
+        "b": 0.43529411764705883
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Detroit Tigers",
+      "city": "Detroit",
+      "short_name": "Tigers",
+      "abbreviation": "DET",
+      "player_1": "Spencer Torkelson",
+      "player_2": "Riley Greene",
+      "player_3": "Kerry Carpenter",
+      "player_4": "Matt Vierling",
+      "player_5": "Reese Olson",
+      "primary_color": {
+        "r": 0.0392156862745098,
+        "g": 0.13333333333333333,
+        "b": 0.25098039215686274
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.2784313725490196,
+        "b": 0.07450980392156863
+      }
+    },
+    {
+      "full_team_name": "Houston Astros",
+      "city": "Houston",
+      "short_name": "Astros",
+      "abbreviation": "HOU",
+      "player_1": "Yordan Alvarez",
+      "player_2": "Framber Valdez",
+      "player_3": "Kyle Tucker",
+      "player_4": "Jos\u00e9 Altuve",
+      "player_5": "Alex Bregman",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.17647058823529413,
+        "b": 0.3843137254901961
+      },
+      "secondary_color": {
+        "r": 0.9215686274509803,
+        "g": 0.43137254901960786,
+        "b": 0.12156862745098039
+      }
+    },
+    {
+      "full_team_name": "Kansas City Royals",
+      "city": "Kansas City",
+      "short_name": "Royals",
+      "abbreviation": "KC",
+      "player_1": "Bobby Witt Jr.",
+      "player_2": "Cole Ragans",
+      "player_3": "Salvador Perez",
+      "player_4": "Vinnie Pasquantino",
+      "player_5": "Maikel Garcia",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.27450980392156865,
+        "b": 0.5294117647058824
+      },
+      "secondary_color": {
+        "r": 0.47843137254901963,
+        "g": 0.6980392156862745,
+        "b": 0.8666666666666667
+      }
+    },
+    {
+      "full_team_name": "Los Angeles Angels",
+      "city": "Los Angeles",
+      "short_name": "Angels",
+      "abbreviation": "LAA",
+      "player_1": "Mike Trout",
+      "player_2": "Logan O'Hoppe",
+      "player_3": "Taylor Ward",
+      "player_4": "Griffin Canning",
+      "player_5": "Nolan Schanuel",
+      "primary_color": {
+        "r": 0.7294117647058823,
+        "g": 0.0,
+        "b": 0.12941176470588237
+      },
+      "secondary_color": {
+        "r": 0.7686274509803922,
+        "g": 0.807843137254902,
+        "b": 0.8313725490196079
+      }
+    },
+    {
+      "full_team_name": "Los Angeles Dodgers",
+      "city": "Los Angeles",
+      "short_name": "Dodgers",
+      "abbreviation": "LAD",
+      "player_1": "Shohei Ohtani",
+      "player_2": "Mookie Betts",
+      "player_3": "Freddie Freeman",
+      "player_4": "Tyler Glasnow",
+      "player_5": "Will Smith",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.35294117647058826,
+        "b": 0.611764705882353
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Miami Marlins",
+      "city": "Miami",
+      "short_name": "Marlins",
+      "abbreviation": "MIA",
+      "player_1": "Jazz Chisholm Jr.",
+      "player_2": "Jes\u00fas Luzardo",
+      "player_3": "Bryan De La Cruz",
+      "player_4": "Josh Bell",
+      "player_5": "Edward Cabrera",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.6392156862745098,
+        "b": 0.8784313725490196
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Milwaukee Brewers",
+      "city": "Milwaukee",
+      "short_name": "Brewers",
+      "abbreviation": "MIL",
+      "player_1": "William Contreras",
+      "player_2": "Christian Yelich",
+      "player_3": "Freddy Peralta",
+      "player_4": "Willy Adames",
+      "player_5": "Brice Turang",
+      "primary_color": {
+        "r": 0.07450980392156863,
+        "g": 0.1607843137254902,
+        "b": 0.29411764705882354
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.7803921568627451,
+        "b": 0.17254901960784313
+      }
+    },
+    {
+      "full_team_name": "Minnesota Twins",
+      "city": "Minnesota",
+      "short_name": "Twins",
+      "abbreviation": "MIN",
+      "player_1": "Carlos Correa",
+      "player_2": "Pablo L\u00f3pez",
+      "player_3": "Max Kepler",
+      "player_4": "Byron Buxton",
+      "player_5": "Edouard Julien",
+      "primary_color": {
+        "r": 0.011764705882352941,
+        "g": 0.12156862745098039,
+        "b": 0.25098039215686274
+      },
+      "secondary_color": {
+        "r": 0.8862745098039215,
+        "g": 0.054901960784313725,
+        "b": 0.19607843137254902
+      }
+    },
+    {
+      "full_team_name": "New York Mets",
+      "city": "New York",
+      "short_name": "Mets",
+      "abbreviation": "NYM",
+      "player_1": "Francisco Lindor",
+      "player_2": "Brandon Nimmo",
+      "player_3": "Pete Alonso",
+      "player_4": "Luis Severino",
+      "player_5": "Starling Marte",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.17647058823529413,
+        "b": 0.4470588235294118
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.34901960784313724,
+        "b": 0.06274509803921569
+      }
+    },
+    {
+      "full_team_name": "New York Yankees",
+      "city": "New York",
+      "short_name": "Yankees",
+      "abbreviation": "NYY",
+      "player_1": "Aaron Judge",
+      "player_2": "Juan Soto",
+      "player_3": "Carlos Rod\u00f3n",
+      "player_4": "Anthony Volpe",
+      "player_5": "Gleyber Torres",
+      "primary_color": {
+        "r": 0.07450980392156863,
+        "g": 0.1411764705882353,
+        "b": 0.2823529411764706
+      },
+      "secondary_color": {
+        "r": 0.7686274509803922,
+        "g": 0.807843137254902,
+        "b": 0.8313725490196079
+      }
+    },
+    {
+      "full_team_name": "Las Vegas Athletics",
+      "city": "Las Vegas",
+      "short_name": "Athletics",
+      "abbreviation": "LVA",
+      "player_1": "Brent Rooker",
+      "player_2": "Zack Gelof",
+      "player_3": "Shea Langeliers",
+      "player_4": "JJ Bleday",
+      "player_5": "JP Sears",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.2196078431372549,
+        "b": 0.19215686274509805
+      },
+      "secondary_color": {
+        "r": 0.9372549019607843,
+        "g": 0.6980392156862745,
+        "b": 0.11764705882352941
+      }
+    },
+    {
+      "full_team_name": "Philadelphia Phillies",
+      "city": "Philadelphia",
+      "short_name": "Phillies",
+      "abbreviation": "PHI",
+      "player_1": "Bryce Harper",
+      "player_2": "Kyle Schwarber",
+      "player_3": "Zack Wheeler",
+      "player_4": "Trea Turner",
+      "player_5": "J.T. Realmuto",
+      "primary_color": {
+        "r": 0.9098039215686274,
+        "g": 0.09411764705882353,
+        "b": 0.1568627450980392
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.19607843137254902,
+        "b": 0.47058823529411764
+      }
+    },
+    {
+      "full_team_name": "Pittsburgh Pirates",
+      "city": "Pittsburgh",
+      "short_name": "Pirates",
+      "abbreviation": "PIT",
+      "player_1": "Bryan Reynolds",
+      "player_2": "Ke'Bryan Hayes",
+      "player_3": "Oneil Cruz",
+      "player_4": "Mitch Keller",
+      "player_5": "Henry Davis",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 0.9921568627450981,
+        "g": 0.7215686274509804,
+        "b": 0.15294117647058825
+      }
+    },
+    {
+      "full_team_name": "San Diego Padres",
+      "city": "San Diego",
+      "short_name": "Padres",
+      "abbreviation": "SD",
+      "player_1": "Fernando Tatis Jr.",
+      "player_2": "Manny Machado",
+      "player_3": "Xander Bogaerts",
+      "player_4": "Dylan Cease",
+      "player_5": "Jurickson Profar",
+      "primary_color": {
+        "r": 0.1843137254901961,
+        "g": 0.1411764705882353,
+        "b": 0.11372549019607843
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.7686274509803922,
+        "b": 0.1450980392156863
+      }
+    },
+    {
+      "full_team_name": "San Francisco Giants",
+      "city": "San Francisco",
+      "short_name": "Giants",
+      "abbreviation": "SF",
+      "player_1": "Logan Webb",
+      "player_2": "Matt Chapman",
+      "player_3": "Michael Conforto",
+      "player_4": "Thairo Estrada",
+      "player_5": "Mike Yastrzemski",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 0.9921568627450981,
+        "g": 0.35294117647058826,
+        "b": 0.11764705882352941
+      }
+    },
+    {
+      "full_team_name": "Seattle Mariners",
+      "city": "Seattle",
+      "short_name": "Mariners",
+      "abbreviation": "SEA",
+      "player_1": "Julio Rodr\u00edguez",
+      "player_2": "Cal Raleigh",
+      "player_3": "Luis Castillo",
+      "player_4": "J.P. Crawford",
+      "player_5": "George Kirby",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.3607843137254902,
+        "b": 0.3607843137254902
+      },
+      "secondary_color": {
+        "r": 0.047058823529411764,
+        "g": 0.17254901960784313,
+        "b": 0.33725490196078434
+      }
+    },
+    {
+      "full_team_name": "St. Louis Cardinals",
+      "city": "St. Louis",
+      "short_name": "Cardinals",
+      "abbreviation": "STL",
+      "player_1": "Nolan Arenado",
+      "player_2": "Paul Goldschmidt",
+      "player_3": "Sonny Gray",
+      "player_4": "Willson Contreras",
+      "player_5": "Masyn Winn",
+      "primary_color": {
+        "r": 0.7450980392156863,
+        "g": 0.0392156862745098,
+        "b": 0.0784313725490196
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.08235294117647059,
+        "b": 0.2549019607843137
+      }
+    },
+    {
+      "full_team_name": "Tampa Bay Rays",
+      "city": "Tampa Bay",
+      "short_name": "Rays",
+      "abbreviation": "TB",
+      "player_1": "Randy Arozarena",
+      "player_2": "Yandy D\u00edaz",
+      "player_3": "Isaac Paredes",
+      "player_4": "Zach Eflin",
+      "player_5": "Jose Caballero",
+      "primary_color": {
+        "r": 0.03529411764705882,
+        "g": 0.17254901960784313,
+        "b": 0.3607843137254902
+      },
+      "secondary_color": {
+        "r": 0.5607843137254902,
+        "g": 0.7372549019607844,
+        "b": 0.9019607843137255
+      }
+    },
+    {
+      "full_team_name": "Texas Rangers",
+      "city": "Texas",
+      "short_name": "Rangers",
+      "abbreviation": "TEX",
+      "player_1": "Corey Seager",
+      "player_2": "Marcus Semien",
+      "player_3": "Adolis Garc\u00eda",
+      "player_4": "Josh Jung",
+      "player_5": "Nathan Eovaldi",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.19607843137254902,
+        "b": 0.47058823529411764
+      },
+      "secondary_color": {
+        "r": 0.7529411764705882,
+        "g": 0.06666666666666667,
+        "b": 0.12156862745098039
+      }
+    },
+    {
+      "full_team_name": "Toronto Blue Jays",
+      "city": "Toronto",
+      "short_name": "Blue Jays",
+      "abbreviation": "TOR",
+      "player_1": "Bo Bichette",
+      "player_2": "Vladimir Guerrero Jr.",
+      "player_3": "Kevin Gausman",
+      "player_4": "George Springer",
+      "player_5": "Daulton Varsho",
+      "primary_color": {
+        "r": 0.07450980392156863,
+        "g": 0.2901960784313726,
+        "b": 0.5568627450980392
+      },
+      "secondary_color": {
+        "r": 0.4235294117647059,
+        "g": 0.6745098039215687,
+        "b": 0.8980392156862745
+      }
+    },
+    {
+      "full_team_name": "Washington Nationals",
+      "city": "Washington",
+      "short_name": "Nationals",
+      "abbreviation": "WSH",
+      "player_1": "CJ Abrams",
+      "player_2": "Luis Garc\u00eda Jr.",
+      "player_3": "Lane Thomas",
+      "player_4": "Mackenzie Gore",
+      "player_5": "Josiah Gray",
+      "primary_color": {
+        "r": 0.6705882352941176,
+        "g": 0.0,
+        "b": 0.011764705882352941
+      },
+      "secondary_color": {
+        "r": 0.06666666666666667,
+        "g": 0.13333333333333333,
+        "b": 0.3568627450980392
+      }
+    }
+  ],
+  "NHL": [
+    {
+      "full_team_name": "Anaheim Ducks",
+      "city": "Anaheim",
+      "short_name": "Ducks",
+      "abbreviation": "ANA",
+      "player_1": "Trevor Zegras",
+      "player_2": "Leo Carlsson",
+      "player_3": "John Gibson",
+      "player_4": "Frank Vatrano",
+      "player_5": "Jamie Drysdale",
+      "primary_color": {
+        "r": 0.9882352941176471,
+        "g": 0.2980392156862745,
+        "b": 0.00784313725490196
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Arizona Coyotes",
+      "city": "Arizona",
+      "short_name": "Coyotes",
+      "abbreviation": "ARI",
+      "player_1": "Clayton Keller",
+      "player_2": "Logan Cooley",
+      "player_3": "Nick Schmaltz",
+      "player_4": "Matias Maccelli",
+      "player_5": "Lawson Crouse",
+      "primary_color": {
+        "r": 0.5490196078431373,
+        "g": 0.14901960784313725,
+        "b": 0.2
+      },
+      "secondary_color": {
+        "r": 0.8862745098039215,
+        "g": 0.8392156862745098,
+        "b": 0.7098039215686275
+      }
+    },
+    {
+      "full_team_name": "Boston Bruins",
+      "city": "Boston",
+      "short_name": "Bruins",
+      "abbreviation": "BOS",
+      "player_1": "David Pastrnak",
+      "player_2": "Brad Marchand",
+      "player_3": "Charlie McAvoy",
+      "player_4": "Jeremy Swayman",
+      "player_5": "Pavel Zacha",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 0.9921568627450981,
+        "g": 0.7333333333333333,
+        "b": 0.18823529411764706
+      }
+    },
+    {
+      "full_team_name": "Buffalo Sabres",
+      "city": "Buffalo",
+      "short_name": "Sabres",
+      "abbreviation": "BUF",
+      "player_1": "Rasmus Dahlin",
+      "player_2": "Tage Thompson",
+      "player_3": "Dylan Cozens",
+      "player_4": "Owen Power",
+      "player_5": "Alex Tuch",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.27450980392156865,
+        "b": 0.5450980392156862
+      },
+      "secondary_color": {
+        "r": 0.9921568627450981,
+        "g": 0.7176470588235294,
+        "b": 0.10196078431372549
+      }
+    },
+    {
+      "full_team_name": "Calgary Flames",
+      "city": "Calgary",
+      "short_name": "Flames",
+      "abbreviation": "CGY",
+      "player_1": "Jonathan Huberdeau",
+      "player_2": "MacKenzie Weegar",
+      "player_3": "Dustin Wolf",
+      "player_4": "Andrew Mangiapane",
+      "player_5": "Rasmus Andersson",
+      "primary_color": {
+        "r": 0.8666666666666667,
+        "g": 0.10196078431372549,
+        "b": 0.19607843137254902
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Carolina Hurricanes",
+      "city": "Carolina",
+      "short_name": "Hurricanes",
+      "abbreviation": "CAR",
+      "player_1": "Sebastian Aho",
+      "player_2": "Andrei Svechnikov",
+      "player_3": "Brent Burns",
+      "player_4": "Frederik Andersen",
+      "player_5": "Martin Necas",
+      "primary_color": {
+        "r": 0.8901960784313725,
+        "g": 0.01568627450980392,
+        "b": 0.14901960784313725
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Chicago Blackhawks",
+      "city": "Chicago",
+      "short_name": "Blackhawks",
+      "abbreviation": "CHI",
+      "player_1": "Connor Bedard",
+      "player_2": "Kevin Korchinski",
+      "player_3": "Lukas Reichel",
+      "player_4": "Seth Jones",
+      "player_5": "Petr Mrazek",
+      "primary_color": {
+        "r": 0.8901960784313725,
+        "g": 0.09803921568627451,
+        "b": 0.21568627450980393
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Colorado Avalanche",
+      "city": "Colorado",
+      "short_name": "Avalanche",
+      "abbreviation": "COL",
+      "player_1": "Nathan MacKinnon",
+      "player_2": "Cale Makar",
+      "player_3": "Mikko Rantanen",
+      "player_4": "Devon Toews",
+      "player_5": "Alexandar Georgiev",
+      "primary_color": {
+        "r": 0.5254901960784314,
+        "g": 0.0,
+        "b": 0.2196078431372549
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.3686274509803922,
+        "b": 0.6392156862745098
+      }
+    },
+    {
+      "full_team_name": "Columbus Blue Jackets",
+      "city": "Columbus",
+      "short_name": "Blue Jackets",
+      "abbreviation": "CBJ",
+      "player_1": "Johnny Gaudreau",
+      "player_2": "Zach Werenski",
+      "player_3": "Patrik Laine",
+      "player_4": "Adam Fantilli",
+      "player_5": "Elvis Merzlikins",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.17647058823529413,
+        "b": 0.3843137254901961
+      },
+      "secondary_color": {
+        "r": 0.8901960784313725,
+        "g": 0.09803921568627451,
+        "b": 0.21568627450980393
+      }
+    },
+    {
+      "full_team_name": "Dallas Stars",
+      "city": "Dallas",
+      "short_name": "Stars",
+      "abbreviation": "DAL",
+      "player_1": "Jason Robertson",
+      "player_2": "Miro Heiskanen",
+      "player_3": "Jake Oettinger",
+      "player_4": "Roope Hintz",
+      "player_5": "Wyatt Johnston",
+      "primary_color": {
+        "r": 0.12549019607843137,
+        "g": 0.5254901960784314,
+        "b": 0.2980392156862745
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Detroit Red Wings",
+      "city": "Detroit",
+      "short_name": "Red Wings",
+      "abbreviation": "DET",
+      "player_1": "Dylan Larkin",
+      "player_2": "Lucas Raymond",
+      "player_3": "Moritz Seider",
+      "player_4": "Alex DeBrincat",
+      "player_5": "Ville Husso",
+      "primary_color": {
+        "r": 0.8901960784313725,
+        "g": 0.0196078431372549,
+        "b": 0.14901960784313725
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Edmonton Oilers",
+      "city": "Edmonton",
+      "short_name": "Oilers",
+      "abbreviation": "EDM",
+      "player_1": "Connor McDavid",
+      "player_2": "Leon Draisaitl",
+      "player_3": "Zach Hyman",
+      "player_4": "Evan Bouchard",
+      "player_5": "Stuart Skinner",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.12549019607843137,
+        "b": 0.3568627450980392
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 0.2980392156862745,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Florida Panthers",
+      "city": "Florida",
+      "short_name": "Panthers",
+      "abbreviation": "FLA",
+      "player_1": "Matthew Tkachuk",
+      "player_2": "Aleksander Barkov",
+      "player_3": "Sergei Bobrovsky",
+      "player_4": "Brandon Montour",
+      "player_5": "Carter Verhaeghe",
+      "primary_color": {
+        "r": 0.8980392156862745,
+        "g": 0.09803921568627451,
+        "b": 0.21568627450980393
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.17647058823529413,
+        "b": 0.3843137254901961
+      }
+    },
+    {
+      "full_team_name": "Los Angeles Kings",
+      "city": "Los Angeles",
+      "short_name": "Kings",
+      "abbreviation": "LA",
+      "player_1": "Anze Kopitar",
+      "player_2": "Kevin Fiala",
+      "player_3": "Adrian Kempe",
+      "player_4": "Drew Doughty",
+      "player_5": "Cam Talbot",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 0.6352941176470588,
+        "g": 0.6666666666666666,
+        "b": 0.6784313725490196
+      }
+    },
+    {
+      "full_team_name": "Minnesota Wild",
+      "city": "Minnesota",
+      "short_name": "Wild",
+      "abbreviation": "MIN",
+      "player_1": "Kirill Kaprizov",
+      "player_2": "Joel Eriksson Ek",
+      "player_3": "Mats Zuccarello",
+      "player_4": "Jared Spurgeon",
+      "player_5": "Filip Gustavsson",
+      "primary_color": {
+        "r": 0.07058823529411765,
+        "g": 0.2784313725490196,
+        "b": 0.20392156862745098
+      },
+      "secondary_color": {
+        "r": 0.6823529411764706,
+        "g": 0.07058823529411765,
+        "b": 0.16470588235294117
+      }
+    },
+    {
+      "full_team_name": "Montreal Canadiens",
+      "city": "Montreal",
+      "short_name": "Canadiens",
+      "abbreviation": "MTL",
+      "player_1": "Cole Caufield",
+      "player_2": "Nick Suzuki",
+      "player_3": "Kaiden Guhle",
+      "player_4": "Juraj Slafkovsky",
+      "player_5": "Sam Montembeault",
+      "primary_color": {
+        "r": 0.7686274509803922,
+        "g": 0.07058823529411765,
+        "b": 0.18823529411764706
+      },
+      "secondary_color": {
+        "r": 0.00392156862745098,
+        "g": 0.22745098039215686,
+        "b": 0.5058823529411764
+      }
+    },
+    {
+      "full_team_name": "Nashville Predators",
+      "city": "Nashville",
+      "short_name": "Predators",
+      "abbreviation": "NSH",
+      "player_1": "Roman Josi",
+      "player_2": "Juuse Saros",
+      "player_3": "Filip Forsberg",
+      "player_4": "Ryan O'Reilly",
+      "player_5": "Luke Evangelista",
+      "primary_color": {
+        "r": 0.9921568627450981,
+        "g": 0.7294117647058823,
+        "b": 0.19215686274509805
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.17647058823529413,
+        "b": 0.3843137254901961
+      }
+    },
+    {
+      "full_team_name": "New Jersey Devils",
+      "city": "New Jersey",
+      "short_name": "Devils",
+      "abbreviation": "NJ",
+      "player_1": "Jack Hughes",
+      "player_2": "Nico Hischier",
+      "player_3": "Dougie Hamilton",
+      "player_4": "Timo Meier",
+      "player_5": "Jesper Bratt",
+      "primary_color": {
+        "r": 0.8901960784313725,
+        "g": 0.043137254901960784,
+        "b": 0.16862745098039217
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "New York Islanders",
+      "city": "New York",
+      "short_name": "Islanders",
+      "abbreviation": "NYI",
+      "player_1": "Mathew Barzal",
+      "player_2": "Bo Horvat",
+      "player_3": "Ilya Sorokin",
+      "player_4": "Brock Nelson",
+      "player_5": "Noah Dobson",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.3215686274509804,
+        "b": 0.6078431372549019
+      },
+      "secondary_color": {
+        "r": 0.9568627450980393,
+        "g": 0.49019607843137253,
+        "b": 0.19215686274509805
+      }
+    },
+    {
+      "full_team_name": "New York Rangers",
+      "city": "New York",
+      "short_name": "Rangers",
+      "abbreviation": "NYR",
+      "player_1": "Artemi Panarin",
+      "player_2": "Igor Shesterkin",
+      "player_3": "Adam Fox",
+      "player_4": "Mika Zibanejad",
+      "player_5": "Chris Kreider",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.33725490196078434,
+        "b": 0.6823529411764706
+      },
+      "secondary_color": {
+        "r": 0.8980392156862745,
+        "g": 0.09803921568627451,
+        "b": 0.21568627450980393
+      }
+    },
+    {
+      "full_team_name": "Ottawa Senators",
+      "city": "Ottawa",
+      "short_name": "Senators",
+      "abbreviation": "OTT",
+      "player_1": "Brady Tkachuk",
+      "player_2": "Tim St\u00fctzle",
+      "player_3": "Claude Giroux",
+      "player_4": "Thomas Chabot",
+      "player_5": "Josh Norris",
+      "primary_color": {
+        "r": 0.8666666666666667,
+        "g": 0.10196078431372549,
+        "b": 0.19607843137254902
+      },
+      "secondary_color": {
+        "r": 0.7176470588235294,
+        "g": 0.5725490196078431,
+        "b": 0.3411764705882353
+      }
+    },
+    {
+      "full_team_name": "Philadelphia Flyers",
+      "city": "Philadelphia",
+      "short_name": "Flyers",
+      "abbreviation": "PHI",
+      "player_1": "Travis Konecny",
+      "player_2": "Owen Tippett",
+      "player_3": "Joel Farabee",
+      "player_4": "Sean Couturier",
+      "player_5": "Carter Hart",
+      "primary_color": {
+        "r": 0.996078431372549,
+        "g": 0.34509803921568627,
+        "b": 0.13725490196078433
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      }
+    },
+    {
+      "full_team_name": "Pittsburgh Penguins",
+      "city": "Pittsburgh",
+      "short_name": "Penguins",
+      "abbreviation": "PIT",
+      "player_1": "Sidney Crosby",
+      "player_2": "Evgeni Malkin",
+      "player_3": "Kris Letang",
+      "player_4": "Bryan Rust",
+      "player_5": "Tristan Jarry",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 0.9921568627450981,
+        "g": 0.7176470588235294,
+        "b": 0.10196078431372549
+      }
+    },
+    {
+      "full_team_name": "San Jose Sharks",
+      "city": "San Jose",
+      "short_name": "Sharks",
+      "abbreviation": "SJ",
+      "player_1": "Tomas Hertl",
+      "player_2": "Logan Couture",
+      "player_3": "William Eklund",
+      "player_4": "Mario Ferraro",
+      "player_5": "Mackenzie Blackwood",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.47058823529411764,
+        "b": 0.5411764705882353
+      },
+      "secondary_color": {
+        "r": 0.027450980392156862,
+        "g": 0.027450980392156862,
+        "b": 0.027450980392156862
+      }
+    },
+    {
+      "full_team_name": "Seattle Kraken",
+      "city": "Seattle",
+      "short_name": "Kraken",
+      "abbreviation": "SEA",
+      "player_1": "Matty Beniers",
+      "player_2": "Jared McCann",
+      "player_3": "Jordan Eberle",
+      "player_4": "Vince Dunn",
+      "player_5": "Philipp Grubauer",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.050980392156862744,
+        "b": 0.2
+      },
+      "secondary_color": {
+        "r": 0.6392156862745098,
+        "g": 0.8627450980392157,
+        "b": 0.8941176470588236
+      }
+    },
+    {
+      "full_team_name": "St. Louis Blues",
+      "city": "St. Louis",
+      "short_name": "Blues",
+      "abbreviation": "STL",
+      "player_1": "Robert Thomas",
+      "player_2": "Jordan Kyrou",
+      "player_3": "Brandon Saad",
+      "player_4": "Justin Faulk",
+      "player_5": "Jordan Binnington",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.27450980392156865,
+        "b": 0.5450980392156862
+      },
+      "secondary_color": {
+        "r": 0.9921568627450981,
+        "g": 0.7176470588235294,
+        "b": 0.10196078431372549
+      }
+    },
+    {
+      "full_team_name": "Tampa Bay Lightning",
+      "city": "Tampa Bay",
+      "short_name": "Lightning",
+      "abbreviation": "TB",
+      "player_1": "Nikita Kucherov",
+      "player_2": "Brayden Point",
+      "player_3": "Victor Hedman",
+      "player_4": "Andrei Vasilevskiy",
+      "player_5": "Steven Stamkos",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.24313725490196078,
+        "b": 0.49411764705882355
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Toronto Maple Leafs",
+      "city": "Toronto",
+      "short_name": "Maple Leafs",
+      "abbreviation": "TOR",
+      "player_1": "Auston Matthews",
+      "player_2": "Mitch Marner",
+      "player_3": "William Nylander",
+      "player_4": "John Tavares",
+      "player_5": "Morgan Rielly",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.24313725490196078,
+        "b": 0.49411764705882355
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Vancouver Canucks",
+      "city": "Vancouver",
+      "short_name": "Canucks",
+      "abbreviation": "VAN",
+      "player_1": "Elias Pettersson",
+      "player_2": "Quinn Hughes",
+      "player_3": "Thatcher Demko",
+      "player_4": "J.T. Miller",
+      "player_5": "Brock Boeser",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.24313725490196078,
+        "b": 0.49411764705882355
+      },
+      "secondary_color": {
+        "r": 0.0,
+        "g": 0.5294117647058824,
+        "b": 0.3215686274509804
+      }
+    },
+    {
+      "full_team_name": "Vegas Golden Knights",
+      "city": "Vegas",
+      "short_name": "Golden Knights",
+      "abbreviation": "VGK",
+      "player_1": "Jack Eichel",
+      "player_2": "Mark Stone",
+      "player_3": "Jonathan Marchessault",
+      "player_4": "Shea Theodore",
+      "player_5": "Adin Hill",
+      "primary_color": {
+        "r": 0.20392156862745098,
+        "g": 0.25098039215686274,
+        "b": 0.2627450980392157
+      },
+      "secondary_color": {
+        "r": 0.7058823529411765,
+        "g": 0.592156862745098,
+        "b": 0.35294117647058826
+      }
+    },
+    {
+      "full_team_name": "Washington Capitals",
+      "city": "Washington",
+      "short_name": "Capitals",
+      "abbreviation": "WSH",
+      "player_1": "Alex Ovechkin",
+      "player_2": "John Carlson",
+      "player_3": "Dylan Strome",
+      "player_4": "Tom Wilson",
+      "player_5": "Darcy Kuemper",
+      "primary_color": {
+        "r": 0.8431372549019608,
+        "g": 0.09411764705882353,
+        "b": 0.18823529411764706
+      },
+      "secondary_color": {
+        "r": 0.043137254901960784,
+        "g": 0.12156862745098039,
+        "b": 0.2549019607843137
+      }
+    },
+    {
+      "full_team_name": "Winnipeg Jets",
+      "city": "Winnipeg",
+      "short_name": "Jets",
+      "abbreviation": "WPG",
+      "player_1": "Connor Hellebuyck",
+      "player_2": "Kyle Connor",
+      "player_3": "Josh Morrissey",
+      "player_4": "Mark Scheifele",
+      "player_5": "Nikolaj Ehlers",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.17647058823529413,
+        "b": 0.3843137254901961
+      },
+      "secondary_color": {
+        "r": 0.7686274509803922,
+        "g": 0.07058823529411765,
+        "b": 0.18823529411764706
+      }
+    }
+  ],
+  "NCAAFootball": [
+    {
+      "full_team_name": "Georgia",
+      "city": "Georgia",
+      "short_name": "Georgia",
+      "abbreviation": "N/A",
+      "player_1": "Carson Beck",
+      "player_2": "Trevor Etienne",
+      "player_3": "Oscar Delp",
+      "player_4": "Malaki Starks",
+      "player_5": "Mykel Williams",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Michigan",
+      "city": "Michigan",
+      "short_name": "Michigan",
+      "abbreviation": "N/A",
+      "player_1": "Alex Orji",
+      "player_2": "Kalel Mullings",
+      "player_3": "Mason Graham",
+      "player_4": "Will Johnson",
+      "player_5": "Semaj Morgan",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Ohio State",
+      "city": "Ohio",
+      "short_name": "State",
+      "abbreviation": "N/A",
+      "player_1": "Devin Brown",
+      "player_2": "Jeremiah Smith",
+      "player_3": "TreVeyon Henderson",
+      "player_4": "Carnell Tate",
+      "player_5": "JT Tuimoloau",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Texas",
+      "city": "Texas",
+      "short_name": "Texas",
+      "abbreviation": "N/A",
+      "player_1": "Quinn Ewers",
+      "player_2": "Cedric Baxter Jr.",
+      "player_3": "Xavier Worthy",
+      "player_4": "Isaiah Bond",
+      "player_5": "T'Vondre Sweat",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Oregon",
+      "city": "Oregon",
+      "short_name": "Oregon",
+      "abbreviation": "N/A",
+      "player_1": "Dillon Gabriel",
+      "player_2": "Bucky Irving",
+      "player_3": "Troy Franklin",
+      "player_4": "Tez Johnson",
+      "player_5": "Jahlil Florence",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Alabama",
+      "city": "Alabama",
+      "short_name": "Alabama",
+      "abbreviation": "N/A",
+      "player_1": "Jalen Milroe",
+      "player_2": "Justice Haynes",
+      "player_3": "Caleb Downs",
+      "player_4": "Dallas Turner",
+      "player_5": "Malik Benson",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Washington",
+      "city": "Washington",
+      "short_name": "Washington",
+      "abbreviation": "N/A",
+      "player_1": "Will Rogers",
+      "player_2": "Germie Bernard",
+      "player_3": "Tybo Rogers",
+      "player_4": "Asa Turner",
+      "player_5": "Zion Tupuola-Fetui",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Penn State",
+      "city": "Pennsylvania",
+      "short_name": "State",
+      "abbreviation": "N/A",
+      "player_1": "Drew Allar",
+      "player_2": "Nicholas Singleton",
+      "player_3": "Kalen King",
+      "player_4": "Kaytron Allen",
+      "player_5": "Abdul Carter",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Florida State",
+      "city": "Florida",
+      "short_name": "State",
+      "abbreviation": "N/A",
+      "player_1": "D.J. Uiagalelei",
+      "player_2": "Lawrance Toafili",
+      "player_3": "Hykeem Williams",
+      "player_4": "Jared Verse",
+      "player_5": "Kentron Poitier",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "LSU",
+      "city": "LSU",
+      "short_name": "LSU",
+      "abbreviation": "N/A",
+      "player_1": "Garrett Nussmeier",
+      "player_2": "Logan Diggs",
+      "player_3": "Brian Thomas Jr.",
+      "player_4": "Chris Hilton Jr.",
+      "player_5": "Harold Perkins",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Notre Dame",
+      "city": "Notre Dame",
+      "short_name": "Dame",
+      "abbreviation": "N/A",
+      "player_1": "Steve Angeli",
+      "player_2": "Jadarian Price",
+      "player_3": "Jordan Faison",
+      "player_4": "Benjamin Morrison",
+      "player_5": "Jeremiyah Love",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Tennessee",
+      "city": "Tennessee",
+      "short_name": "Tennessee",
+      "abbreviation": "N/A",
+      "player_1": "Nico Iamaleava",
+      "player_2": "Dylan Sampson",
+      "player_3": "Bru McCoy",
+      "player_4": "Ramel Keyton",
+      "player_5": "James Pearce Jr.",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Oklahoma",
+      "city": "Oklahoma",
+      "short_name": "Oklahoma",
+      "abbreviation": "N/A",
+      "player_1": "Jackson Arnold",
+      "player_2": "Gavin Sawchuk",
+      "player_3": "Andrel Anthony",
+      "player_4": "Jalil Farooq",
+      "player_5": "Danny Stutsman",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Ole Miss",
+      "city": "Ole Miss",
+      "short_name": "Miss",
+      "abbreviation": "N/A",
+      "player_1": "Jaxson Dart",
+      "player_2": "Quinshon Judkins",
+      "player_3": "Tre Harris",
+      "player_4": "Jordan Watkins",
+      "player_5": "Sunterrian Perkins",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Missouri",
+      "city": "Missouri",
+      "short_name": "Missouri",
+      "abbreviation": "N/A",
+      "player_1": "Brady Cook",
+      "player_2": "Cody Schrader",
+      "player_3": "Luther Burden III",
+      "player_4": "Marquis Johnson",
+      "player_5": "Ty'Ron Hopper",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Arizona",
+      "city": "Arizona",
+      "short_name": "Arizona",
+      "abbreviation": "N/A",
+      "player_1": "Noah Fifita",
+      "player_2": "Tetairoa McMillan",
+      "player_3": "Jonah Coleman",
+      "player_4": "Jacob Manu",
+      "player_5": "Ephesians Prysock",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Louisville",
+      "city": "Louisville",
+      "short_name": "Louisville",
+      "abbreviation": "N/A",
+      "player_1": "Tyler Shough",
+      "player_2": "Isaac Guerendo",
+      "player_3": "Jamari Thrash",
+      "player_4": "Ben Perry",
+      "player_5": "Jimmy Calloway",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Iowa",
+      "city": "Iowa",
+      "short_name": "Iowa",
+      "abbreviation": "N/A",
+      "player_1": "Cade McNamara",
+      "player_2": "Kaleb Johnson",
+      "player_3": "Erick All",
+      "player_4": "Cooper DeJean",
+      "player_5": "Sebastian Castro",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Kansas",
+      "city": "Kansas",
+      "short_name": "Kansas",
+      "abbreviation": "N/A",
+      "player_1": "Jalon Daniels",
+      "player_2": "Devin Neal",
+      "player_3": "Luke Grimm",
+      "player_4": "Kenny Logan Jr.",
+      "player_5": "L.J. Arnold",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Oregon State",
+      "city": "Oregon",
+      "short_name": "State",
+      "abbreviation": "N/A",
+      "player_1": "Aidan Chiles",
+      "player_2": "Deshaun Fenwick",
+      "player_3": "Silas Bolden",
+      "player_4": "Anthony Gould",
+      "player_5": "Kitan Oladapo",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "SMU",
+      "city": "SMU",
+      "short_name": "SMU",
+      "abbreviation": "N/A",
+      "player_1": "Preston Stone",
+      "player_2": "Jaylan Knighton",
+      "player_3": "Roderick Daniels Jr.",
+      "player_4": "Romello Brinson",
+      "player_5": "Isaiah Nwokobia",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Liberty",
+      "city": "Liberty",
+      "short_name": "Liberty",
+      "abbreviation": "N/A",
+      "player_1": "Kaidon Salter",
+      "player_2": "Quinton Cooley",
+      "player_3": "C.J. Daniels",
+      "player_4": "Noah Frith",
+      "player_5": "Kendall Johnson",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "USC",
+      "city": "USC",
+      "short_name": "USC",
+      "abbreviation": "N/A",
+      "player_1": "Miller Moss",
+      "player_2": "Quinten Joyner",
+      "player_3": "Zachariah Branch",
+      "player_4": "Tahj Washington",
+      "player_5": "Eric Gentry",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Tulane",
+      "city": "Tulane",
+      "short_name": "Tulane",
+      "abbreviation": "N/A",
+      "player_1": "Michael Pratt",
+      "player_2": "Shaadie Clayton",
+      "player_3": "Lawrence Keys III",
+      "player_4": "Jha'Quan Jackson",
+      "player_5": "Tyler Grubbs",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "James Madison",
+      "city": "James Madison",
+      "short_name": "Madison",
+      "abbreviation": "N/A",
+      "player_1": "Alonza Barnett III",
+      "player_2": "Kaelon Black",
+      "player_3": "Reggie Brown",
+      "player_4": "Terrance Greene Jr.",
+      "player_5": "Jalen Green",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "NC State",
+      "city": "North Carolina",
+      "short_name": "State",
+      "abbreviation": "N/A",
+      "player_1": "Grayson McCall",
+      "player_2": "Kendrick Raphael",
+      "player_3": "Kevin Concepcion",
+      "player_4": "Terrell Anderson",
+      "player_5": "Payton Wilson",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    }
+  ],
+  "NCAABasketball": [
+    {
+      "full_team_name": "UConn",
+      "city": "UConn",
+      "short_name": "UConn",
+      "abbreviation": "N/A",
+      "player_1": "Donovan Clingan",
+      "player_2": "Alex Karaban",
+      "player_3": "Stephon Castle",
+      "player_4": "Tristen Newton",
+      "player_5": "Samson Johnson",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Purdue",
+      "city": "Purdue",
+      "short_name": "Purdue",
+      "abbreviation": "N/A",
+      "player_1": "Zach Edey",
+      "player_2": "Fletcher Loyer",
+      "player_3": "Braden Smith",
+      "player_4": "Trey Kaufman-Renn",
+      "player_5": "Mason Gillis",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Houston",
+      "city": "Houston",
+      "short_name": "Houston",
+      "abbreviation": "N/A",
+      "player_1": "L.J. Cryer",
+      "player_2": "Jamal Shead",
+      "player_3": "Emanuel Sharp",
+      "player_4": "J'Wan Roberts",
+      "player_5": "Ja'Vier Francis",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "North Carolina",
+      "city": "North Carolina",
+      "short_name": "Carolina",
+      "abbreviation": "N/A",
+      "player_1": "R.J. Davis",
+      "player_2": "Armando Bacot",
+      "player_3": "Elliot Cadeau",
+      "player_4": "Harrison Ingram",
+      "player_5": "Seth Trimble",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Tennessee",
+      "city": "Tennessee",
+      "short_name": "Tennessee",
+      "abbreviation": "N/A",
+      "player_1": "Zakai Zeigler",
+      "player_2": "Santiago Vescovi",
+      "player_3": "Jonas Aidoo",
+      "player_4": "Jahmai Mashack",
+      "player_5": "Josiah-Jordan James",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Arizona",
+      "city": "Arizona",
+      "short_name": "Arizona",
+      "abbreviation": "N/A",
+      "player_1": "Caleb Love",
+      "player_2": "Oumar Ballo",
+      "player_3": "Kylan Boswell",
+      "player_4": "Pelle Larsson",
+      "player_5": "Keshad Johnson",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Marquette",
+      "city": "Marquette",
+      "short_name": "Marquette",
+      "abbreviation": "N/A",
+      "player_1": "Tyler Kolek",
+      "player_2": "Oso Ighodaro",
+      "player_3": "Kameron Jones",
+      "player_4": "David Joplin",
+      "player_5": "Chase Ross",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Duke",
+      "city": "Duke",
+      "short_name": "Duke",
+      "abbreviation": "N/A",
+      "player_1": "Kyle Filipowski",
+      "player_2": "Tyrese Proctor",
+      "player_3": "Jeremy Roach",
+      "player_4": "Mark Mitchell",
+      "player_5": "Caleb Foster",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Baylor",
+      "city": "Baylor",
+      "short_name": "Baylor",
+      "abbreviation": "N/A",
+      "player_1": "Ja'Kobe Walter",
+      "player_2": "RayJ Dennis",
+      "player_3": "Jalen Bridges",
+      "player_4": "Yves Missi",
+      "player_5": "Langston Love",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Creighton",
+      "city": "Creighton",
+      "short_name": "Creighton",
+      "abbreviation": "N/A",
+      "player_1": "Trey Alexander",
+      "player_2": "Baylor Scheierman",
+      "player_3": "Ryan Kalkbrenner",
+      "player_4": "Steven Ashworth",
+      "player_5": "Isaac Traudt",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Illinois",
+      "city": "Illinois",
+      "short_name": "Illinois",
+      "abbreviation": "N/A",
+      "player_1": "Marcus Domask",
+      "player_2": "Quincy Guerrier",
+      "player_3": "Terrence Shannon Jr.",
+      "player_4": "Coleman Hawkins",
+      "player_5": "Ty Rodgers",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Kansas",
+      "city": "Kansas",
+      "short_name": "Kansas",
+      "abbreviation": "N/A",
+      "player_1": "Hunter Dickinson",
+      "player_2": "Kevin McCullar Jr.",
+      "player_3": "Dajuan Harris Jr.",
+      "player_4": "KJ Adams Jr.",
+      "player_5": "Johnny Furphy",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Auburn",
+      "city": "Auburn",
+      "short_name": "Auburn",
+      "abbreviation": "N/A",
+      "player_1": "Johni Broome",
+      "player_2": "Denver Jones",
+      "player_3": "Jaylin Williams",
+      "player_4": "Chad Baker-Mazara",
+      "player_5": "Tre Donaldson",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Kentucky",
+      "city": "Kentucky",
+      "short_name": "Kentucky",
+      "abbreviation": "N/A",
+      "player_1": "Antonio Reeves",
+      "player_2": "Reed Sheppard",
+      "player_3": "Rob Dillingham",
+      "player_4": "Justin Edwards",
+      "player_5": "Trevon Brazile",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Iowa State",
+      "city": "Iowa",
+      "short_name": "State",
+      "abbreviation": "N/A",
+      "player_1": "Tamin Lipsey",
+      "player_2": "Keshon Gilbert",
+      "player_3": "Robert Jones",
+      "player_4": "Demarion Watson",
+      "player_5": "Curtis Jones",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "San Diego State",
+      "city": "San Diego",
+      "short_name": "State",
+      "abbreviation": "N/A",
+      "player_1": "Jaedon LeDee",
+      "player_2": "Darrion Trammell",
+      "player_3": "Lamont Butler",
+      "player_4": "Micah Parrish",
+      "player_5": "Reese Waters",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Saint Mary's",
+      "city": "Saint Mary's",
+      "short_name": "Mary's",
+      "abbreviation": "N/A",
+      "player_1": "Aidan Mahaney",
+      "player_2": "Mitchell Saxen",
+      "player_3": "Alex Ducas",
+      "player_4": "Augustas Marciulionis",
+      "player_5": "Joshua Jefferson",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Gonzaga",
+      "city": "Gonzaga",
+      "short_name": "Gonzaga",
+      "abbreviation": "N/A",
+      "player_1": "Ryan Nembhard",
+      "player_2": "Graham Ike",
+      "player_3": "Anton Watson",
+      "player_4": "Nolan Hickman",
+      "player_5": "Ben Gregg",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Florida",
+      "city": "Florida",
+      "short_name": "Florida",
+      "abbreviation": "N/A",
+      "player_1": "Walter Clayton Jr.",
+      "player_2": "Tyrese Samuel",
+      "player_3": "Zyon Pullin",
+      "player_4": "Will Richard",
+      "player_5": "Alex Condon",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Michigan State",
+      "city": "Michigan",
+      "short_name": "State",
+      "abbreviation": "N/A",
+      "player_1": "Tyson Walker",
+      "player_2": "A.J. Hoggard",
+      "player_3": "Mady Sissoko",
+      "player_4": "Jaden Akins",
+      "player_5": "Malik Hall",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "TCU",
+      "city": "TCU",
+      "short_name": "TCU",
+      "abbreviation": "N/A",
+      "player_1": "Emanuel Miller",
+      "player_2": "JaKobe Coles",
+      "player_3": "Jameer Nelson Jr.",
+      "player_4": "Micah Peavy",
+      "player_5": "Trevor Amos",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Texas",
+      "city": "Texas",
+      "short_name": "Texas",
+      "abbreviation": "N/A",
+      "player_1": "Max Abmas",
+      "player_2": "A.J. Johnson",
+      "player_3": "Tyrese Hunter",
+      "player_4": "Brock Cunningham",
+      "player_5": "Dillon Mitchell",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Nevada",
+      "city": "Nevada",
+      "short_name": "Nevada",
+      "abbreviation": "N/A",
+      "player_1": "Jarod Lucas",
+      "player_2": "Kenan Blackshear",
+      "player_3": "Nick Davidson",
+      "player_4": "Trey Pettigrew",
+      "player_5": "Tyler Rolison",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Wisconsin",
+      "city": "Wisconsin",
+      "short_name": "Wisconsin",
+      "abbreviation": "N/A",
+      "player_1": "Tyler Wahl",
+      "player_2": "Steven Crowl",
+      "player_3": "Chucky Hepburn",
+      "player_4": "Connor Essegian",
+      "player_5": "Max Klesmit",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Mississippi State",
+      "city": "Mississippi",
+      "short_name": "State",
+      "abbreviation": "N/A",
+      "player_1": "Tolu Smith",
+      "player_2": "Dashawn Davis",
+      "player_3": "D.J. Jeffries",
+      "player_4": "Cameron Matthews",
+      "player_5": "Shakeel Moore",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    {
+      "full_team_name": "Dayton",
+      "city": "Dayton",
+      "short_name": "Dayton",
+      "abbreviation": "N/A",
+      "player_1": "DaRon Holmes II",
+      "player_2": "Malachi Smith",
+      "player_3": "Koby Brea",
+      "player_4": "Javon Bennett",
+      "player_5": "Nate Santos",
+      "primary_color": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "secondary_color": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #ffffff;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        .container {
+            padding: 16px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        
+        h1 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 16px 0;
+            color: #000000;
+        }
+        
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid #E5E5E5;
+            margin-bottom: 16px;
+            position: sticky;
+            top: 0;
+            background-color: #ffffff;
+            z-index: 10;
+        }
+        
+        .tab {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+            font-size: 13px;
+            color: #666;
+            transition: all 0.2s ease;
+        }
+        
+        .tab.active {
+            border-bottom: 2px solid #0D99FF;
+            color: #0D99FF;
+        }
+        
+        .tab:hover:not(.active) {
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 8px 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .checkbox-group {
+            margin-bottom: 16px;
+        }
+        
+        .checkbox-group h3 {
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+        }
+        
+        .checkbox-item {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        button {
+            background-color: #0D99FF;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            margin-right: 8px;
+            transition: background-color 0.2s ease;
+        }
+        
+        button:hover {
+            background-color: #0A85E9;
+        }
+        
+        button:active {
+            background-color: #0871C4;
+        }
+        
+        button:disabled {
+            background-color: #E5E5E5;
+            color: #999;
+            cursor: not-allowed;
+        }
+        
+        button.secondary {
+            background-color: #F5F5F5;
+            color: #333;
+            border: 1px solid #E5E5E5;
+        }
+        
+        button.secondary:hover {
+            background-color: #EBEBEB;
+        }
+        
+        button.secondary:active {
+            background-color: #DDDDDD;
+        }
+        
+        .error-message {
+            background-color: #FDEBEB;
+            color: #D93025;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 16px 0;
+            border: 1px solid #F7CBCB;
+            font-weight: 500;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        
+        .form-group input[type="text"],
+        .form-group select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #E5E5E5;
+            border-radius: 4px;
+            font-size: 13px;
+            box-sizing: border-box;
+        }
+        
+        .form-group input[type="text"]:focus,
+        .form-group select:focus {
+            border-color: #0D99FF;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(13, 153, 255, 0.2);
+        }
+        
+        .form-group input[type="file"] {
+            margin-bottom: 8px;
+        }
+        
+        .section {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #E5E5E5;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .section h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+        }
+        
+        .validation-message {
+            margin-top: 8px;
+            font-size: 12px;
+        }
+        
+        .validation-message.valid {
+            color: #1C7C4E;
+        }
+        
+        .validation-message.invalid {
+            color: #D93025;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .success-message {
+            background-color: #E7F5EE;
+            color: #1C7C4E;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 16px 0;
+            border: 1px solid #C3E6D4;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MiracleData™</h1>
+        
+        <div class="tab-container">
+            <div class="tab active" data-tab="import-sports">Import Sports Data</div>
+            <div class="tab" data-tab="duplicate">Duplicate Collections</div>
+            <div class="tab" data-tab="import-export">Import/Export JSON</div>
+        </div>
+        
+        <div id="import-sports" class="tab-content active">
+            <div class="checkbox-group">
+                <h3>Select Sports</h3>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="nba" value="NBA">
+                    <label for="nba">NBA (30 teams)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="nfl" value="NFL">
+                    <label for="nfl">NFL (32 teams)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="mlb" value="MLB">
+                    <label for="mlb">MLB (30 teams)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="nhl" value="NHL">
+                    <label for="nhl">NHL (32 teams)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="wnba" value="WNBA">
+                    <label for="wnba">WNBA (12 teams)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="ncaa" value="NCAA Football">
+                    <label for="ncaa">NCAA Football (25 teams)</label>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button id="fetchData">Fetch Sports Data</button>
+                <button id="selectAll" class="secondary">Select All</button>
+                <button id="deselectAll" class="secondary">Deselect All</button>
+            </div>
+            
+            <div id="successMessage" class="success-message" style="display: none;"></div>
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+        </div>
+        
+        <div id="duplicate" class="tab-content">
+            <div class="form-group">
+                <label for="collectionSelect">Select Collection</label>
+                <select id="collectionSelect">
+                    <option value="">Loading collections...</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="newCollectionName">New Collection Name (optional)</label>
+                <input type="text" id="newCollectionName" placeholder="Enter name or leave blank for auto-name">
+            </div>
+            
+            <button id="duplicateBtn">Duplicate Collection</button>
+        </div>
+        
+        <div id="import-export" class="tab-content">
+            <div class="section">
+                <h3>Export Collection</h3>
+                <div class="form-group">
+                    <label for="exportCollectionSelect">Select Collection</label>
+                    <select id="exportCollectionSelect">
+                        <option value="">Loading collections...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Export Format</label>
+                    <div class="checkbox-item">
+                        <input type="radio" id="formatDefault" name="exportFormat" value="default" checked>
+                        <label for="formatDefault">Default Format</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="radio" id="formatToken" name="exportFormat" value="token">
+                        <label for="formatToken">Design Token Format</label>
+                    </div>
+                </div>
+                <button id="exportBtn">Export Collection</button>
+            </div>
+            
+            <div class="section">
+                <h3>Import Collection</h3>
+                <div class="form-group">
+                    <label for="importFile">Select JSON File</label>
+                    <input type="file" id="importFile" accept=".json">
+                </div>
+                <div id="importValidation" class="validation-message" style="display: none;"></div>
+                <button id="importBtn" disabled>Import Collection</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Tab switching logic
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and content
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // Load collections when switching to duplicate or import/export tab
+                if (tabId === 'duplicate' || tabId === 'import-export') {
+                    parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+                }
+            });
+        });
+        
+        // Select/deselect all buttons
+        document.getElementById('selectAll').addEventListener('click', () => {
+            document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
+                cb.checked = true;
+            });
+        });
+        
+        document.getElementById('deselectAll').addEventListener('click', () => {
+            document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+        });
+        
+        // Fetch data button
+        document.getElementById('fetchData').addEventListener('click', () => {
+            const selectedSports = [];
+            document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked').forEach(cb => {
+                selectedSports.push(cb.value);
+            });
+            
+            if (selectedSports.length === 0) {
+                alert('Please select at least one sport.');
+                return;
+            }
+            
+            // Disable buttons during fetch
+            document.getElementById('fetchData').disabled = true;
+            document.getElementById('selectAll').disabled = true;
+            document.getElementById('deselectAll').disabled = true;
+            
+            // Hide any previous messages
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            // Send message to plugin
+            parent.postMessage({ 
+                pluginMessage: { 
+                    type: 'fetch-sports-data',
+                    selectedSports: selectedSports
+                } 
+            }, '*');
+        });
+        
+        // Duplicate button
+        document.getElementById('duplicateBtn').addEventListener('click', () => {
+            const collectionId = document.getElementById('collectionSelect').value;
+            const newName = document.getElementById('newCollectionName').value;
+            
+            if (!collectionId) {
+                alert('Please select a collection to duplicate.');
+                return;
+            }
+            
+            parent.postMessage({ 
+                pluginMessage: { 
+                    type: 'duplicate-collection',
+                    collectionId: collectionId,
+                    newName: newName
+                } 
+            }, '*');
+        });
+        
+        // Auto-populate new collection name when collection is selected
+        document.getElementById('collectionSelect').addEventListener('change', (event) => {
+            const selectedOption = event.target.options[event.target.selectedIndex];
+            if (selectedOption && selectedOption.textContent) {
+                const newNameInput = document.getElementById('newCollectionName');
+                newNameInput.value = `${selectedOption.textContent} (Copy)`;
+            }
+        });
+        
+        // Export button
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            const collectionId = document.getElementById('exportCollectionSelect').value;
+            const format = document.querySelector('input[name="exportFormat"]:checked').value;
+            
+            if (!collectionId) {
+                alert('Please select a collection to export.');
+                return;
+            }
+            
+            parent.postMessage({ 
+                pluginMessage: { 
+                    type: 'export-collection',
+                    collectionId: collectionId,
+                    format: format
+                } 
+            }, '*');
+        });
+        
+        // Import file handling
+        document.getElementById('importFile').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (!file) {
+                document.getElementById('importBtn').disabled = true;
+                document.getElementById('importValidation').style.display = 'none';
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    // Validate the data
+                    parent.postMessage({ 
+                        pluginMessage: { 
+                            type: 'validate-collection-import',
+                            data: data
+                        } 
+                    }, '*');
+                    
+                } catch (error) {
+                    document.getElementById('importValidation').style.display = 'block';
+                    document.getElementById('importValidation').className = 'validation-message invalid';
+                    document.getElementById('importValidation').innerHTML = `Invalid JSON file: ${error.message}`;
+                    document.getElementById('importBtn').disabled = true;
+                }
+            };
+            reader.readAsText(file);
+        });
+        
+        // Import button
+        document.getElementById('importBtn').addEventListener('click', () => {
+            const fileInput = document.getElementById('importFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a file to import.');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    parent.postMessage({ 
+                        pluginMessage: { 
+                            type: 'import-collection',
+                            data: data,
+                            fileName: file.name
+                        } 
+                    }, '*');
+                    
+                } catch (error) {
+                    alert(`Error parsing JSON file: ${error.message}`);
+                }
+            };
+            reader.readAsText(file);
+        });
+        
+        // Function to handle file download
+        function downloadObjectAsJson(exportObj, exportName) {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", exportName);
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+        
+        // Function to handle fetch requests from the plugin
+        async function handleFetchRequest(request) {
+            try {
+                console.log(`UI received fetch request for: ${request.url}`);
+                
+                // Make the actual fetch request from the UI (browser context)
+                const response = await fetch(request.url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Send the data back to the plugin
+                parent.postMessage({
+                    pluginMessage: {
+                        type: 'fetch-response',
+                        requestId: request.requestId,
+                        data: data
+                    }
+                }, '*');
+                
+                console.log(`UI successfully fetched data from: ${request.url}`);
+            } catch (error) {
+                console.error(`UI fetch error for ${request.url}:`, error);
+                
+                // Send error back to the plugin
+                parent.postMessage({
+                    pluginMessage: {
+                        type: 'fetch-response',
+                        requestId: request.requestId,
+                        error: error.message
+                    }
+                }, '*');
+            }
+        }
+        
+        // Listen for messages from the plugin
+        window.onmessage = async (event) => {
+            const msg = event.data.pluginMessage;
+            
+            // Handle fetch requests from the plugin
+            if (msg && msg.type === 'fetch-request') {
+                handleFetchRequest(msg);
+                return;
+            }
+            
+            if (msg && msg.type === 'error') {
+                // Reset button states
+                document.getElementById('fetchData').disabled = false;
+                document.getElementById('selectAll').disabled = false;
+                document.getElementById('deselectAll').disabled = false;
+                
+                // Show error message
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('errorMessage').textContent = msg.message;
+                
+            } else if (msg && msg.type === 'success') {
+                alert('Success: ' + msg.message);
+                
+            } else if (msg && msg.type === 'collections-loaded') {
+                // Populate collection dropdowns
+                const collections = msg.collections;
+                
+                const duplicateSelect = document.getElementById('collectionSelect');
+                const exportSelect = document.getElementById('exportCollectionSelect');
+                
+                duplicateSelect.innerHTML = '';
+                exportSelect.innerHTML = '';
+                
+                if (collections.length === 0) {
+                    duplicateSelect.innerHTML = '<option value="">No collections available</option>';
+                    exportSelect.innerHTML = '<option value="">No collections available</option>';
+                } else {
+                    duplicateSelect.innerHTML = '<option value="">Select a collection...</option>';
+                    exportSelect.innerHTML = '<option value="">Select a collection...</option>';
+                    
+                    collections.forEach(collection => {
+                        const option1 = document.createElement('option');
+                        option1.value = collection.id;
+                        option1.textContent = collection.name;
+                        duplicateSelect.appendChild(option1);
+                        
+                        const option2 = document.createElement('option');
+                        option2.value = collection.id;
+                        option2.textContent = collection.name;
+                        exportSelect.appendChild(option2);
+                    });
+                }
+                
+            } else if (msg && msg.type === 'sports-data-fetched') {
+                // Show success message
+                const results = msg.results || [];
+                const successCount = results.filter(r => r.success).length;
+                
+                if (successCount > 0) {
+                    const successMessage = document.getElementById('successMessage');
+                    successMessage.style.display = 'block';
+                    successMessage.textContent = `Successfully created variables for ${successCount} sport(s)!`;
+                }
+                
+                // Reset button states immediately
+                document.getElementById('fetchData').disabled = false;
+                document.getElementById('selectAll').disabled = false;
+                document.getElementById('deselectAll').disabled = false;
+                
+            } else if (msg && msg.type === 'sports-data-error') {
+                // Show error message
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('errorMessage').textContent = msg.message;
+                
+                // Reset button states
+                document.getElementById('fetchData').disabled = false;
+                document.getElementById('selectAll').disabled = false;
+                document.getElementById('deselectAll').disabled = false;
+                
+            } else if (msg && msg.type === 'export-data-ready') {
+                // Download the data as JSON
+                downloadObjectAsJson(msg.data, msg.fileName || 'miracle_data_export.json');
+                
+            } else if (msg && msg.type === 'collection-validation-result') {
+                const result = msg.result;
+                const validationDiv = document.getElementById('importValidation');
+                validationDiv.style.display = 'block';
+                
+                if (result.valid) {
+                    const formatLabel = result.format === 'token' ? 'Design Token Format' : 'Figma Variables Format';
+                    validationDiv.className = 'validation-message valid';
+                    validationDiv.innerHTML = `✓ Valid collection (${formatLabel}): ${result.message}`;
+                    document.getElementById('importBtn').disabled = false;
+                } else {
+                    validationDiv.className = 'validation-message invalid';
+                    validationDiv.innerHTML = `✗ Invalid collection: ${result.message}`;
+                    document.getElementById('importBtn').disabled = true;
+                }
+                
+            } else if (msg && msg.type === 'import-collection-success') {
+                const formatLabel = msg.result.format === 'token' ? 'Design Token Format' : 'Figma Variables Format';
+                alert(`Collection "${msg.result.collectionName}" imported successfully! (${formatLabel})\n\nCreated: ${msg.result.created}\nUpdated: ${msg.result.updated}\nSkipped: ${msg.result.skipped}`);
+                
+                // Refresh collections list
+                parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+                
+            } else if (msg && msg.type === 'import-collection-error') {
+                alert(`Error importing collection: ${msg.message}`);
+            } else if (msg && msg.type === 'variables-api-unavailable') {
+                // Handle case when variables API is not available
+                console.log('Received variables-api-unavailable message:', msg);
+                
+                // Create a custom modal instead of using confirm
+                const modalContainer = document.createElement('div');
+                modalContainer.style.position = 'fixed';
+                modalContainer.style.top = '0';
+                modalContainer.style.left = '0';
+                modalContainer.style.width = '100%';
+                modalContainer.style.height = '100%';
+                modalContainer.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                modalContainer.style.display = 'flex';
+                modalContainer.style.justifyContent = 'center';
+                modalContainer.style.alignItems = 'center';
+                modalContainer.style.zIndex = '9999';
+                
+                const modalContent = document.createElement('div');
+                modalContent.style.backgroundColor = 'white';
+                modalContent.style.padding = '24px';
+                modalContent.style.borderRadius = '8px';
+                modalContent.style.maxWidth = '400px';
+                modalContent.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                
+                const modalTitle = document.createElement('h3');
+                modalTitle.textContent = 'Variables API Not Available';
+                modalTitle.style.margin = '0 0 16px 0';
+                modalTitle.style.fontSize = '16px';
+                modalTitle.style.fontWeight = '600';
+                
+                const modalMessage = document.createElement('p');
+                modalMessage.textContent = 'The variables API is not available in this document. Would you like to download the converted data as a JSON file instead?';
+                modalMessage.style.margin = '0 0 24px 0';
+                modalMessage.style.lineHeight = '1.5';
+                
+                const buttonContainer = document.createElement('div');
+                buttonContainer.style.display = 'flex';
+                buttonContainer.style.justifyContent = 'flex-end';
+                buttonContainer.style.gap = '8px';
+                
+                const cancelButton = document.createElement('button');
+                cancelButton.textContent = 'Cancel';
+                cancelButton.className = 'secondary';
+                cancelButton.onclick = () => {
+                    document.body.removeChild(modalContainer);
+                };
+                
+                const downloadButton = document.createElement('button');
+                downloadButton.textContent = 'Download JSON';
+                downloadButton.onclick = () => {
+                    // Download the converted data
+                    downloadObjectAsJson(msg.data, msg.fileName || 'converted-tokens.json');
+                    document.body.removeChild(modalContainer);
+                };
+                
+                buttonContainer.appendChild(cancelButton);
+                buttonContainer.appendChild(downloadButton);
+                
+                modalContent.appendChild(modalTitle);
+                modalContent.appendChild(modalMessage);
+                modalContent.appendChild(buttonContainer);
+                modalContainer.appendChild(modalContent);
+                
+                document.body.appendChild(modalContainer);
+            }
+        };
+        
+        // Initial load of collections for duplicate tab
+        parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+    </script>
+</body>
+</html>
