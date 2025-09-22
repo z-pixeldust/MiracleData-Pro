@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CSV Import</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 16px;
+            background: #ffffff;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #333;
+        }
+        
+        .import-section {
+            margin-bottom: 20px;
+            padding: 16px;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        
+        .import-section h3 {
+            margin: 0 0 12px 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .import-button {
+            width: 100%;
+            padding: 12px 16px;
+            background: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+        
+        .import-button:hover {
+            background: #138496;
+        }
+        
+        .import-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .file-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+        
+        .status {
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status.success {
+            background: #e8f5e8;
+            color: #2d5a2d;
+            border: 1px solid #c3e6c3;
+        }
+        
+        .status.error {
+            background: #ffeaea;
+            color: #8b0000;
+            border: 1px solid #ffcccc;
+        }
+        
+        .status.info {
+            background: #e6f3ff;
+            color: #0066cc;
+            border: 1px solid #b3d9ff;
+        }
+        
+        .help-text {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 CSV Import</h1>
+        
+        <div class="import-section">
+            <h3>Import CSV Data</h3>
+            <div class="help-text">
+                <strong>Single Mode:</strong> 2 columns (A=Variable Name, B=Value)<br>
+                <strong>Multiple Modes:</strong> 3+ columns (A=Variable Name, B=Mode1, C=Mode2, etc.)<br>
+                <strong>Note:</strong> Empty rows are automatically removed
+            </div>
+            <input type="file" id="csvFileInput" class="file-input" accept=".csv" onchange="handleCSVFile()">
+            <input type="text" id="collectionName" class="file-input" placeholder="Collection Name (e.g., My Teams)" value="CSV Import">
+            <button class="import-button" onclick="importCSV()">Import CSV Data</button>
+            <div id="csvImportStatus" class="status" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // CSV Import Functions
+        let csvData = '';
+        
+        function handleCSVFile() {
+            const fileInput = document.getElementById('csvFileInput');
+            const file = fileInput.files[0];
+            
+            if (file && file.type === 'text/csv') {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    csvData = e.target.result;
+                    console.log('CSV file loaded:', file.name);
+                    
+                    const status = document.getElementById('csvImportStatus');
+                    status.style.display = 'block';
+                    status.className = 'status success';
+                    status.textContent = `✅ CSV loaded: ${file.name} (${file.size} bytes)`;
+                };
+                reader.readAsText(file);
+            } else {
+                const status = document.getElementById('csvImportStatus');
+                status.style.display = 'block';
+                status.className = 'status error';
+                status.textContent = '❌ Please select a valid CSV file';
+            }
+        }
+        
+        function importCSV() {
+            if (!csvData) {
+                const status = document.getElementById('csvImportStatus');
+                status.style.display = 'block';
+                status.className = 'status error';
+                status.textContent = '❌ Please select a CSV file first';
+                return;
+            }
+            
+            const collectionName = document.getElementById('collectionName').value || 'CSV Import';
+            const status = document.getElementById('csvImportStatus');
+            
+            status.style.display = 'block';
+            status.className = 'status info';
+            status.textContent = 'Importing CSV data...';
+            
+            parent.postMessage({
+                pluginMessage: {
+                    type: 'import-csv',
+                    csvText: csvData,
+                    collectionName: collectionName
+                }
+            }, '*');
+        }
+        
+        // Listen for results from plugin
+        window.addEventListener('message', (event) => {
+            const message = event.data.pluginMessage;
+            
+            if (message.type === 'csv-import-result') {
+                const status = document.getElementById('csvImportStatus');
+                status.style.display = 'block';
+                
+                if (message.success) {
+                    status.className = 'status success';
+                    status.textContent = `✅ CSV import successful! Created ${message.rowCount} modes with ${message.variableCount} variables.`;
+                } else {
+                    status.className = 'status error';
+                    status.textContent = `❌ CSV import failed: ${message.error}`;
+                }
+            }
+        });
+        
+        // Initialize
+        console.log('CSV Import UI loaded');
+    </script>
+</body>
+</html>

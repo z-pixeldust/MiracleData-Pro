@@ -1,0 +1,13 @@
+{
+  "name": "MiracleData - CSV Import",
+  "id": "miracle-data-csv-import",
+  "api": "1.0.0",
+  "main": "code-spreadsheet.js",
+  "ui": "ui-spreadsheet.html",
+  "editorType": [
+    "figma"
+  ],
+  "permissions": ["currentuser"],
+  "capabilities": [],
+  "version": "1.0.3"
+}

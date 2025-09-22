@@ -1,21 +1,13 @@
 {
-  "name": "MiracleData™",
-  "id": "team-data-plugin",
+  "name": "MiracleData Pro",
+  "id": "miracle-data-pro",
   "api": "1.0.0",
   "main": "code.js",
   "ui": "ui.html",
   "editorType": [
     "figma"
   ],
-  "networkAccess": {
-    "allowedDomains": [
-      "https://site.api.espn.com",
-      "https://sports.core.api.espn.com",
-      "https://site.web.api.espn.com",
-      "https://api.espn.com",
-      "https://cdn.espn.com"
-    ]
-  },
   "permissions": ["currentuser"],
-  "capabilities": []
+  "capabilities": [],
+  "version": "1.0.3"
 }

@@ -13,7 +13,7 @@
         }
         
         .container {
-            padding: 16px;
+            padding: 20px;
             max-width: 100%;
             box-sizing: border-box;
         }
@@ -28,7 +28,7 @@
         .tab-container {
             display: flex;
             border-bottom: 1px solid #E5E5E5;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
             position: sticky;
             top: 0;
             background-color: #ffffff;
@@ -36,7 +36,7 @@
         }
         
         .tab {
-            padding: 8px 16px;
+            padding: 12px 20px;
             cursor: pointer;
             border-bottom: 2px solid transparent;
             font-weight: 500;
@@ -57,7 +57,7 @@
         
         .tab-content {
             display: none;
-            padding: 8px 0;
+            padding: 16px 0;
         }
         
         .tab-content.active {
@@ -65,17 +65,17 @@
         }
         
         .checkbox-group {
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
         
         .checkbox-group h3 {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
-            margin: 0 0 8px 0;
+            margin: 0 0 16px 0;
         }
         
         .checkbox-item {
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
         }
@@ -88,12 +88,13 @@
             background-color: #0D99FF;
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 12px 16px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 13px;
             font-weight: 500;
             margin-right: 8px;
+            margin-bottom: 8px;
             transition: background-color 0.2s ease;
         }
         
@@ -136,23 +137,24 @@
         }
         
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             font-weight: 500;
         }
         
         .form-group input[type="text"],
         .form-group select {
             width: 100%;
-            padding: 8px 10px;
+            padding: 10px 12px;
             border: 1px solid #E5E5E5;
             border-radius: 4px;
             font-size: 13px;
             box-sizing: border-box;
+            margin-bottom: 8px;
         }
         
         .form-group input[type="text"]:focus,
@@ -163,7 +165,15 @@
         }
         
         .form-group input[type="file"] {
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            padding: 8px;
+        }
+        
+        #csv-import h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+            color: #000;
         }
         
         .section {
@@ -219,6 +229,7 @@
         
         <div class="tab-container">
             <div class="tab active" data-tab="import-sports">Import Sports Data</div>
+            <div class="tab" data-tab="csv-import">CSV Import</div>
             <div class="tab" data-tab="duplicate">Duplicate Collections</div>
             <div class="tab" data-tab="import-export">Import/Export JSON</div>
         </div>
@@ -260,6 +271,16 @@
             
             <div id="successMessage" class="success-message" style="display: none;"></div>
             <div id="errorMessage" class="error-message" style="display: none;"></div>
+        </div>
+        
+        <div id="csv-import" class="tab-content">
+            <div class="form-group">
+                <h3>Import CSV Data</h3>
+                <input type="file" id="csvFileInput" class="file-input" accept=".csv" onchange="handleCSVFile()">
+                <input type="text" id="collectionName" class="text-input" placeholder="Collection Name" value="CSV Import">
+                <button id="importCSVBtn" class="primary-button">Import CSV Data</button>
+                <div id="csvImportStatus" class="status-message" style="display: none;"></div>
+            </div>
         </div>
         
         <div id="duplicate" class="tab-content">
@@ -708,6 +729,72 @@
                 document.body.appendChild(modalContainer);
             }
         };
+        
+        // CSV Import functionality
+        let csvData = '';
+        
+        function handleCSVFile() {
+            const fileInput = document.getElementById('csvFileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                csvData = e.target.result;
+                console.log('CSV file loaded:', file.name);
+                document.getElementById('csvImportStatus').textContent = `File loaded: ${file.name}`;
+                document.getElementById('csvImportStatus').style.display = 'block';
+                document.getElementById('csvImportStatus').className = 'status-message success';
+            };
+            reader.readAsText(file);
+        }
+        
+        function importCSV() {
+            if (!csvData) {
+                alert('Please select a CSV file first');
+                return;
+            }
+            
+            const collectionName = document.getElementById('collectionName').value || 'CSV Import';
+            
+            // Send CSV data to plugin
+            parent.postMessage({ 
+                pluginMessage: { 
+                    type: 'import-csv',
+                    csvText: csvData,
+                    collectionName: collectionName
+                } 
+            }, '*');
+            
+            // Show loading status
+            const statusDiv = document.getElementById('csvImportStatus');
+            statusDiv.textContent = 'Importing CSV data...';
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'status-message loading';
+        }
+        
+        // Add event listener for import button
+        document.getElementById('importCSVBtn').addEventListener('click', importCSV);
+        
+        // Listen for CSV import results
+        window.addEventListener('message', (event) => {
+            if (event.data.pluginMessage && event.data.pluginMessage.type === 'csv-import-result') {
+                const result = event.data.pluginMessage;
+                const statusDiv = document.getElementById('csvImportStatus');
+                
+                if (result.success) {
+                    statusDiv.textContent = `✅ Successfully imported ${result.rowCount} rows`;
+                    statusDiv.className = 'status-message success';
+                } else {
+                    statusDiv.textContent = `❌ Import failed: ${result.error}`;
+                    statusDiv.className = 'status-message error';
+                }
+                statusDiv.style.display = 'block';
+            }
+        });
         
         // Initial load of collections for duplicate tab
         parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
