@@ -64,6 +64,8 @@ function importCSVData(csvText, collectionName) {
                 firstCell.includes('design') || 
                 firstCell.includes('note') ||
                 firstCell.includes('file here') ||
+                firstCell.includes('instructions') ||
+                firstCell.includes('comment') ||
                 firstCell.startsWith('(') ||
                 firstCell === '') {
                 console.log(`Skipping metadata row: ${row[0]}`);

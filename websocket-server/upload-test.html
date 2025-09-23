@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSV Upload Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        .upload-area:hover {
+            border-color: #0D99FF;
+        }
+        .upload-area.dragover {
+            border-color: #0D99FF;
+            background-color: #f0f8ff;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        button {
+            background-color: #0D99FF;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #007BFF;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #0D99FF;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background-color: #f8d7da;
+        }
+        .success {
+            border-left-color: #28a745;
+            background-color: #d4edda;
+        }
+        .spreadsheet-list {
+            margin-top: 20px;
+        }
+        .spreadsheet-item {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: box-shadow 0.3s;
+        }
+        .spreadsheet-item:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 CSV Upload Test</h1>
+        
+        <div class="upload-area" id="uploadArea">
+            <p>📁 Drag and drop your CSV file here, or click to select</p>
+            <input type="file" id="fileInput" accept=".csv" />
+            <button onclick="document.getElementById('fileInput').click()">Choose CSV File</button>
+        </div>
+
+        <div style="text-align: center;">
+            <button id="uploadBtn" onclick="uploadCSV()" disabled>Upload CSV</button>
+            <button onclick="loadUploadedSpreadsheets()">Refresh List</button>
+            <button onclick="testWebSocketConnection()">Test WebSocket</button>
+        </div>
+
+        <div id="results" class="results" style="display: none;"></div>
+
+        <div class="spreadsheet-list">
+            <h3>📋 Uploaded Spreadsheets</h3>
+            <div id="spreadsheetList">
+                <p>Click "Refresh List" to load uploaded spreadsheets</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedFile = null;
+        let selectedSpreadsheetId = null;
+
+        // File input handling
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            selectedFile = e.target.files[0];
+            if (selectedFile) {
+                document.getElementById('uploadBtn').disabled = false;
+                showResult(`Selected file: ${selectedFile.name}`, 'success');
+            }
+        });
+
+        // Drag and drop handling
+        const uploadArea = document.getElementById('uploadArea');
+        
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                selectedFile = files[0];
+                document.getElementById('uploadBtn').disabled = false;
+                showResult(`Selected file: ${selectedFile.name}`, 'success');
+            }
+        });
+
+        function showResult(message, type = 'info') {
+            const results = document.getElementById('results');
+            results.textContent = message;
+            results.className = `results ${type}`;
+            results.style.display = 'block';
+        }
+
+        async function uploadCSV() {
+            if (!selectedFile) {
+                showResult('Please select a CSV file first', 'error');
+                return;
+            }
+
+            try {
+                const csvContent = await readFileAsText(selectedFile);
+                
+                showResult('Uploading CSV...', 'info');
+
+                const response = await fetch('http://localhost:3001/api/upload-csv', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        fileName: selectedFile.name,
+                        csvContent: csvContent
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showResult(`✅ CSV uploaded successfully! Spreadsheet ID: ${result.spreadsheetId}`, 'success');
+                    selectedSpreadsheetId = result.spreadsheetId;
+                    loadUploadedSpreadsheets();
+                } else {
+                    showResult(`❌ Upload failed: ${result.error}`, 'error');
+                }
+
+            } catch (error) {
+                showResult(`❌ Upload error: ${error.message}`, 'error');
+            }
+        }
+
+        function readFileAsText(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = e => resolve(e.target.result);
+                reader.onerror = e => reject(new Error('Failed to read file'));
+                reader.readAsText(file);
+            });
+        }
+
+        async function loadUploadedSpreadsheets() {
+            try {
+                const response = await fetch('http://localhost:3001/api/uploaded-spreadsheets');
+                const data = await response.json();
+
+                const listDiv = document.getElementById('spreadsheetList');
+                
+                if (data.uploadedSpreadsheets.length === 0) {
+                    listDiv.innerHTML = '<p>No uploaded spreadsheets found</p>';
+                    return;
+                }
+
+                listDiv.innerHTML = data.uploadedSpreadsheets.map(spreadsheet => `
+                    <div class="spreadsheet-item" onclick="selectSpreadsheet('${spreadsheet.spreadsheetId}')">
+                        <h4>${spreadsheet.title}</h4>
+                        <p><strong>ID:</strong> ${spreadsheet.spreadsheetId}</p>
+                        <p><strong>Headers:</strong> ${spreadsheet.headers.join(', ')}</p>
+                        <p><strong>Rows:</strong> ${spreadsheet.rowCount}</p>
+                        <p><strong>Last Modified:</strong> ${new Date(spreadsheet.lastModified).toLocaleString()}</p>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                showResult(`❌ Error loading spreadsheets: ${error.message}`, 'error');
+            }
+        }
+
+        function selectSpreadsheet(spreadsheetId) {
+            selectedSpreadsheetId = spreadsheetId;
+            showResult(`Selected spreadsheet: ${spreadsheetId}`, 'success');
+        }
+
+        async function testWebSocketConnection() {
+            if (!selectedSpreadsheetId) {
+                showResult('Please upload and select a spreadsheet first', 'error');
+                return;
+            }
+
+            try {
+                showResult('Testing WebSocket connection...', 'info');
+
+                // Create WebSocket connection
+                const ws = new WebSocket('ws://localhost:3001');
+                
+                ws.onopen = function() {
+                    showResult('✅ WebSocket connected! Starting sync...', 'success');
+                    
+                    // Start sync with uploaded spreadsheet
+                    ws.send(JSON.stringify({
+                        type: 'start-sync',
+                        data: {
+                            spreadsheetId: selectedSpreadsheetId,
+                            collectionId: 'test-collection',
+                            syncInterval: 5000
+                        }
+                    }));
+                };
+
+                ws.onmessage = function(event) {
+                    const message = JSON.parse(event.data);
+                    console.log('Received:', message);
+                    
+                    if (message.type === 'sheet-update') {
+                        showResult(`📊 Real-time update received: ${JSON.stringify(message.data.changes)}`, 'success');
+                    } else if (message.type === 'sync-started') {
+                        showResult('✅ Sync started successfully!', 'success');
+                    }
+                };
+
+                ws.onerror = function(error) {
+                    showResult(`❌ WebSocket error: ${error}`, 'error');
+                };
+
+                // Close connection after 10 seconds
+                setTimeout(() => {
+                    ws.close();
+                    showResult('🔌 WebSocket connection closed after test', 'info');
+                }, 10000);
+
+            } catch (error) {
+                showResult(`❌ WebSocket test error: ${error.message}`, 'error');
+            }
+        }
+
+        // Load spreadsheets on page load
+        window.onload = function() {
+            loadUploadedSpreadsheets();
+        };
+    </script>
+</body>
+</html>

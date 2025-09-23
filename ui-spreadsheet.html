@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>CSV Import</title>
+    <title>CSV Import with Filtering</title>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -11,7 +11,7 @@
         }
         
         .container {
-            max-width: 400px;
+            max-width: 600px;
             margin: 0 auto;
         }
         
@@ -59,6 +59,23 @@
             cursor: not-allowed;
         }
         
+        .secondary-button {
+            width: 100%;
+            padding: 8px 16px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+        
+        .secondary-button:hover {
+            background: #5a6268;
+        }
+        
         .file-input {
             width: 100%;
             padding: 8px;
@@ -100,14 +117,147 @@
             margin-bottom: 8px;
             line-height: 1.4;
         }
+        
+        .filter-section {
+            display: none;
+            margin-bottom: 20px;
+            padding: 16px;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            background: #ffffff;
+        }
+        
+        .filter-section.active {
+            display: block;
+        }
+        
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            margin-bottom: 16px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: block;
+        }
+        
+        .preview-table thead {
+            display: block;
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .preview-table tbody {
+            display: block;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        
+        .preview-table tr {
+            display: flex;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .preview-table th,
+        .preview-table td {
+            flex: 1;
+            padding: 6px 8px;
+            text-align: left;
+            border-right: 1px solid #dee2e6;
+            min-width: 80px;
+        }
+        
+        .preview-table th {
+            font-weight: 600;
+            background: #f8f9fa;
+        }
+        
+        .column-header {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .column-checkbox {
+            margin: 0;
+            transform: scale(0.8);
+        }
+        
+        .filtered-out {
+            opacity: 0.5;
+            background-color: #f8f9fa;
+        }
+        
+        .row-filter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .row-filter label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .row-filter input {
+            padding: 4px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 11px;
+            width: 60px;
+        }
+        
+        .summary {
+            background: #e9ecef;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
+        
+        .step-indicator {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .step {
+            flex: 1;
+            padding: 8px 12px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 500;
+            border-radius: 4px;
+            background: #f8f9fa;
+            color: #6c757d;
+        }
+        
+        .step.active {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .step.completed {
+            background: #28a745;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📊 CSV Import</h1>
+        <h1>📊 CSV Import with Filtering</h1>
         
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step" id="step1">1. Upload</div>
+            <div class="step" id="step2">2. Filter</div>
+            <div class="step" id="step3">3. Import</div>
+        </div>
+        
+        <!-- Upload Section -->
         <div class="import-section">
-            <h3>Import CSV Data</h3>
+            <h3>📁 Upload CSV File</h3>
             <div class="help-text">
                 <strong>Single Mode:</strong> 2 columns (A=Variable Name, B=Value)<br>
                 <strong>Multiple Modes:</strong> 3+ columns (A=Variable Name, B=Mode1, C=Mode2, etc.)<br>
@@ -115,14 +265,49 @@
             </div>
             <input type="file" id="csvFileInput" class="file-input" accept=".csv" onchange="handleCSVFile()">
             <input type="text" id="collectionName" class="file-input" placeholder="Collection Name (e.g., My Teams)" value="CSV Import">
-            <button class="import-button" onclick="importCSV()">Import CSV Data</button>
+            <button class="import-button" id="previewButton" onclick="previewCSV()" disabled>Preview & Filter Data</button>
             <div id="csvImportStatus" class="status" style="display: none;"></div>
+        </div>
+        
+        <!-- Filter Section -->
+        <div class="filter-section" id="filterSection">
+            <h3>🔍 Filter Data</h3>
+            
+            <!-- Row Filters -->
+            <div class="row-filter">
+                <label>Skip first:</label>
+                <input type="number" id="skipRows" value="0" min="0" onchange="updatePreview()">
+                <label>rows</label>
+            </div>
+            
+            <div class="row-filter">
+                <label>Max rows:</label>
+                <input type="number" id="maxRows" value="50" min="1" onchange="updatePreview()">
+                <label>(0 = all)</label>
+            </div>
+            
+            <!-- Summary -->
+            <div class="summary" id="filterSummary">
+                Loading preview...
+            </div>
+            
+            <!-- Preview Table -->
+            <div id="previewContainer">
+                <!-- Table will be generated here -->
+            </div>
+            
+            <!-- Import Button -->
+            <button class="import-button" onclick="importFilteredCSV()">Import Filtered Data</button>
+            <button class="secondary-button" onclick="resetFilter()">Reset Filters</button>
         </div>
     </div>
 
     <script>
         // CSV Import Functions
         let csvData = '';
+        let parsedData = null;
+        let columnFilters = [];
+        let currentStep = 1;
         
         function handleCSVFile() {
             const fileInput = document.getElementById('csvFileInput');
@@ -138,6 +323,10 @@
                     status.style.display = 'block';
                     status.className = 'status success';
                     status.textContent = `✅ CSV loaded: ${file.name} (${file.size} bytes)`;
+                    
+                    // Enable preview button
+                    document.getElementById('previewButton').disabled = false;
+                    updateStep(1);
                 };
                 reader.readAsText(file);
             } else {
@@ -148,29 +337,224 @@
             }
         }
         
-        function importCSV() {
+        function parseCSV(csvText) {
+            function parseCSVLine(line) {
+                const result = [];
+                let current = '';
+                let inQuotes = false;
+                
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
+                        result.push(current.trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                
+                result.push(current.trim());
+                return result.map(cell => cell.replace(/^"|"$/g, ''));
+            }
+            
+            const lines = csvText.split('\n').filter(line => line.trim() !== '');
+            const rawData = lines.map(line => parseCSVLine(line));
+            
+            // Find the row with the most columns to determine structure
+            const maxColumns = Math.max(...rawData.map(row => row.length));
+            
+            // Use the first row as headers
+            let headers = rawData[0] || [];
+            if (headers.length < maxColumns) {
+                for (let i = headers.length; i < maxColumns; i++) {
+                    headers.push(`Column ${i + 1}`);
+                }
+            }
+            
+            // Remove the header row from data
+            let data = rawData.slice(1);
+            
+            // Remove empty rows
+            data = data.filter(row => {
+                if (!row.some(cell => cell.trim() !== '')) {
+                    return false;
+                }
+                return true;
+            });
+            
+            return { headers, data };
+        }
+        
+        function previewCSV() {
             if (!csvData) {
-                const status = document.getElementById('csvImportStatus');
-                status.style.display = 'block';
-                status.className = 'status error';
-                status.textContent = '❌ Please select a CSV file first';
+                showStatus('❌ Please select a CSV file first', 'error');
+                return;
+            }
+            
+            try {
+                parsedData = parseCSV(csvData);
+                columnFilters = parsedData.headers.map(() => true); // All columns selected by default
+                
+                showFilterSection();
+                updatePreview();
+                updateStep(2);
+                
+            } catch (error) {
+                showStatus('❌ Error parsing CSV: ' + error.message, 'error');
+            }
+        }
+        
+        function showFilterSection() {
+            document.getElementById('filterSection').classList.add('active');
+        }
+        
+        function updatePreview() {
+            if (!parsedData) return;
+            
+            const skipRows = parseInt(document.getElementById('skipRows').value) || 0;
+            const maxRows = parseInt(document.getElementById('maxRows').value) || 0;
+            
+            let filteredData = parsedData.data.slice(skipRows);
+            if (maxRows > 0) {
+                filteredData = filteredData.slice(0, maxRows);
+            }
+            
+            // Update summary
+            const totalRows = parsedData.data.length;
+            const filteredRows = filteredData.length;
+            const selectedColumns = columnFilters.filter(Boolean).length;
+            const totalColumns = parsedData.headers.length;
+            
+            document.getElementById('filterSummary').innerHTML = `
+                <strong>Preview Summary:</strong><br>
+                • ${filteredRows} of ${totalRows} rows will be imported<br>
+                • ${selectedColumns} of ${totalColumns} columns selected<br>
+                • Structure: ${filteredRows > 0 && filteredData[0].length > 2 ? 'Multiple Modes' : 'Single Mode'}
+            `;
+            
+            // Generate preview table
+            generatePreviewTable(filteredData);
+        }
+        
+        function generatePreviewTable(data) {
+            const container = document.getElementById('previewContainer');
+            const skipRows = parseInt(document.getElementById('skipRows').value) || 0;
+            
+            if (data.length === 0) {
+                container.innerHTML = '<div class="status error">No data to preview</div>';
+                return;
+            }
+            
+            // Show first 10 rows for preview
+            const previewData = data.slice(0, 10);
+            
+            let tableHTML = '<table class="preview-table"><thead><tr>';
+            
+            // Header row with checkboxes
+            parsedData.headers.forEach((header, index) => {
+                const isSelected = columnFilters[index];
+                tableHTML += `
+                    <th class="${!isSelected ? 'filtered-out' : ''}">
+                        <div class="column-header">
+                            <input type="checkbox" class="column-checkbox" 
+                                   ${isSelected ? 'checked' : ''} 
+                                   onchange="toggleColumn(${index})">
+                            ${header}
+                        </div>
+                    </th>
+                `;
+            });
+            tableHTML += '</tr></thead><tbody>';
+            
+            // Data rows
+            previewData.forEach((row, rowIndex) => {
+                tableHTML += '<tr>';
+                row.forEach((cell, cellIndex) => {
+                    const isSelected = columnFilters[cellIndex];
+                    const displayValue = cell.length > 15 ? cell.substring(0, 15) + '...' : cell;
+                    tableHTML += `
+                        <td class="${!isSelected ? 'filtered-out' : ''}">
+                            ${displayValue || '&nbsp;'}
+                        </td>
+                    `;
+                });
+                tableHTML += '</tr>';
+            });
+            
+            tableHTML += '</tbody></table>';
+            
+            if (data.length > 10) {
+                tableHTML += `<div class="help-text">Showing first 10 rows of ${data.length} total rows</div>`;
+            }
+            
+            container.innerHTML = tableHTML;
+        }
+        
+        function toggleColumn(columnIndex) {
+            columnFilters[columnIndex] = !columnFilters[columnIndex];
+            updatePreview();
+        }
+        
+        function importFilteredCSV() {
+            if (!parsedData) {
+                showStatus('❌ No data to import', 'error');
                 return;
             }
             
             const collectionName = document.getElementById('collectionName').value || 'CSV Import';
-            const status = document.getElementById('csvImportStatus');
+            const skipRows = parseInt(document.getElementById('skipRows').value) || 0;
+            const maxRows = parseInt(document.getElementById('maxRows').value) || 0;
             
-            status.style.display = 'block';
-            status.className = 'status info';
-            status.textContent = 'Importing CSV data...';
+            // Filter data based on user selections
+            let filteredData = parsedData.data.slice(skipRows);
+            if (maxRows > 0) {
+                filteredData = filteredData.slice(0, maxRows);
+            }
+            
+            // Filter columns
+            const selectedColumns = columnFilters.map((selected, index) => selected ? index : null).filter(i => i !== null);
+            const filteredHeaders = selectedColumns.map(i => parsedData.headers[i]);
+            const filteredRows = filteredData.map(row => selectedColumns.map(i => row[i] || ''));
+            
+            // Reconstruct CSV with filtered data
+            const filteredCSV = [filteredHeaders, ...filteredRows]
+                .map(row => row.map(cell => `"${cell}"`).join(','))
+                .join('\n');
+            
+            showStatus('Importing filtered CSV data...', 'info');
+            updateStep(3);
             
             parent.postMessage({
                 pluginMessage: {
                     type: 'import-csv',
-                    csvText: csvData,
+                    csvText: filteredCSV,
                     collectionName: collectionName
                 }
             }, '*');
+        }
+        
+        function resetFilter() {
+            columnFilters = parsedData.headers.map(() => true);
+            document.getElementById('skipRows').value = 0;
+            document.getElementById('maxRows').value = 50;
+            updatePreview();
+        }
+        
+        function updateStep(step) {
+            currentStep = step;
+            document.getElementById('step1').className = 'step' + (step >= 1 ? (step > 1 ? ' completed' : ' active') : '');
+            document.getElementById('step2').className = 'step' + (step >= 2 ? (step > 2 ? ' completed' : ' active') : '');
+            document.getElementById('step3').className = 'step' + (step >= 3 ? ' active' : '');
+        }
+        
+        function showStatus(message, type) {
+            const status = document.getElementById('csvImportStatus');
+            status.style.display = 'block';
+            status.className = `status ${type}`;
+            status.textContent = message;
         }
         
         // Listen for results from plugin
@@ -178,21 +562,16 @@
             const message = event.data.pluginMessage;
             
             if (message.type === 'csv-import-result') {
-                const status = document.getElementById('csvImportStatus');
-                status.style.display = 'block';
-                
                 if (message.success) {
-                    status.className = 'status success';
-                    status.textContent = `✅ CSV import successful! Created ${message.rowCount} modes with ${message.variableCount} variables.`;
+                    showStatus(`✅ CSV import successful! Created ${message.rowCount} modes with ${message.variableCount} variables.`, 'success');
                 } else {
-                    status.className = 'status error';
-                    status.textContent = `❌ CSV import failed: ${message.error}`;
+                    showStatus(`❌ CSV import failed: ${message.error}`, 'error');
                 }
             }
         });
         
         // Initialize
-        console.log('CSV Import UI loaded');
+        console.log('CSV Import with Filtering UI loaded');
     </script>
 </body>
 </html>

@@ -227,62 +227,176 @@
     <div class="container">
         <h1>MiracleData™</h1>
         
-        <div class="tab-container">
-            <div class="tab active" data-tab="import-sports">Import Sports Data</div>
-            <div class="tab" data-tab="csv-import">CSV Import</div>
-            <div class="tab" data-tab="duplicate">Duplicate Collections</div>
-            <div class="tab" data-tab="import-export">Import/Export JSON</div>
-        </div>
-        
-        <div id="import-sports" class="tab-content active">
-            <div class="checkbox-group">
-                <h3>Select Sports</h3>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="nba" value="NBA">
-                    <label for="nba">NBA (30 teams)</label>
-                </div>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="nfl" value="NFL">
-                    <label for="nfl">NFL (32 teams)</label>
-                </div>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="mlb" value="MLB">
-                    <label for="mlb">MLB (30 teams)</label>
-                </div>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="nhl" value="NHL">
-                    <label for="nhl">NHL (32 teams)</label>
-                </div>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="wnba" value="WNBA">
-                    <label for="wnba">WNBA (12 teams)</label>
-                </div>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="ncaa" value="NCAA Football">
-                    <label for="ncaa">NCAA Football (25 teams)</label>
-                </div>
+        <!-- Tab Navigation -->
+            <div class="tab-container">
+                <div class="tab active" data-tab="realtime-sync">Real-Time Sync</div>
+                <div class="tab" data-tab="sports-data">Import Sports Data</div>
+                <div class="tab" data-tab="duplicate">Duplicate Collection</div>
+                <div class="tab" data-tab="import-export">Import/Export</div>
             </div>
-            
-            <div class="button-group">
-                <button id="fetchData">Fetch Sports Data</button>
-                <button id="selectAll" class="secondary">Select All</button>
-                <button id="deselectAll" class="secondary">Deselect All</button>
-            </div>
-            
-            <div id="successMessage" class="success-message" style="display: none;"></div>
-            <div id="errorMessage" class="error-message" style="display: none;"></div>
-        </div>
         
-        <div id="csv-import" class="tab-content">
+        <div id="realtime-sync" class="tab-content active">
             <div class="form-group">
-                <h3>Import CSV Data</h3>
-                <input type="file" id="csvFileInput" class="file-input" accept=".csv" onchange="handleCSVFile()">
-                <input type="text" id="collectionName" class="text-input" placeholder="Collection Name" value="CSV Import">
-                <button id="importCSVBtn" class="primary-button">Import CSV Data</button>
-                <div id="csvImportStatus" class="status-message" style="display: none;"></div>
+                <h3>Real-Time CSV Sync</h3>
+                <p style="margin-bottom: 16px; color: #666; font-size: 12px;">
+                    Upload your CSV file to create Figma variables with real-time synchronization. 
+                    Any changes you make to the CSV file will automatically update your Figma design.
+                </p>
+                
+                <!-- CSV Upload Interface -->
+                <div id="csv-upload" style="background: #f8f9fa; padding: 16px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
+                    <h4 style="margin-top: 0; color: #495057;">📊 Upload CSV Data</h4>
+                    <p style="font-size: 12px; color: #6c757d; margin-bottom: 12px;">
+                        Upload your CSV file to create Figma variables with real-time synchronization.
+                    </p>
+                    
+                    <div style="margin-bottom: 12px;">
+                        <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="handleCSVFileSelect(event)">
+                        <button id="uploadCSVBtn" class="primary-button" style="font-size: 13px; padding: 12px 20px; width: 100%;" onclick="document.getElementById('csvFileInput').click()">
+                            📁 Choose CSV File
+                        </button>
+                    </div>
+                    
+                    <div id="uploadStatus" style="background: white; padding: 12px; border-radius: 4px; border: 1px solid #dee2e6; font-size: 12px; min-height: 60px;">
+                        <div style="color: #6c757d;">Ready to upload CSV file...</div>
+                    </div>
+                </div>
+                
+                <!-- Feature Status -->
+                <div id="sync-feature-status" class="status-message" style="display: none; margin-bottom: 16px;">
+                    <strong>Feature Status:</strong> <span id="sync-status-text">Loading...</span>
+                </div>
+                
+                <!-- Connection Status -->
+                <div id="connection-status" style="margin-bottom: 16px;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                        <div id="connection-indicator" style="width: 12px; height: 12px; border-radius: 50%; background: #ccc;"></div>
+                        <span id="connection-text">Not connected</span>
+                    </div>
+                </div>
+                
+                <!-- Authentication Section -->
+                <div id="auth-section">
+                    <button id="connectGoogleBtn" class="primary-button" disabled>
+                        Connect Google Account
+                    </button>
+                    <p style="font-size: 11px; color: #666; margin-top: 8px;">
+                        You'll be redirected to Google to authorize access to your spreadsheets.
+                    </p>
+                </div>
+                
+                <!-- Sheet Selection (hidden initially) -->
+                <div id="sheet-selection" style="display: none;">
+                    <label for="sheetSelect">Select Spreadsheet:</label>
+                    <select id="sheetSelect" class="text-input">
+                        <option value="">Loading spreadsheets...</option>
+                    </select>
+                    
+                    <label for="collectionSelect">Target Collection:</label>
+                    <select id="collectionSelect" class="text-input">
+                        <option value="">Select a collection...</option>
+                    </select>
+                    
+                    <button id="startSyncBtn" class="primary-button" disabled>
+                        Start Real-Time Sync
+                    </button>
+                </div>
+                
+                <!-- Sync Configuration (hidden initially) -->
+                <div id="sync-config" style="display: none;">
+                    <h4>Sync Configuration</h4>
+                    
+                    <div style="margin-bottom: 12px;">
+                        <label>
+                            <input type="checkbox" id="autoSyncEnabled" checked>
+                            Enable automatic sync
+                        </label>
+                    </div>
+                    
+                    <div style="margin-bottom: 12px;">
+                        <label for="syncInterval">Sync Interval:</label>
+                        <select id="syncInterval" class="text-input">
+                            <option value="realtime">Real-time (WebSocket)</option>
+                            <option value="5">Every 5 seconds</option>
+                            <option value="30">Every 30 seconds</option>
+                            <option value="60">Every minute</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: 12px;">
+                        <label>
+                            <input type="checkbox" id="notifyOnChange" checked>
+                            Show notifications on changes
+                        </label>
+                    </div>
+                    
+                    <button id="stopSyncBtn" class="secondary-button">
+                        Stop Sync
+                    </button>
+                </div>
+                
+                <!-- Sync Status -->
+                <div id="sync-status" style="display: none;">
+                    <h4>Sync Status</h4>
+                    <div id="sync-info" style="background: #f8f9fa; padding: 12px; border-radius: 4px; font-size: 12px;">
+                        <div>Last sync: <span id="last-sync">Never</span></div>
+                        <div>Variables updated: <span id="variables-updated">0</span></div>
+                        <div>Connection: <span id="connection-details">Disconnected</span></div>
+                    </div>
+                </div>
+                
+                <div id="realtime-sync-status" class="status-message" style="display: none; margin-top: 12px;"></div>
             </div>
         </div>
         
+        <!-- Sports Data Import Tab -->
+        <div id="sports-data" class="tab-content">
+            <div class="form-group">
+                <h3>Import Sports Data</h3>
+                <p style="margin-bottom: 16px; color: #666; font-size: 12px;">
+                    Select sports to import data for. This will fetch real-time data and create Figma variables.
+                </p>
+                
+                <div class="checkbox-group">
+                    <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                        <button id="selectAll" class="secondary-button">Select All</button>
+                        <button id="deselectAll" class="secondary-button">Deselect All</button>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="nfl" value="NFL" checked>
+                        <label for="nfl">NFL</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="nba" value="NBA" checked>
+                        <label for="nba">NBA</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mlb" value="MLB" checked>
+                        <label for="mlb">MLB</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="nhl" value="NHL" checked>
+                        <label for="nhl">NHL</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="wnba" value="WNBA" checked>
+                        <label for="wnba">WNBA</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="ncaa-football" value="NCAA Football" checked>
+                        <label for="ncaa-football">NCAA Football</label>
+                    </div>
+                </div>
+                
+                <button id="fetchData" class="primary-button">Fetch Sports Data</button>
+                
+                <div id="successMessage" style="display: none; color: #28a745; margin-top: 12px; padding: 8px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 4px;"></div>
+                <div id="errorMessage" style="display: none; color: #dc3545; margin-top: 12px; padding: 8px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px;"></div>
+            </div>
+        </div>
+        
+        <!-- Duplicate Collection Tab -->
         <div id="duplicate" class="tab-content">
             <div class="form-group">
                 <label for="collectionSelect">Select Collection</label>
@@ -299,6 +413,7 @@
             <button id="duplicateBtn">Duplicate Collection</button>
         </div>
         
+        <!-- Import/Export Tab -->
         <div id="import-export" class="tab-content">
             <div class="section">
                 <h3>Export Collection</h3>
@@ -309,14 +424,16 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Export Format</label>
-                    <div class="checkbox-item">
-                        <input type="radio" id="formatDefault" name="exportFormat" value="default" checked>
-                        <label for="formatDefault">Default Format</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="radio" id="formatToken" name="exportFormat" value="token">
-                        <label for="formatToken">Design Token Format</label>
+                    <label>Export Format:</label>
+                    <div style="display: flex; gap: 16px;">
+                        <label style="display: flex; align-items: center; gap: 4px;">
+                            <input type="radio" name="exportFormat" value="json" checked>
+                            JSON
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 4px;">
+                            <input type="radio" name="exportFormat" value="csv">
+                            CSV
+                        </label>
                     </div>
                 </div>
                 <button id="exportBtn">Export Collection</button>
@@ -325,11 +442,14 @@
             <div class="section">
                 <h3>Import Collection</h3>
                 <div class="form-group">
-                    <label for="importFile">Select JSON File</label>
-                    <input type="file" id="importFile" accept=".json">
+                    <label for="importFileInput">Select File</label>
+                    <input type="file" id="importFileInput" accept=".json,.csv">
                 </div>
-                <div id="importValidation" class="validation-message" style="display: none;"></div>
-                <button id="importBtn" disabled>Import Collection</button>
+                <div class="form-group">
+                    <label for="importCollectionName">Collection Name (optional)</label>
+                    <input type="text" id="importCollectionName" placeholder="Enter name or leave blank for auto-name">
+                </div>
+                <button id="importBtn">Import Collection</button>
             </div>
         </div>
     </div>
@@ -342,17 +462,247 @@
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
                 
-                // Add active class to clicked tab and corresponding content
+                // Add active class to clicked tab
                 tab.classList.add('active');
-                const tabId = tab.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
                 
-                // Load collections when switching to duplicate or import/export tab
-                if (tabId === 'duplicate' || tabId === 'import-export') {
-                    parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+                // Show corresponding content
+                const tabId = tab.getAttribute('data-tab');
+                const content = document.getElementById(tabId);
+                if (content) {
+                    content.classList.add('active');
                 }
             });
         });
+        
+        // Define functions early to avoid reference errors
+        window.handleCSVFileSelect = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            console.log('📁 CSV file selected:', file.name);
+            addTestResult(`📁 CSV file selected: ${file.name}`, 'info');
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const csvContent = e.target.result;
+                uploadCSVFile(file.name, csvContent);
+            };
+            reader.readAsText(file);
+        };
+        
+        window.testCSVUpload = async function() {
+            console.log('📊 Testing CSV upload functionality...');
+            addTestResult('📊 Testing CSV upload functionality...', 'info');
+            
+            try {
+                // Sample CSV data
+                const csvContent = `Name,Age,Score,Team
+Alice,28,95.5,Blue
+Bob,32,87.2,Red
+Charlie,25,92.8,Green
+Diana,30,89.1,Purple`;
+
+                addTestResult('📤 Uploading sample CSV data...', 'info');
+
+                const response = await fetch('http://localhost:3001/api/upload-csv', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fileName: 'sample-data.csv',
+                        csvContent: csvContent
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    addTestResult(`✅ CSV uploaded successfully!`, 'success');
+                    addTestResult(`📋 Spreadsheet ID: ${result.spreadsheetId}`, 'info');
+                    addTestResult(`📊 Headers: ${result.headers.join(', ')}`, 'info');
+                    addTestResult(`📈 Rows: ${result.rowCount}`, 'info');
+                    
+                    // Test WebSocket sync with uploaded CSV
+                    addTestResult('🔌 Testing real-time sync with uploaded CSV...', 'info');
+                    
+                    const wsClient = new WebSocketClient();
+                    await wsClient.connect();
+                    
+                    wsClient.send('start-sync', {
+                        spreadsheetId: result.spreadsheetId,
+                        collectionId: 'uploaded-csv-test',
+                        syncInterval: 5000
+                    });
+                    
+                    wsClient.on('sheet-update', (data) => {
+                        addTestResult(`📊 Real-time update received: ${JSON.stringify(data.changes)}`, 'success');
+                        
+                        // Send message to plugin to update variables with new data
+                        parent.postMessage({
+                            pluginMessage: {
+                                type: 'websocket-sync-update',
+                                spreadsheetId: result.spreadsheetId,
+                                collectionId: 'uploaded-csv-test'
+                            }
+                        }, '*');
+                    });
+                    
+                    wsClient.on('sync-started', (data) => {
+                        addTestResult(`✅ Sync started with uploaded CSV!`, 'success');
+                        
+                        // Send message to plugin to create variables from CSV data
+                        console.log('📤 Sending websocket-sync-start message to plugin:', {
+                            type: 'websocket-sync-start',
+                            spreadsheetId: result.spreadsheetId,
+                            collectionId: `uploaded-${fileName.replace(/\.csv$/i, '').replace(/\s+/g, '-')}`
+                        });
+                        parent.postMessage({
+                            pluginMessage: {
+                                type: 'websocket-sync-start',
+                                spreadsheetId: result.spreadsheetId,
+                                collectionId: `uploaded-${fileName.replace(/\.csv$/i, '').replace(/\s+/g, '-')}`
+                            }
+                        }, '*');
+                    });
+                    
+                    addTestResult('🎯 Real-time sync active! Watch for updates...', 'success');
+                    
+                } else {
+                    addTestResult(`❌ CSV upload failed: ${result.error}`, 'error');
+                }
+
+            } catch (error) {
+                addTestResult(`❌ CSV upload test failed: ${error.message}`, 'error');
+                addTestResult('💡 Make sure the WebSocket server is running on port 3001', 'info');
+            }
+        };
+        
+        window.uploadCSVFile = async function(fileName, csvContent) {
+            console.log('📤 Uploading CSV file:', fileName);
+            addTestResult(`📤 Uploading CSV file: ${fileName}`, 'info');
+            
+            try {
+                const response = await fetch('http://localhost:3001/api/upload-csv', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fileName: fileName,
+                        csvContent: csvContent
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    addTestResult(`✅ CSV uploaded successfully!`, 'success');
+                    addTestResult(`📋 Spreadsheet ID: ${result.spreadsheetId}`, 'info');
+                    addTestResult(`📊 Headers: ${result.headers.join(', ')}`, 'info');
+                    addTestResult(`📈 Rows: ${result.rowCount}`, 'info');
+                    
+                    // Test WebSocket sync with uploaded CSV
+                    addTestResult('🔌 Starting real-time sync with your CSV...', 'info');
+                    
+                    const wsClient = new WebSocketClient();
+                    await wsClient.connect();
+                    
+                    wsClient.send('start-sync', {
+                        spreadsheetId: result.spreadsheetId,
+                        collectionId: `uploaded-${fileName.replace(/\.csv$/i, '').replace(/\s+/g, '-')}`,
+                        syncInterval: 5000
+                    });
+                    
+                    wsClient.on('sheet-update', (data) => {
+                        addTestResult(`📊 Real-time update received: ${JSON.stringify(data.changes)}`, 'success');
+                        
+                        // Send message to plugin to update variables with new data
+                        parent.postMessage({
+                            pluginMessage: {
+                                type: 'websocket-sync-update',
+                                spreadsheetId: result.spreadsheetId,
+                                collectionId: `uploaded-${fileName.replace(/\.csv$/i, '').replace(/\s+/g, '-')}`
+                            }
+                        }, '*');
+                    });
+                    
+                    wsClient.on('sync-started', (data) => {
+                        addTestResult(`✅ Real-time sync started with your CSV!`, 'success');
+                        
+                        // Send message to plugin to create variables from CSV data
+                        console.log('📤 Sending websocket-sync-start message to plugin (uploadCSVFile):', {
+                            type: 'websocket-sync-start',
+                            spreadsheetId: result.spreadsheetId,
+                            collectionId: `uploaded-${fileName.replace(/\.csv$/i, '').replace(/\s+/g, '-')}`
+                        });
+                        parent.postMessage({
+                            pluginMessage: {
+                                type: 'websocket-sync-start',
+                                spreadsheetId: result.spreadsheetId,
+                                collectionId: `uploaded-${fileName.replace(/\.csv$/i, '').replace(/\s+/g, '-')}`
+                            }
+                        }, '*');
+                    });
+                    
+                    addTestResult('🎯 Your CSV is now syncing in real-time! Watch for updates...', 'success');
+                    
+                    // Store the spreadsheet ID globally for easy access
+                    window.lastUploadedSpreadsheetId = result.spreadsheetId;
+                    console.log('💾 Spreadsheet ID stored in window.lastUploadedSpreadsheetId:', result.spreadsheetId);
+                    
+                } else {
+                    addTestResult(`❌ CSV upload failed: ${result.error}`, 'error');
+                }
+
+            } catch (error) {
+                addTestResult(`❌ CSV upload failed: ${error.message}`, 'error');
+                addTestResult('💡 Make sure the WebSocket server is running on port 3001', 'info');
+            }
+        };
+        
+        // Manual refresh function
+        window.refreshData = async function() {
+            console.log('🔄 Manually refreshing data...');
+            addTestResult('🔄 Manually refreshing data...', 'info');
+            
+            try {
+                // Get the current spreadsheet ID from WebSocket client
+                const spreadsheetId = wsClient.currentSpreadsheetId;
+                if (!spreadsheetId) {
+                    addTestResult('❌ No active sync session. Please upload a CSV first.', 'error');
+                    return;
+                }
+                
+                console.log('🔄 Using current spreadsheetId:', spreadsheetId);
+                
+                // Trigger refresh on server
+                const response = await fetch(`http://localhost:3001/api/refresh/${spreadsheetId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    addTestResult('✅ Data refreshed successfully!', 'success');
+                    addTestResult('📊 Check your Figma variables for updated values', 'info');
+                } else {
+                    addTestResult(`❌ Refresh failed: ${result.error}`, 'error');
+                }
+                
+            } catch (error) {
+                addTestResult(`❌ Refresh failed: ${error.message}`, 'error');
+                addTestResult('💡 Make sure the WebSocket server is running on port 3001', 'info');
+            }
+        };
+        
+        // Helper function for test results
+        function addTestResult(message, type) {
+            const resultsDiv = document.getElementById('uploadStatus');
+            if (resultsDiv) {
+                const color = type === 'success' ? '#28a745' : 
+                            type === 'error' ? '#dc3545' : '#17a2b8';
+                resultsDiv.innerHTML += `<div style="color: ${color}; margin-bottom: 4px;">${message}</div>`;
+                resultsDiv.scrollTop = resultsDiv.scrollHeight;
+            }
+        }
         
         // Select/deselect all buttons
         document.getElementById('selectAll').addEventListener('click', () => {
@@ -380,13 +730,19 @@
             }
             
             // Disable buttons during fetch
-            document.getElementById('fetchData').disabled = true;
-            document.getElementById('selectAll').disabled = true;
-            document.getElementById('deselectAll').disabled = true;
+            const fetchDataBtn = document.getElementById('fetchData');
+            const selectAllBtn = document.getElementById('selectAll');
+            const deselectAllBtn = document.getElementById('deselectAll');
+            const errorMessage = document.getElementById('errorMessage');
             
-            // Hide any previous messages
-            document.getElementById('successMessage').style.display = 'none';
-            document.getElementById('errorMessage').style.display = 'none';
+            if (fetchDataBtn) fetchDataBtn.disabled = true;
+            if (selectAllBtn) selectAllBtn.disabled = true;
+            if (deselectAllBtn) deselectAllBtn.disabled = true;
+            
+            // Hide any previous error messages
+            if (errorMessage) {
+                errorMessage.style.display = 'none';
+            }
             
             // Send message to plugin
             parent.postMessage({ 
@@ -425,7 +781,135 @@
             }
         });
         
-        // Export button
+        // Export/Import buttons
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            const collectionId = document.getElementById('exportCollectionSelect').value;
+            const format = document.querySelector('input[name="exportFormat"]:checked').value;
+            
+            if (!collectionId) {
+                alert('Please select a collection to export.');
+                return;
+            }
+            
+            parent.postMessage({ 
+                pluginMessage: { 
+                    type: 'export-collection',
+                    collectionId: collectionId,
+                    format: format
+                } 
+            }, '*');
+        });
+        
+        document.getElementById('importBtn').addEventListener('click', () => {
+            const fileInput = document.getElementById('importFileInput');
+            const file = fileInput.files[0];
+            const collectionName = document.getElementById('importCollectionName').value;
+            
+            if (!file) {
+                alert('Please select a file to import.');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    parent.postMessage({ 
+                        pluginMessage: { 
+                            type: 'import-collection',
+                            data: data,
+                            collectionName: collectionName
+                        } 
+                    }, '*');
+                } catch (error) {
+                    alert('Invalid JSON file. Please check the file format.');
+                }
+            };
+            reader.readAsText(file);
+        });
+        
+        // COMMENTED OUT FOR WEBSOCKET TESTING - Select/deselect all buttons
+        /*
+        document.getElementById('selectAll').addEventListener('click', () => {
+            document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
+                cb.checked = true;
+            });
+        });
+        
+        document.getElementById('deselectAll').addEventListener('click', () => {
+            document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+        });
+        */
+        
+        // COMMENTED OUT FOR WEBSOCKET TESTING - Fetch data button
+        /*
+        document.getElementById('fetchData').addEventListener('click', () => {
+            const selectedSports = [];
+            document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked').forEach(cb => {
+                selectedSports.push(cb.value);
+            });
+            
+            if (selectedSports.length === 0) {
+                alert('Please select at least one sport.');
+                return;
+            }
+            
+            // Disable buttons during fetch
+            document.getElementById('fetchData').disabled = true;
+            document.getElementById('selectAll').disabled = true;
+            document.getElementById('deselectAll').disabled = true;
+            
+            // Hide any previous messages
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (successMessage) successMessage.style.display = 'none';
+            if (errorMessage) errorMessage.style.display = 'none';
+            
+            // Send message to plugin
+            parent.postMessage({ 
+                pluginMessage: { 
+                    type: 'fetch-sports-data',
+                    selectedSports: selectedSports
+                } 
+            }, '*');
+        });
+        */
+        
+        // COMMENTED OUT FOR WEBSOCKET TESTING - Duplicate button
+        /*
+        document.getElementById('duplicateBtn').addEventListener('click', () => {
+            const collectionId = document.getElementById('collectionSelect').value;
+            const newName = document.getElementById('newCollectionName').value;
+            
+            if (!collectionId) {
+                alert('Please select a collection to duplicate.');
+                return;
+            }
+            
+            parent.postMessage({ 
+                pluginMessage: { 
+                    type: 'duplicate-collection',
+                    collectionId: collectionId,
+                    newName: newName
+                } 
+            }, '*');
+        });
+        
+        // Auto-populate new collection name when collection is selected
+        document.getElementById('collectionSelect').addEventListener('change', (event) => {
+            const selectedOption = event.target.options[event.target.selectedIndex];
+            if (selectedOption && selectedOption.textContent) {
+                const newNameInput = document.getElementById('newCollectionName');
+                newNameInput.value = `${selectedOption.textContent} (Copy)`;
+            }
+        });
+        */
+        
+        // COMMENTED OUT FOR WEBSOCKET TESTING - Export/Import buttons
+        /*
         document.getElementById('exportBtn').addEventListener('click', () => {
             const collectionId = document.getElementById('exportCollectionSelect').value;
             const format = document.querySelector('input[name="exportFormat"]:checked').value;
@@ -516,8 +1000,10 @@
             downloadAnchorNode.click();
             downloadAnchorNode.remove();
         }
+        */
         
-        // Function to handle fetch requests from the plugin
+        // COMMENTED OUT FOR WEBSOCKET TESTING - Function to handle fetch requests from the plugin
+        /*
         async function handleFetchRequest(request) {
             try {
                 console.log(`UI received fetch request for: ${request.url}`);
@@ -554,17 +1040,22 @@
                 }, '*');
             }
         }
+        */
         
         // Listen for messages from the plugin
         window.onmessage = async (event) => {
             const msg = event.data.pluginMessage;
             
-            // Handle fetch requests from the plugin
+            // COMMENTED OUT FOR WEBSOCKET TESTING - Handle fetch requests from the plugin
+            /*
             if (msg && msg.type === 'fetch-request') {
                 handleFetchRequest(msg);
                 return;
             }
+            */
             
+            // COMMENTED OUT FOR WEBSOCKET TESTING - Error handling for sports data
+            /*
             if (msg && msg.type === 'error') {
                 // Reset button states
                 document.getElementById('fetchData').disabled = false;
@@ -572,10 +1063,15 @@
                 document.getElementById('deselectAll').disabled = false;
                 
                 // Show error message
-                document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('errorMessage').textContent = msg.message;
+                const errorMessage = document.getElementById('errorMessage');
+                if (errorMessage) {
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = msg.message;
+                }
                 
             } else if (msg && msg.type === 'success') {
+            */
+            if (msg && msg.type === 'success') {
                 alert('Success: ' + msg.message);
                 
             } else if (msg && msg.type === 'collections-loaded') {
@@ -615,24 +1111,37 @@
                 
                 if (successCount > 0) {
                     const successMessage = document.getElementById('successMessage');
-                    successMessage.style.display = 'block';
-                    successMessage.textContent = `Successfully created variables for ${successCount} sport(s)!`;
+                    if (successMessage) {
+                        successMessage.style.display = 'block';
+                        successMessage.textContent = `Successfully created variables for ${successCount} sport(s)!`;
+                    }
                 }
                 
                 // Reset button states immediately
-                document.getElementById('fetchData').disabled = false;
-                document.getElementById('selectAll').disabled = false;
-                document.getElementById('deselectAll').disabled = false;
+                const fetchDataBtn = document.getElementById('fetchData');
+                const selectAllBtn = document.getElementById('selectAll');
+                const deselectAllBtn = document.getElementById('deselectAll');
+                
+                if (fetchDataBtn) fetchDataBtn.disabled = false;
+                if (selectAllBtn) selectAllBtn.disabled = false;
+                if (deselectAllBtn) deselectAllBtn.disabled = false;
                 
             } else if (msg && msg.type === 'sports-data-error') {
                 // Show error message
-                document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('errorMessage').textContent = msg.message;
+                const errorMessage = document.getElementById('errorMessage');
+                if (errorMessage) {
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = msg.message;
+                }
                 
                 // Reset button states
-                document.getElementById('fetchData').disabled = false;
-                document.getElementById('selectAll').disabled = false;
-                document.getElementById('deselectAll').disabled = false;
+                const fetchDataBtn = document.getElementById('fetchData');
+                const selectAllBtn = document.getElementById('selectAll');
+                const deselectAllBtn = document.getElementById('deselectAll');
+                
+                if (fetchDataBtn) fetchDataBtn.disabled = false;
+                if (selectAllBtn) selectAllBtn.disabled = false;
+                if (deselectAllBtn) deselectAllBtn.disabled = false;
                 
             } else if (msg && msg.type === 'export-data-ready') {
                 // Download the data as JSON
@@ -730,61 +1239,239 @@
             }
         };
         
-        // CSV Import functionality
-        let csvData = '';
+        // CSV Filter functionality
+        let filterCsvData = '';
+        let parsedFilterData = null;
+        let columnFilters = [];
         
-        function handleCSVFile() {
-            const fileInput = document.getElementById('csvFileInput');
+        function handleFilterCSVFile() {
+            const fileInput = document.getElementById('filterCsvFileInput');
             const file = fileInput.files[0];
             
-            if (!file) {
-                return;
+            if (file && file.type === 'text/csv') {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    filterCsvData = e.target.result;
+                    console.log('Filter CSV file loaded:', file.name);
+                    
+                    document.getElementById('previewFilterBtn').disabled = false;
+                    updateFilterStep(1);
+                };
+                reader.readAsText(file);
+            } else {
+                showFilterStatus('❌ Please select a valid CSV file', 'error');
             }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                csvData = e.target.result;
-                console.log('CSV file loaded:', file.name);
-                document.getElementById('csvImportStatus').textContent = `File loaded: ${file.name}`;
-                document.getElementById('csvImportStatus').style.display = 'block';
-                document.getElementById('csvImportStatus').className = 'status-message success';
-            };
-            reader.readAsText(file);
         }
         
-        function importCSV() {
-            if (!csvData) {
-                alert('Please select a CSV file first');
+        function parseFilterCSV(csvText) {
+            function parseCSVLine(line) {
+                const result = [];
+                let current = '';
+                let inQuotes = false;
+                
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
+                        result.push(current.trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                
+                result.push(current.trim());
+                return result.map(cell => cell.replace(/^"|"$/g, ''));
+            }
+            
+            const lines = csvText.split('\n').filter(line => line.trim() !== '');
+            const rawData = lines.map(line => parseCSVLine(line));
+            
+            const maxColumns = Math.max(...rawData.map(row => row.length));
+            
+            let headers = rawData[0] || [];
+            if (headers.length < maxColumns) {
+                for (let i = headers.length; i < maxColumns; i++) {
+                    headers.push(`Column ${i + 1}`);
+                }
+            }
+            
+            let data = rawData.slice(1);
+            data = data.filter(row => {
+                if (!row.some(cell => cell.trim() !== '')) {
+                    return false;
+                }
+                return true;
+            });
+            
+            return { headers, data };
+        }
+        
+        function previewFilterCSV() {
+            if (!filterCsvData) {
+                showFilterStatus('❌ Please select a CSV file first', 'error');
                 return;
             }
             
-            const collectionName = document.getElementById('collectionName').value || 'CSV Import';
+            try {
+                parsedFilterData = parseFilterCSV(filterCsvData);
+                columnFilters = parsedFilterData.headers.map(() => true);
+                
+                document.getElementById('filter-section').style.display = 'block';
+                updateFilterPreview();
+                updateFilterStep(2);
+                
+            } catch (error) {
+                showFilterStatus('❌ Error parsing CSV: ' + error.message, 'error');
+            }
+        }
+        
+        function updateFilterPreview() {
+            if (!parsedFilterData) return;
             
-            // Send CSV data to plugin
-            parent.postMessage({ 
-                pluginMessage: { 
+            const skipRows = parseInt(document.getElementById('skipRows').value) || 0;
+            const maxRows = parseInt(document.getElementById('maxRows').value) || 0;
+            
+            let filteredData = parsedFilterData.data.slice(skipRows);
+            if (maxRows > 0) {
+                filteredData = filteredData.slice(0, maxRows);
+            }
+            
+            const totalRows = parsedFilterData.data.length;
+            const filteredRows = filteredData.length;
+            const selectedColumns = columnFilters.filter(Boolean).length;
+            const totalColumns = parsedFilterData.headers.length;
+            
+            document.getElementById('filterSummary').innerHTML = `
+                <strong>Preview Summary:</strong><br>
+                • ${filteredRows} of ${totalRows} rows will be imported<br>
+                • ${selectedColumns} of ${totalColumns} columns selected<br>
+                • Structure: ${filteredRows > 0 && filteredData[0].length > 2 ? 'Multiple Modes' : 'Single Mode'}
+            `;
+            
+            generateFilterPreviewTable(filteredData);
+        }
+        
+        function generateFilterPreviewTable(data) {
+            const container = document.getElementById('previewContainer');
+            
+            if (data.length === 0) {
+                container.innerHTML = '<div style="padding: 16px; text-align: center; color: #666;">No data to preview</div>';
+                return;
+            }
+            
+            const previewData = data.slice(0, 10);
+            
+            let tableHTML = '<table style="width: 100%; border-collapse: collapse; font-size: 11px;"><thead><tr style="background: #f8f9fa;">';
+            
+            parsedFilterData.headers.forEach((header, index) => {
+                const isSelected = columnFilters[index];
+                tableHTML += `
+                    <th style="padding: 6px 8px; border: 1px solid #dee2e6; text-align: left; ${!isSelected ? 'opacity: 0.5; background: #f8f9fa;' : ''}">
+                        <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                            <input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleFilterColumn(${index})" style="transform: scale(0.8);">
+                            ${header}
+                        </label>
+                    </th>
+                `;
+            });
+            tableHTML += '</tr></thead><tbody>';
+            
+            previewData.forEach((row, rowIndex) => {
+                tableHTML += '<tr>';
+                row.forEach((cell, cellIndex) => {
+                    const isSelected = columnFilters[cellIndex];
+                    const displayValue = cell.length > 15 ? cell.substring(0, 15) + '...' : cell;
+                    tableHTML += `
+                        <td style="padding: 6px 8px; border: 1px solid #dee2e6; ${!isSelected ? 'opacity: 0.5; background: #f8f9fa;' : ''}">
+                            ${displayValue || '&nbsp;'}
+                        </td>
+                    `;
+                });
+                tableHTML += '</tr>';
+            });
+            
+            tableHTML += '</tbody></table>';
+            
+            if (data.length > 10) {
+                tableHTML += `<div style="padding: 8px; text-align: center; font-size: 10px; color: #666;">Showing first 10 rows of ${data.length} total rows</div>`;
+            }
+            
+            container.innerHTML = tableHTML;
+        }
+        
+        function toggleFilterColumn(columnIndex) {
+            columnFilters[columnIndex] = !columnFilters[columnIndex];
+            updateFilterPreview();
+        }
+        
+        function importFilteredCSV() {
+            if (!parsedFilterData) {
+                showFilterStatus('❌ No data to import', 'error');
+                return;
+            }
+            
+            const collectionName = document.getElementById('filterCollectionName').value || 'CSV Import';
+            const skipRows = parseInt(document.getElementById('skipRows').value) || 0;
+            const maxRows = parseInt(document.getElementById('maxRows').value) || 0;
+            
+            let filteredData = parsedFilterData.data.slice(skipRows);
+            if (maxRows > 0) {
+                filteredData = filteredData.slice(0, maxRows);
+            }
+            
+            const selectedColumns = columnFilters.map((selected, index) => selected ? index : null).filter(i => i !== null);
+            const filteredHeaders = selectedColumns.map(i => parsedFilterData.headers[i]);
+            const filteredRows = filteredData.map(row => selectedColumns.map(i => row[i] || ''));
+            
+            const filteredCSV = [filteredHeaders, ...filteredRows]
+                .map(row => row.map(cell => `"${cell}"`).join(','))
+                .join('\n');
+            
+            showFilterStatus('Importing filtered CSV data...', 'loading');
+            updateFilterStep(3);
+            
+            parent.postMessage({
+                pluginMessage: {
                     type: 'import-csv',
-                    csvText: csvData,
+                    csvText: filteredCSV,
                     collectionName: collectionName
-                } 
+                }
             }, '*');
-            
-            // Show loading status
-            const statusDiv = document.getElementById('csvImportStatus');
-            statusDiv.textContent = 'Importing CSV data...';
-            statusDiv.style.display = 'block';
-            statusDiv.className = 'status-message loading';
         }
         
-        // Add event listener for import button
-        document.getElementById('importCSVBtn').addEventListener('click', importCSV);
+        function resetFilter() {
+            columnFilters = parsedFilterData.headers.map(() => true);
+            document.getElementById('skipRows').value = 0;
+            document.getElementById('maxRows').value = 50;
+            updateFilterPreview();
+        }
         
-        // Listen for CSV import results
+        function updateFilterStep(step) {
+            document.getElementById('step1').style.background = step >= 1 ? (step > 1 ? '#28a745' : '#17a2b8') : '#f8f9fa';
+            document.getElementById('step1').style.color = step >= 1 ? 'white' : '#6c757d';
+            document.getElementById('step2').style.background = step >= 2 ? (step > 2 ? '#28a745' : '#17a2b8') : '#f8f9fa';
+            document.getElementById('step2').style.color = step >= 2 ? 'white' : '#6c757d';
+            document.getElementById('step3').style.background = step >= 3 ? '#17a2b8' : '#f8f9fa';
+            document.getElementById('step3').style.color = step >= 3 ? 'white' : '#6c757d';
+        }
+        
+        function showFilterStatus(message, type) {
+            const status = document.getElementById('filterCsvImportStatus');
+            status.style.display = 'block';
+            status.className = `status-message ${type}`;
+            status.textContent = message;
+        }
+        
+        // Listen for CSV import results and WebSocket sync results
         window.addEventListener('message', (event) => {
             if (event.data.pluginMessage && event.data.pluginMessage.type === 'csv-import-result') {
                 const result = event.data.pluginMessage;
-                const statusDiv = document.getElementById('csvImportStatus');
                 
+                // Handle regular CSV import results
+                const statusDiv = document.getElementById('csvImportStatus');
                 if (result.success) {
                     statusDiv.textContent = `✅ Successfully imported ${result.rowCount} rows`;
                     statusDiv.className = 'status-message success';
@@ -793,11 +1480,1059 @@
                     statusDiv.className = 'status-message error';
                 }
                 statusDiv.style.display = 'block';
+                
+                // Handle filter CSV import results
+                const filterStatusDiv = document.getElementById('filterCsvImportStatus');
+                if (filterStatusDiv && filterStatusDiv.style.display !== 'none') {
+                    if (result.success) {
+                        filterStatusDiv.textContent = `✅ Successfully imported ${result.rowCount} rows`;
+                        filterStatusDiv.className = 'status-message success';
+                    } else {
+                        filterStatusDiv.textContent = `❌ Import failed: ${result.error}`;
+                        filterStatusDiv.className = 'status-message error';
+                    }
+                }
+                
+                // Handle real-time sync results
+                if (event.data.pluginMessage && event.data.pluginMessage.type === 'realtime-sync-result') {
+                    const syncResult = event.data.pluginMessage;
+                    const syncStatusDiv = document.getElementById('realtime-sync-status');
+                    
+                    if (syncStatusDiv) {
+                        syncStatusDiv.style.display = 'block';
+                        
+                        if (syncResult.success) {
+                            syncStatusDiv.className = 'status-message success';
+                            syncStatusDiv.textContent = syncResult.message || 'Real-time sync successful';
+                            
+                            // Update connection status
+                            if (syncResult.connected) {
+                                updateConnectionStatus(true, syncResult.connectionDetails);
+                            }
+                            
+                            // Update sync info
+                            if (syncResult.lastSync || syncResult.variablesUpdated) {
+                                updateSyncInfo(syncResult.lastSync, syncResult.variablesUpdated);
+                            }
+                        } else {
+                            syncStatusDiv.className = 'status-message error';
+                            syncStatusDiv.textContent = syncResult.error || 'Real-time sync failed';
+                            
+                            // Update connection status
+                            updateConnectionStatus(false, syncResult.error);
+                        }
+                    }
+                }
+                
+                // Handle Google auth results
+                if (event.data.pluginMessage && event.data.pluginMessage.type === 'google-auth-result') {
+                    const authResult = event.data.pluginMessage;
+                    const syncStatusDiv = document.getElementById('realtime-sync-status');
+                    
+                    if (syncStatusDiv) {
+                        syncStatusDiv.style.display = 'block';
+                        
+                        if (authResult.success) {
+                            syncStatusDiv.className = 'status-message success';
+                            syncStatusDiv.textContent = 'Successfully connected to Google';
+                            
+                            // Show sheet selection
+                            document.getElementById('auth-section').style.display = 'none';
+                            document.getElementById('sheet-selection').style.display = 'block';
+                            
+                            // Load user's spreadsheets
+                            if (authResult.sheets) {
+                                const sheetSelect = document.getElementById('sheetSelect');
+                                sheetSelect.innerHTML = '<option value="">Select a spreadsheet...</option>';
+                                authResult.sheets.forEach(sheet => {
+                                    const option = document.createElement('option');
+                                    option.value = sheet.id;
+                                    option.textContent = sheet.name;
+                                    sheetSelect.appendChild(option);
+                                });
+                            }
+                        } else {
+                            syncStatusDiv.className = 'status-message error';
+                            syncStatusDiv.textContent = authResult.error || 'Google authentication failed';
+                        }
+                    }
+                }
+                
+                // Handle WebSocket sync results
+                if (event.data.pluginMessage && event.data.pluginMessage.type === 'websocket-sync-result') {
+                    const syncResult = event.data.pluginMessage;
+                    
+                    if (syncResult.success) {
+                        addTestResult(`✅ WebSocket sync variables created! ${syncResult.variableCount} variables from ${syncResult.rowCount} rows`, 'success');
+                    } else {
+                        addTestResult(`❌ WebSocket sync failed: ${syncResult.error}`, 'error');
+                    }
+                }
+                
+                // Handle WebSocket sync update results
+                if (event.data.pluginMessage && event.data.pluginMessage.type === 'websocket-sync-update-result') {
+                    const updateResult = event.data.pluginMessage;
+                    
+                    if (updateResult.success) {
+                        addTestResult(`✅ Variables updated! ${updateResult.updatedCount} values changed`, 'success');
+                    } else {
+                        addTestResult(`❌ Variable update failed: ${updateResult.error}`, 'error');
+                    }
+                }
             }
         });
         
+        // Real-Time Sync functionality (Phase 2)
+        let realTimeSyncEnabled = false;
+        let googleAuth = null;
+        let websocketClient = null;
+        let syncManager = null;
+        
+        // Initialize real-time sync features
+        function initializeRealTimeSync() {
+            // FORCE ENABLE FOR WEBSOCKET TESTING - Always enable real-time sync
+            console.log('🚀 Force-enabling Real-Time Sync for WebSocket testing');
+            realTimeSyncEnabled = true;
+            
+            // Show the real-time sync tab (it's already visible since it's the only tab)
+            const realtimeTab = document.querySelector('[data-tab="realtime-sync"]');
+            if (realtimeTab) {
+                realtimeTab.style.display = 'block';
+                console.log('✅ Real-Time Sync tab enabled');
+            }
+            
+            updateSyncFeatureStatus('enabled');
+            
+            // Set up event listeners
+            setupRealTimeSyncEventListeners();
+            
+            // Load collections for sync
+            loadCollectionsForSync();
+        }
+        
+        function updateSyncFeatureStatus(status) {
+            const statusDiv = document.getElementById('sync-feature-status');
+            const statusText = document.getElementById('sync-status-text');
+            
+            statusDiv.style.display = 'block';
+            
+            switch (status) {
+                case 'enabled':
+                    statusDiv.className = 'status-message success';
+                    statusText.textContent = 'Enabled - Real-time sync is available';
+                    break;
+                case 'disabled':
+                    statusDiv.className = 'status-message error';
+                    statusText.textContent = 'Disabled - Feature not available in this version';
+                    break;
+                case 'loading':
+                    statusDiv.className = 'status-message loading';
+                    statusText.textContent = 'Loading...';
+                    break;
+            }
+        }
+        
+        function setupRealTimeSyncEventListeners() {
+            // Google Connect button
+            document.getElementById('connectGoogleBtn').addEventListener('click', handleGoogleConnect);
+            
+            // Start Sync button
+            document.getElementById('startSyncBtn').addEventListener('click', handleStartSync);
+            
+            // Stop Sync button
+            document.getElementById('stopSyncBtn').addEventListener('click', handleStopSync);
+            
+            // Sheet selection change
+            document.getElementById('sheetSelect').addEventListener('change', handleSheetSelection);
+        }
+        
+        function handleGoogleConnect() {
+            showSyncStatus('Connecting to Google...', 'loading');
+            
+            // Send message to plugin to start OAuth flow
+            parent.postMessage({
+                pluginMessage: {
+                    type: 'google-auth-start'
+                }
+            }, '*');
+        }
+        
+        function handleStartSync() {
+            const sheetId = document.getElementById('sheetSelect').value;
+            const collectionId = document.getElementById('collectionSelect').value;
+            
+            if (!sheetId || !collectionId) {
+                showSyncStatus('Please select both a spreadsheet and collection', 'error');
+                return;
+            }
+            
+            showSyncStatus('Starting real-time sync...', 'loading');
+            
+            parent.postMessage({
+                pluginMessage: {
+                    type: 'start-realtime-sync',
+                    sheetId: sheetId,
+                    collectionId: collectionId,
+                    config: {
+                        autoSync: document.getElementById('autoSyncEnabled').checked,
+                        interval: document.getElementById('syncInterval').value,
+                        notifications: document.getElementById('notifyOnChange').checked
+                    }
+                }
+            }, '*');
+        }
+        
+        function handleStopSync() {
+            showSyncStatus('Stopping sync...', 'loading');
+            
+            parent.postMessage({
+                pluginMessage: {
+                    type: 'stop-realtime-sync'
+                }
+            }, '*');
+        }
+        
+        function handleSheetSelection() {
+            const sheetId = document.getElementById('sheetSelect').value;
+            const startBtn = document.getElementById('startSyncBtn');
+            
+            if (sheetId && document.getElementById('collectionSelect').value) {
+                startBtn.disabled = false;
+            } else {
+                startBtn.disabled = true;
+            }
+        }
+        
+        function loadCollectionsForSync() {
+            // Load collections for the sync dropdown
+            parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+        }
+        
+        function showSyncStatus(message, type) {
+            const statusDiv = document.getElementById('realtime-sync-status');
+            statusDiv.style.display = 'block';
+            statusDiv.className = `status-message ${type}`;
+            statusDiv.textContent = message;
+        }
+        
+        function updateConnectionStatus(connected, details = '') {
+            const indicator = document.getElementById('connection-indicator');
+            const text = document.getElementById('connection-text');
+            const detailsSpan = document.getElementById('connection-details');
+            
+            if (connected) {
+                indicator.style.background = '#28a745';
+                text.textContent = 'Connected';
+                detailsSpan.textContent = details || 'Connected';
+            } else {
+                indicator.style.background = '#dc3545';
+                text.textContent = 'Disconnected';
+                detailsSpan.textContent = details || 'Disconnected';
+            }
+        }
+        
+        function updateSyncInfo(lastSync, variablesUpdated) {
+            document.getElementById('last-sync').textContent = lastSync || 'Never';
+            document.getElementById('variables-updated').textContent = variablesUpdated || '0';
+        }
+        
+        // Phase 3 Testing Interface Functions
+        function addTestResult(message, type = 'info') {
+            const resultsDiv = document.getElementById('uploadStatus');
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : type === 'warning' ? '#ffc107' : '#6c757d';
+            
+            const resultDiv = document.createElement('div');
+            resultDiv.style.color = color;
+            resultDiv.style.marginBottom = '4px';
+            resultDiv.innerHTML = `[${timestamp}] ${message}`;
+            
+            resultsDiv.appendChild(resultDiv);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+        
+        function clearTestResults() {
+            const resultsDiv = document.getElementById('uploadStatus');
+            resultsDiv.innerHTML = '<div style="color: #6c757d;">Ready to upload CSV file...</div>';
+        }
+        
+        // Removed testAllComponents function - no longer needed
+        
+        // Removed testDataMapper function - no longer needed
+        
+        // Removed testSimpleFunction function - no longer needed
+        
+        // Removed testWebSocket function - no longer needed
+        
+        // CSV Upload Functions - MOVED TO EARLY SCRIPT BLOCK TO AVOID REFERENCE ERRORS
+        
+        // uploadCSVFile function - MOVED TO EARLY SCRIPT BLOCK TO AVOID REFERENCE ERRORS
+        
+        // testCSVUpload function - MOVED TO EARLY SCRIPT BLOCK TO AVOID REFERENCE ERRORS
+        
+        console.log('✅ CSV upload functions defined');
+        
+        // IMMEDIATE INITIALIZATION - Don't wait for DOMContentLoaded
+        console.log('🚀 IMMEDIATE: Starting WebSocket testing interface initialization');
+        
+        // Try multiple initialization strategies
+        function tryInitialize() {
+            console.log('🔧 Attempting to initialize testing interface...');
+            
+            try {
+                // Force enable real-time sync
+                initializeRealTimeSync();
+                
+                // Set up testing buttons
+                setupTestingButtons();
+                
+                console.log('✅ Initialization successful!');
+                
+            } catch (error) {
+                console.error('❌ Initialization failed:', error);
+                // Retry after a short delay
+                setTimeout(tryInitialize, 500);
+            }
+        }
+        
+        function setupTestingButtons() {
+            console.log('🔧 Setting up testing button event listeners...');
+            
+            // Setup CSV upload functionality
+            console.log('✅ CSV upload interface initialized');
+            console.log('📁 File input available:', !!document.getElementById('csvFileInput'));
+            console.log('📁 Upload button available:', !!document.getElementById('uploadCSVBtn'));
+            console.log('🧪 Test button available:', !!document.getElementById('testCSVUpload'));
+            
+            console.log('🎯 Testing interface setup complete! Try clicking the buttons.');
+        }
+        
+        // Try immediate initialization
+        tryInitialize();
+        
+        // Also try on DOMContentLoaded as backup
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 DOM Content Loaded - Backup initialization');
+            setTimeout(tryInitialize, 100);
+        });
+        
+        // Try again after a longer delay as final backup
+        setTimeout(tryInitialize, 1000);
+        
         // Initial load of collections for duplicate tab
         parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+    </script>
+    
+    <!-- Phase 1 Infrastructure (Figma-compatible) -->
+    <script src="shared/figma-compatible.js"></script>
+    
+    <!-- Phase 3: Real-Time Sync Components (Inlined for Figma compatibility) -->
+    <script>
+        console.log('Phase 3 script loading...');
+        
+        try {
+            // Simple test first
+            window.testPhase3 = function() {
+                console.log('Phase 3 test function available');
+            };
+            
+            console.log('testPhase3 created:', typeof window.testPhase3);
+        } catch (error) {
+            console.error('Error creating testPhase3:', error);
+        }
+        
+        // Simple DataMapper for testing
+        window.DataMapper = class DataMapper {
+            constructor() {
+                console.log('DataMapper constructor called');
+            }
+            
+            transformColorValue(value) {
+                console.log('transformColorValue called with:', value);
+                if (value === '#FF0000') {
+                    return { r: 1, g: 0, b: 0 };
+                }
+                throw new Error('Unsupported color format: ' + value);
+            }
+            
+            transformNumberValue(value) {
+                console.log('transformNumberValue called with:', value);
+                const num = parseFloat(value);
+                if (isNaN(num)) {
+                    throw new Error('Invalid number: ' + value);
+                }
+                return num;
+            }
+            
+            transformStringValue(value) {
+                console.log('transformStringValue called with:', value);
+                return String(value || '');
+            }
+        };
+        
+        console.log('DataMapper created:', typeof window.DataMapper);
+        
+        // Google OAuth2 Authentication for Figma Plugin
+        // Phase 3: Real-time sync authentication
+        
+        window.GoogleOAuth = class GoogleOAuth {
+            constructor() {
+                this.clientId = 'YOUR_GOOGLE_CLIENT_ID'; // Replace with actual client ID
+                this.redirectUri = 'https://your-domain.com/oauth/callback'; // Replace with actual redirect URI
+                this.scopes = [
+                    'https://www.googleapis.com/auth/spreadsheets.readonly',
+                    'https://www.googleapis.com/auth/drive.readonly'
+                ];
+                this.accessToken = null;
+                this.refreshToken = null;
+                this.tokenExpiry = null;
+                this.isAuthenticated = false;
+                
+                // Load stored tokens if available
+                this.loadStoredTokens();
+            }
+            
+            // Load tokens from secure storage
+            loadStoredTokens() {
+                try {
+                    const stored = localStorage.getItem('google_oauth_tokens');
+                    if (stored) {
+                        const tokens = JSON.parse(stored);
+                        this.accessToken = tokens.accessToken;
+                        this.refreshToken = tokens.refreshToken;
+                        this.tokenExpiry = tokens.expiry;
+                        
+                        // Check if token is still valid
+                        if (this.tokenExpiry && Date.now() < this.tokenExpiry) {
+                            this.isAuthenticated = true;
+                            console.log('Google OAuth: Loaded valid stored tokens');
+                        } else {
+                            console.log('Google OAuth: Stored tokens expired, need refresh');
+                            this.isAuthenticated = false;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Google OAuth: Failed to load stored tokens', error);
+                    this.isAuthenticated = false;
+                }
+            }
+            
+            // Check if user is authenticated
+            isUserAuthenticated() {
+                return this.isAuthenticated && this.accessToken && Date.now() < this.tokenExpiry;
+            }
+            
+            // Start OAuth2 flow (placeholder)
+            async startAuthFlow() {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        reject(new Error('Google OAuth not configured. Please set up OAuth credentials.'));
+                    }, 100);
+                });
+            }
+            
+            // Get user info (placeholder)
+            async getUserInfo() {
+                throw new Error('Google OAuth not configured');
+            }
+            
+            // Sign out
+            signOut() {
+                try {
+                    localStorage.removeItem('google_oauth_tokens');
+                    this.accessToken = null;
+                    this.refreshToken = null;
+                    this.tokenExpiry = null;
+                    this.isAuthenticated = false;
+                    console.log('Google OAuth: User signed out');
+                } catch (error) {
+                    console.error('Google OAuth: Sign out failed', error);
+                }
+            }
+        }
+
+        // Google Sheets API Client for Figma Plugin
+        // Phase 3: Real-time sync with Google Sheets
+        
+        window.GoogleSheetsAPI = class GoogleSheetsAPI {
+            constructor(oauthClient) {
+                this.oauth = oauthClient;
+                this.baseUrl = 'https://sheets.googleapis.com/v4/spreadsheets';
+                this.driveUrl = 'https://www.googleapis.com/drive/v3';
+            }
+            
+            // Get user's spreadsheets (placeholder)
+            async getUserSpreadsheets() {
+                throw new Error('Google Sheets API not configured');
+            }
+            
+            // Get spreadsheet metadata (placeholder)
+            async getSpreadsheetInfo(spreadsheetId) {
+                throw new Error('Google Sheets API not configured');
+            }
+            
+            // Get sheet data (placeholder)
+            async getSheetData(spreadsheetId, range, options = {}) {
+                throw new Error('Google Sheets API not configured');
+            }
+            
+            // Validate spreadsheet access (placeholder)
+            async validateAccess(spreadsheetId) {
+                return false;
+            }
+        }
+
+        // WebSocket Client for Real-Time Sync
+        // Phase 3: Real-time communication infrastructure
+        
+        window.WebSocketClient = class WebSocketClient {
+            constructor() {
+                this.ws = null;
+                this.url = 'ws://localhost:3001'; // Connect to our local WebSocket server
+                this.isConnected = false;
+                this.reconnectAttempts = 0;
+                this.maxReconnectAttempts = 5;
+                this.messageHandlers = new Map();
+                this.connectionTimeout = null;
+                this.currentSpreadsheetId = null; // Store the current spreadsheet ID
+            }
+            
+            // Connect to WebSocket server
+            async connect(options = {}) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        console.log('🔌 Connecting to WebSocket server:', this.url);
+                        
+                        this.ws = new WebSocket(this.url);
+                        
+                        // Connection timeout
+                        this.connectionTimeout = setTimeout(() => {
+                            reject(new Error('Connection timeout'));
+                        }, 5000);
+                        
+                        this.ws.onopen = () => {
+                            console.log('✅ WebSocket connected');
+                            this.isConnected = true;
+                            this.reconnectAttempts = 0;
+                            clearTimeout(this.connectionTimeout);
+                            resolve();
+                        };
+                        
+                        this.ws.onmessage = (event) => {
+                            try {
+                                const message = JSON.parse(event.data);
+                                console.log('📨 Received message:', message.type);
+                                this.handleMessage(message);
+                            } catch (error) {
+                                console.error('❌ Error parsing message:', error);
+                            }
+                        };
+                        
+                        this.ws.onclose = (event) => {
+                            console.log('🔌 WebSocket disconnected:', event.code, event.reason);
+                            this.isConnected = false;
+                            clearTimeout(this.connectionTimeout);
+                            
+                            if (!event.wasClean && this.reconnectAttempts < this.maxReconnectAttempts) {
+                                this.handleReconnect();
+                            }
+                        };
+                        
+                        this.ws.onerror = (error) => {
+                            console.error('❌ WebSocket error:', error);
+                            clearTimeout(this.connectionTimeout);
+                            reject(error);
+                        };
+                        
+                    } catch (error) {
+                        clearTimeout(this.connectionTimeout);
+                        reject(error);
+                    }
+                });
+            }
+            
+            // Send message to server
+            send(type, data = {}) {
+                if (!this.isConnected || !this.ws) {
+                    console.warn('⚠️ WebSocket not connected');
+                    return false;
+                }
+                
+                // Store spreadsheetId for start-sync messages
+                if (type === 'start-sync' && data.spreadsheetId) {
+                    this.currentSpreadsheetId = data.spreadsheetId;
+                    console.log('💾 Stored current spreadsheetId:', data.spreadsheetId);
+                }
+                
+                const message = {
+                    type,
+                    data,
+                    timestamp: new Date().toISOString()
+                };
+                
+                try {
+                    this.ws.send(JSON.stringify(message));
+                    console.log('📤 Sent message:', type);
+                    return true;
+                } catch (error) {
+                    console.error('❌ Error sending message:', error);
+                    return false;
+                }
+            }
+            
+            // Handle incoming messages
+            handleMessage(message) {
+                const handlers = this.messageHandlers.get(message.type) || [];
+                handlers.forEach(handler => {
+                    try {
+                        handler(message.data, message);
+                    } catch (error) {
+                        console.error(`❌ Error in message handler for ${message.type}:`, error);
+                    }
+                });
+            }
+            
+            // Handle reconnection
+            handleReconnect() {
+                this.reconnectAttempts++;
+                const delay = Math.min(1000 * Math.pow(2, this.reconnectAttempts), 30000);
+                
+                console.log(`🔄 Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts})`);
+                
+                setTimeout(() => {
+                    this.connect().catch(error => {
+                        console.error('❌ Reconnection failed:', error);
+                    });
+                }, delay);
+            }
+            
+            // Register message handler
+            on(event, handler) {
+                if (!this.messageHandlers.has(event)) {
+                    this.messageHandlers.set(event, []);
+                }
+                this.messageHandlers.get(event).push(handler);
+            }
+            
+            // Remove message handler
+            off(event, handler) {
+                if (this.messageHandlers.has(event)) {
+                    const handlers = this.messageHandlers.get(event);
+                    const index = handlers.indexOf(handler);
+                    if (index > -1) {
+                        handlers.splice(index, 1);
+                    }
+                }
+            }
+            
+            // Disconnect from server
+            disconnect() {
+                if (this.ws) {
+                    this.ws.close(1000, 'Client disconnect');
+                    this.ws = null;
+                }
+                this.isConnected = false;
+                console.log('WebSocket: Disconnected');
+            }
+        }
+
+        // Data Mapper for Google Sheets to Figma Variables
+        // Phase 3: Transform spreadsheet data to Figma variables
+        
+        window.DataMapper = class DataMapper {
+            constructor() {
+                this.variableTypes = {
+                    COLOR: 'COLOR',
+                    FLOAT: 'FLOAT',
+                    STRING: 'STRING'
+                };
+            }
+            
+            // Transform color value
+            transformColorValue(value) {
+                if (typeof value !== 'string') {
+                    throw new Error('Color value must be a string');
+                }
+                
+                // Convert to RGB format for Figma
+                if (value.startsWith('#')) {
+                    // Hex to RGB
+                    const hex = value.replace('#', '');
+                    const r = parseInt(hex.substr(0, 2), 16) / 255;
+                    const g = parseInt(hex.substr(2, 2), 16) / 255;
+                    const b = parseInt(hex.substr(4, 2), 16) / 255;
+                    return { r, g, b };
+                } else if (value.startsWith('rgb')) {
+                    // RGB/RGBA to RGB
+                    const matches = value.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+                    if (matches) {
+                        const r = parseInt(matches[1]) / 255;
+                        const g = parseInt(matches[2]) / 255;
+                        const b = parseInt(matches[3]) / 255;
+                        return { r, g, b };
+                    }
+                }
+                
+                // Named colors (basic mapping)
+                const namedColors = {
+                    'red': { r: 1, g: 0, b: 0 },
+                    'blue': { r: 0, g: 0, b: 1 },
+                    'green': { r: 0, g: 1, b: 0 },
+                    'yellow': { r: 1, g: 1, b: 0 },
+                    'orange': { r: 1, g: 0.5, b: 0 },
+                    'purple': { r: 0.5, g: 0, b: 1 },
+                    'pink': { r: 1, g: 0.5, b: 0.5 },
+                    'black': { r: 0, g: 0, b: 0 },
+                    'white': { r: 1, g: 1, b: 1 },
+                    'gray': { r: 0.5, g: 0.5, b: 0.5 },
+                    'grey': { r: 0.5, g: 0.5, b: 0.5 }
+                };
+                
+                if (namedColors[value.toLowerCase()]) {
+                    return namedColors[value.toLowerCase()];
+                }
+                
+                throw new Error(`Unsupported color format: ${value}`);
+            }
+            
+            // Transform number value
+            transformNumberValue(value) {
+                if (typeof value === 'number') {
+                    return value;
+                }
+                
+                const num = parseFloat(value);
+                if (isNaN(num) || !isFinite(num)) {
+                    throw new Error(`Invalid number value: ${value}`);
+                }
+                
+                return num;
+            }
+            
+            // Transform string value
+            transformStringValue(value) {
+                return String(value || '');
+            }
+        }
+
+        // Sync Manager for Real-Time Google Sheets to Figma Variables
+        // Phase 3: Main sync coordination
+        
+        window.SyncManager = class SyncManager {
+            constructor() {
+                this.oauth = null;
+                this.sheetsAPI = null;
+                this.websocketClient = null;
+                this.dataMapper = null;
+                this.activeSyncs = new Map();
+                this.isInitialized = false;
+            }
+            
+            // Initialize sync manager with dependencies
+            async initialize(oauth, sheetsAPI, websocketClient, dataMapper) {
+                try {
+                    console.log('SyncManager: Initializing...');
+                    
+                    this.oauth = oauth;
+                    this.sheetsAPI = sheetsAPI;
+                    this.websocketClient = websocketClient;
+                    this.dataMapper = dataMapper;
+                    
+                    this.isInitialized = true;
+                    console.log('SyncManager: Initialized successfully');
+                    
+                } catch (error) {
+                    console.error('SyncManager: Initialization failed', error);
+                    throw error;
+                }
+            }
+            
+            // Start real-time sync
+            async startSync(spreadsheetId, collectionId, config = {}) {
+                try {
+                    console.log('🔄 SyncManager: Starting sync for', { spreadsheetId, collectionId });
+                    
+                    if (!this.isInitialized) {
+                        throw new Error('SyncManager not initialized');
+                    }
+                    
+                    if (!this.websocketClient) {
+                        throw new Error('WebSocket client not available');
+                    }
+                    
+                    // Connect to WebSocket if not connected
+                    if (!this.websocketClient.isConnected) {
+                        console.log('🔌 Connecting to WebSocket...');
+                        await this.websocketClient.connect();
+                    }
+                    
+                    // Set up message handlers
+                    this.setupWebSocketHandlers();
+                    
+                    // Start sync with server
+                    const syncConfig = {
+                        spreadsheetId,
+                        collectionId,
+                        syncInterval: config.syncInterval || 5000,
+                        ...config
+                    };
+                    
+                    const success = this.websocketClient.send('start-sync', syncConfig);
+                    
+                    if (success) {
+                        this.activeSyncs.set(spreadsheetId, {
+                            collectionId,
+                            config: syncConfig,
+                            startTime: new Date(),
+                            status: 'active'
+                        });
+                        
+                        console.log('✅ Sync started successfully');
+                        return { 
+                            success: true, 
+                            message: 'Real-time sync started',
+                            syncConfig 
+                        };
+                    } else {
+                        throw new Error('Failed to send start-sync message');
+                    }
+                    
+                } catch (error) {
+                    console.error('❌ SyncManager: Start sync failed', error);
+                    return { 
+                        success: false, 
+                        message: `Failed to start sync: ${error.message}` 
+                    };
+                }
+            }
+            
+            // Set up WebSocket message handlers
+            setupWebSocketHandlers() {
+                // Handle sheet updates
+                this.websocketClient.on('sheet-update', (data) => {
+                    console.log('📊 Received sheet update:', data);
+                    this.handleSheetUpdate(data);
+                });
+                
+                // Handle sync status messages
+                this.websocketClient.on('sync-started', (data) => {
+                    console.log('✅ Sync started on server:', data);
+                    this.updateSyncStatus(data.spreadsheetId, 'active');
+                });
+                
+                this.websocketClient.on('sync-stopped', (data) => {
+                    console.log('⏹️ Sync stopped on server:', data);
+                    this.updateSyncStatus(data.spreadsheetId, 'stopped');
+                });
+                
+                // Handle connection status
+                this.websocketClient.on('connection', (data) => {
+                    console.log('🔌 WebSocket connection established:', data);
+                });
+                
+                // Handle errors
+                this.websocketClient.on('error', (data) => {
+                    console.error('❌ WebSocket error:', data);
+                });
+            }
+            
+            // Handle incoming sheet updates
+            handleSheetUpdate(data) {
+                try {
+                    console.log('🔄 Processing sheet update:', data);
+                    
+                    // Transform data using our data mapper
+                    if (this.dataMapper && data.changes) {
+                        const transformedData = this.transformSheetData(data.changes, data.spreadsheetId);
+                        console.log('📊 Transformed data:', transformedData);
+                        
+                        // Send to Figma plugin backend
+                        this.sendToFigma('update-variables', {
+                            collectionId: data.collectionId,
+                            variables: transformedData,
+                            source: 'websocket-sync'
+                        });
+                    }
+                    
+                } catch (error) {
+                    console.error('❌ Error handling sheet update:', error);
+                }
+            }
+            
+            // Transform sheet data to Figma variables format
+            transformSheetData(changes, spreadsheetId) {
+                const variables = {};
+                
+                // Simple transformation - in a real implementation, this would be more sophisticated
+                Object.keys(changes).forEach(rowIndex => {
+                    const rowChanges = changes[rowIndex];
+                    Object.keys(rowChanges).forEach(colIndex => {
+                        const value = rowChanges[colIndex];
+                        const variableName = `sheet_${spreadsheetId}_row_${rowIndex}_col_${colIndex}`;
+                        variables[variableName] = value;
+                    });
+                });
+                
+                return variables;
+            }
+            
+            // Send data to Figma plugin backend
+            sendToFigma(type, data) {
+                try {
+                    // This would send a message to the plugin backend
+                    // For now, we'll just log it
+                    console.log('📤 Sending to Figma backend:', type, data);
+                    
+                    // In a real implementation, this would use postMessage to communicate
+                    // with the plugin backend (code.js)
+                    
+                } catch (error) {
+                    console.error('❌ Error sending to Figma:', error);
+                }
+            }
+            
+            // Update sync status
+            updateSyncStatus(spreadsheetId, status) {
+                const sync = this.activeSyncs.get(spreadsheetId);
+                if (sync) {
+                    sync.status = status;
+                    sync.lastUpdate = new Date();
+                }
+            }
+            
+            // Stop real-time sync
+            async stopSync(spreadsheetId) {
+                try {
+                    console.log('⏹️ SyncManager: Stopping sync for', spreadsheetId);
+                    
+                    if (this.websocketClient && this.websocketClient.isConnected) {
+                        this.websocketClient.send('stop-sync', { spreadsheetId });
+                    }
+                    
+                    this.activeSyncs.delete(spreadsheetId);
+                    
+                    console.log('✅ Sync stopped successfully');
+                    return {
+                        success: true,
+                        message: 'Real-time sync stopped'
+                    };
+                    
+                } catch (error) {
+                    console.error('❌ SyncManager: Stop sync failed', error);
+                    return {
+                        success: false,
+                        message: `Failed to stop sync: ${error.message}`
+                    };
+                }
+            }
+            
+            // Get sync status
+            getSyncStatus() {
+                return {
+                    activeSyncs: [],
+                    totalVariablesUpdated: 0,
+                    websocketConnected: false
+                };
+            }
+        }
+        
+        console.log('Phase 3 script loaded successfully!');
+        console.log('GoogleOAuth:', typeof window.GoogleOAuth);
+        console.log('DataMapper:', typeof window.DataMapper);
+        console.log('SyncManager:', typeof window.SyncManager);
+        console.log('testPhase3:', typeof window.testPhase3);
+        
+        // Make testing functions globally available
+        // Note: testAllComponents, testDataMapper, testSimpleFunction, and testWebSocket were removed
+        
+        // Make WebSocketClient globally available for console testing
+        window.WebSocketClient = window.WebSocketClient;
+        
+        console.log('✅ Testing functions made globally available');
+        console.log('Available functions:', {
+            WebSocketClient: typeof window.WebSocketClient,
+            testCSVUpload: typeof window.testCSVUpload,
+            handleCSVFileSelect: typeof window.handleCSVFileSelect
+        });
+        
+        // Add a global test function for spreadsheet 2
+        window.testSpreadsheet2 = async function() {
+            console.log('🧪 Testing with test-spreadsheet-2...');
+            
+            const wsClient = new window.WebSocketClient();
+            
+            try {
+                // Connect to WebSocket
+                await wsClient.connect();
+                console.log('✅ Connected to WebSocket');
+                
+                // Start sync with spreadsheet 2 (Company Metrics)
+                wsClient.send('start-sync', {
+                    spreadsheetId: 'test-spreadsheet-2',
+                    collectionId: 'company-metrics',
+                    syncInterval: 5000
+                });
+                
+                console.log('🔄 Started sync with test-spreadsheet-2');
+                
+                // Listen for real-time updates
+                wsClient.on('sheet-update', (data) => {
+                    console.log('📊 Real-time update received:', data);
+                });
+                
+                wsClient.on('sync-started', (data) => {
+                    console.log('✅ Sync started:', data);
+                });
+                
+                console.log('🎯 Listening for updates... Watch for data changes every 10 seconds!');
+                
+                return wsClient; // Return the client so you can disconnect later if needed
+                
+            } catch (error) {
+                console.error('❌ Test failed:', error);
+                throw error;
+            }
+        };
+        
+        console.log('✅ Global testSpreadsheet2 function added');
+        
+        // Add function to upload your own CSV content
+        window.uploadMyCSV = async function(csvContent, fileName = 'my-data.csv') {
+            console.log('📊 Uploading your CSV data...');
+            
+            try {
+                const response = await fetch('http://localhost:3001/api/upload-csv', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fileName: fileName,
+                        csvContent: csvContent
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    console.log('✅ CSV uploaded successfully!');
+                    console.log('📋 Spreadsheet ID:', result.spreadsheetId);
+                    console.log('📊 Headers:', result.headers);
+                    console.log('📈 Row Count:', result.rowCount);
+                    
+                    // Return the spreadsheet ID for testing
+                    return result.spreadsheetId;
+                } else {
+                    console.error('❌ Upload failed:', result.error);
+                    return null;
+                }
+                
+            } catch (error) {
+                console.error('❌ Upload error:', error);
+                return null;
+            }
+        };
+        
+        console.log('✅ Global uploadMyCSV function added');
+        console.log('✅ CSV upload functions already defined earlier');
     </script>
 </body>
 </html>

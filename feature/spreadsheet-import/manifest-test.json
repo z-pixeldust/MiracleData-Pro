@@ -8,6 +8,5 @@
     "figma"
   ],
   "permissions": ["currentuser"],
-  "capabilities": [],
-  "version": "1.0.3"
+  "capabilities": []
 }

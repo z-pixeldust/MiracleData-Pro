@@ -2,6 +2,9 @@
 
 // All data will be fetched live from APIs.
 
+// Phase 1: Safe infrastructure (non-breaking)
+// Figma-compatible infrastructure loaded via script tag in HTML
+
 // Define fallback data (minimal structure to prevent errors)
 let SPORTS_DATA = {
   NBA: [
@@ -533,7 +536,7 @@ figma.showUI(__html__, {
 });
 
 // CSV Import Functionality
-function importCSVData(csvText, collectionName) {
+async function importCSVData(csvText, collectionName) {
     console.log('Starting CSV import for collection:', collectionName);
     
     try {
@@ -593,6 +596,8 @@ function importCSVData(csvText, collectionName) {
                 firstCell.includes('design') || 
                 firstCell.includes('note') ||
                 firstCell.includes('file here') ||
+                firstCell.includes('instructions') ||
+                firstCell.includes('comment') ||
                 firstCell.startsWith('(') ||
                 firstCell === '') {
                 console.log(`Skipping metadata row: ${row[0]}`);
@@ -639,26 +644,52 @@ function importCSVData(csvText, collectionName) {
             });
             
             // Create variables for each row
-            data.forEach((row, rowIndex) => {
+            for (let rowIndex = 0; rowIndex < data.length; rowIndex++) {
+                const row = data[rowIndex];
                 const variableName = row[0] || `Variable ${rowIndex + 1}`;
                 
                 // Skip empty rows
                 if (!variableName.trim()) {
                     console.log(`Skipping empty row ${rowIndex + 1}`);
-                    return;
+                    continue;
                 }
                 
-                // Determine variable type (check first non-empty value)
+                // Determine variable type (only COLOR if ALL values are colors)
                 let variableType = 'STRING';
+                let allValuesAreColors = true;
+                
                 for (let i = 1; i < row.length; i++) {
-                    if (row[i] && row[i].startsWith('#')) {
-                        variableType = 'COLOR';
-                        break;
+                    const value = row[i];
+                    if (value && value.trim() !== '') {
+                        if (!value.startsWith('#')) {
+                            allValuesAreColors = false;
+                            break;
+                        }
                     }
                 }
                 
+                if (allValuesAreColors && row.length > 1) {
+                    variableType = 'COLOR';
+                }
+                
                 try {
-                    const variable = figma.variables.createVariable(variableName, collection, variableType);
+                    console.log(`Creating variable: "${variableName}" with type: ${variableType}`);
+                    console.log(`Collection:`, collection);
+                    console.log(`Collection variables:`, collection.variables);
+                    
+                    // Check if variable already exists using Figma API
+                    const existingVariables = await figma.variables.getLocalVariables();
+                    const existingVariable = existingVariables.find(v => v.name === variableName && v.variableCollectionId === collection.id);
+                    let variable;
+                    
+                    if (existingVariable) {
+                        console.log(`Variable "${variableName}" already exists, skipping creation`);
+                        variable = existingVariable;
+                    } else {
+                        console.log(`Creating new variable: "${variableName}"`);
+                        variable = figma.variables.createVariable(variableName, collection, variableType);
+                        console.log(`Created variable:`, variable);
+                    }
                     
                     // Set values for each mode
                     headers.slice(1).forEach((_, modeIndex) => {
@@ -675,9 +706,9 @@ function importCSVData(csvText, collectionName) {
                         }
                     });
                 } catch (error) {
-                    console.log(`Error creating variable ${variableName}:`, error);
+                    console.error(`Error creating variable ${variableName}:`, error);
                 }
-            });
+            }
             
         } else {
             // SINGLE MODE: A=Variable Name, B=Value
@@ -750,6 +781,57 @@ function importCSVData(csvText, collectionName) {
             error: error.message
         };
     }
+}
+
+// Phase 1: Register existing services (non-breaking)
+// This allows new features to use existing functionality through the service registry
+if (typeof services !== 'undefined' && services) {
+  try {
+    // Register existing functionality as services
+    services.register('variableManager', {
+      createVariable: figma.variables.createVariable,
+      createCollection: figma.variables.createVariableCollection,
+      getCollections: figma.variables.getLocalVariableCollectionsAsync
+    });
+    
+    if (typeof importCSVData === 'function') {
+      services.register('csvImporter', {
+        importData: importCSVData
+      });
+    }
+    
+    if (typeof fetchNBAData === 'function') {
+      services.register('sportsApi', {
+        fetchNBA: fetchNBAData,
+        fetchNFL: fetchNFLData,
+        fetchMLB: fetchMLBData,
+        fetchNHL: fetchNHLData,
+        fetchWNBA: fetchWNBAData,
+        fetchNCAA: fetchNCAAData
+      });
+    }
+    
+    if (typeof Logger !== 'undefined' && Logger) {
+      Logger.info('Existing services registered successfully');
+    }
+  } catch (error) {
+    console.log('Service registration not available:', error.message);
+  }
+}
+
+// Phase 3: Helper functions for real-time sync
+async function getUserSpreadsheets(oauth) {
+  try {
+    if (typeof GoogleSheetsAPI !== 'undefined') {
+      const sheetsAPI = new GoogleSheetsAPI(oauth);
+      return await sheetsAPI.getUserSpreadsheets();
+    } else {
+      throw new Error('Google Sheets API not available');
+    }
+  } catch (error) {
+    console.error('Failed to get user spreadsheets:', error);
+    return [];
+  }
 }
 
 // Handle messages from the UI
@@ -994,7 +1076,7 @@ figma.ui.onmessage = async (msg) => {
         console.log('📊 CSV data length:', msg.csvText ? msg.csvText.length : 'undefined');
         console.log('📝 Collection name:', msg.collectionName);
         
-        const result = importCSVData(msg.csvText, msg.collectionName || 'CSV Import');
+        const result = await importCSVData(msg.csvText, msg.collectionName || 'CSV Import');
         
         console.log('📋 Import result:', result);
         
@@ -1006,6 +1088,314 @@ figma.ui.onmessage = async (msg) => {
             variableCount: result.variableCount,
             error: result.error
         });
+    } else if (msg.type === 'open-spreadsheet-ui') {
+        // Switch to CSV filter mode
+        figma.ui.postMessage({
+            type: 'switch-to-filter-mode'
+        });
+    } else if (msg.type === 'health-check') {
+        // Phase 1: Health check endpoint (non-breaking)
+        try {
+            if (typeof HealthMonitor !== 'undefined' && HealthMonitor) {
+                const health = await HealthMonitor.checkExistingFeatures();
+                figma.ui.postMessage({
+                    type: 'health-check-result',
+                    health
+                });
+            } else {
+                // Fallback health check
+                const health = {
+                    healthy: true,
+                    results: {
+                        plugin: { healthy: true, message: 'Plugin is running' },
+                        figma: { healthy: true, message: 'Figma API accessible' },
+                        timestamp: new Date().toISOString()
+                    }
+                };
+                
+                figma.ui.postMessage({
+                    type: 'health-check-result',
+                    health
+                });
+            }
+        } catch (error) {
+            figma.ui.postMessage({
+                type: 'health-check-result',
+                health: { healthy: false, error: error.message }
+            });
+        }
+    } else if (msg.type === 'google-auth-start') {
+        // Phase 3: Google authentication
+        try {
+            // Check if real-time sync is enabled
+            if (typeof CONFIG !== 'undefined' && CONFIG.features && CONFIG.features.realTimeSync) {
+                // Initialize Google OAuth if not already done
+                if (typeof GoogleOAuth !== 'undefined') {
+                    const oauth = new GoogleOAuth();
+                    
+                    // Check if already authenticated
+                    if (oauth.isUserAuthenticated()) {
+                        figma.ui.postMessage({
+                            type: 'google-auth-result',
+                            success: true,
+                            message: 'Already authenticated with Google',
+                            sheets: await this.getUserSpreadsheets(oauth)
+                        });
+                    } else {
+                        // Start OAuth flow
+                        const result = await oauth.startAuthFlow();
+                        
+                        if (result.success) {
+                            figma.ui.postMessage({
+                                type: 'google-auth-result',
+                                success: true,
+                                message: 'Successfully authenticated with Google',
+                                sheets: await this.getUserSpreadsheets(oauth)
+                            });
+                        } else {
+                            figma.ui.postMessage({
+                                type: 'google-auth-result',
+                                success: false,
+                                error: result.error || 'Authentication failed'
+                            });
+                        }
+                    }
+                } else {
+                    figma.ui.postMessage({
+                        type: 'google-auth-result',
+                        success: false,
+                        error: 'Google OAuth not available. Please check configuration.'
+                    });
+                }
+            } else {
+                figma.ui.postMessage({
+                    type: 'google-auth-result',
+                    success: false,
+                    error: 'Real-time sync feature is not enabled in this version.'
+                });
+            }
+        } catch (error) {
+            figma.ui.postMessage({
+                type: 'google-auth-result',
+                success: false,
+                error: error.message
+            });
+        }
+    } else if (msg.type === 'start-realtime-sync') {
+        // Phase 3: Start real-time sync
+        try {
+            // Check if real-time sync is enabled
+            if (typeof CONFIG !== 'undefined' && CONFIG.features && CONFIG.features.realTimeSync) {
+                // Initialize sync manager if not already done
+                if (typeof SyncManager !== 'undefined' && typeof GoogleOAuth !== 'undefined') {
+                    const oauth = new GoogleOAuth();
+                    const sheetsAPI = new GoogleSheetsAPI(oauth);
+                    const websocketClient = new WebSocketClient();
+                    const dataMapper = new DataMapper();
+                    const syncManager = new SyncManager();
+                    
+                    // Initialize sync manager
+                    await syncManager.initialize(oauth, sheetsAPI, websocketClient, dataMapper);
+                    
+                    // Start sync
+                    const result = await syncManager.startSync(msg.sheetId, msg.collectionId, msg.config);
+                    
+                    figma.ui.postMessage({
+                        type: 'realtime-sync-result',
+                        success: result.success,
+                        message: result.message,
+                        error: result.error,
+                        connected: websocketClient.isConnected,
+                        variablesUpdated: result.variablesUpdated,
+                        lastSync: result.lastSync
+                    });
+                } else {
+                    figma.ui.postMessage({
+                        type: 'realtime-sync-result',
+                        success: false,
+                        error: 'Sync components not available. Please check configuration.',
+                        connected: false
+                    });
+                }
+            } else {
+                figma.ui.postMessage({
+                    type: 'realtime-sync-result',
+                    success: false,
+                    error: 'Real-time sync feature is not enabled in this version.',
+                    connected: false
+                });
+            }
+        } catch (error) {
+            figma.ui.postMessage({
+                type: 'realtime-sync-result',
+                success: false,
+                error: error.message,
+                connected: false
+            });
+        }
+    } else if (msg.type === 'stop-realtime-sync') {
+        // Phase 2: Stop real-time sync (disabled by default)
+        try {
+            figma.ui.postMessage({
+                type: 'realtime-sync-result',
+                success: true,
+                message: 'Sync stopped (placeholder - feature not yet implemented)',
+                connected: false
+            });
+        } catch (error) {
+            figma.ui.postMessage({
+                type: 'realtime-sync-result',
+                success: false,
+                error: error.message,
+                connected: false
+            });
+        }
+    } else if (msg.type === 'websocket-sync-update') {
+        // Handle WebSocket sync updates - update existing variables
+        try {
+            console.log('🔄 WebSocket sync update received:', msg);
+            console.log('🔄 Updating variables from WebSocket sync:', msg.spreadsheetId);
+            
+            // Get updated CSV data from WebSocket server
+            const response = await fetch(`http://localhost:3001/api/spreadsheets/${msg.spreadsheetId}/sheets/Sheet1`);
+            const sheetData = await response.json();
+            
+            if (sheetData.data && sheetData.data.length > 0) {
+                // Find the collection by name
+                const collections = figma.variables.getLocalVariableCollections();
+                const collection = collections.find(c => c.name === msg.collectionId);
+                
+                if (collection) {
+                    // Get all variables in this collection
+                    const variables = figma.variables.getLocalVariables().filter(v => v.variableCollectionId === collection.id);
+                    
+                    // Update existing variables with new values
+                    let updatedCount = 0;
+                    sheetData.data.forEach((row, rowIndex) => {
+                        const variableName = row[0];
+                        if (variableName) {
+                            const variable = variables.find(v => v.name === variableName);
+                            if (variable) {
+                                // Update values for each mode
+                                collection.modes.forEach((mode, modeIndex) => {
+                                    if (modeIndex < sheetData.headers.length - 1) { // -1 because first column is variable name
+                                        const value = row[modeIndex + 1];
+                                        if (value) {
+                                            try {
+                                                // Convert value based on variable type
+                                                let convertedValue = value;
+                                                
+                                                if (variable.resolvedType === 'COLOR' && value.startsWith('#')) {
+                                                    // Convert hex to RGB for color variables
+                                                    convertedValue = hexToRgb(value);
+                                                } else if (variable.resolvedType === 'FLOAT' || variable.resolvedType === 'BOOLEAN') {
+                                                    // Convert to appropriate type for numeric/boolean variables
+                                                    if (variable.resolvedType === 'FLOAT') {
+                                                        convertedValue = parseFloat(value) || 0;
+                                                    } else if (variable.resolvedType === 'BOOLEAN') {
+                                                        convertedValue = value.toLowerCase() === 'true' || value === '1';
+                                                    }
+                                                }
+                                                // For STRING variables, use value as-is
+                                                
+                                                variable.setValueForMode(mode.modeId, convertedValue);
+                                                updatedCount++;
+                                                console.log(`✅ Updated ${variableName} (${variable.resolvedType}) = ${convertedValue}`);
+                                            } catch (error) {
+                                                console.log(`❌ Failed to update ${variableName}: ${error.message}`);
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    
+                    console.log(`✅ Updated ${updatedCount} variable values from WebSocket sync`);
+                    
+                    // Send success message back to UI
+                    figma.ui.postMessage({
+                        type: 'websocket-sync-update-result',
+                        success: true,
+                        updatedCount: updatedCount
+                    });
+                    
+                    figma.notify(`✅ Updated ${updatedCount} variable values`);
+                } else {
+                    console.log('❌ Collection not found:', msg.collectionId);
+                    figma.ui.postMessage({
+                        type: 'websocket-sync-update-result',
+                        success: false,
+                        error: 'Collection not found'
+                    });
+                }
+            } else {
+                console.log('❌ No data found for spreadsheet:', msg.spreadsheetId);
+                figma.ui.postMessage({
+                    type: 'websocket-sync-update-result',
+                    success: false,
+                    error: 'No data found in spreadsheet'
+                });
+            }
+        } catch (error) {
+            console.error('❌ WebSocket sync update failed:', error);
+            figma.ui.postMessage({
+                type: 'websocket-sync-update-result',
+                success: false,
+                error: error.message
+            });
+            figma.notify('❌ WebSocket sync update failed: ' + error.message);
+        }
+    } else if (msg.type === 'websocket-sync-start') {
+        // Handle WebSocket sync start - create variables from CSV data
+        try {
+            console.log('🚀 WebSocket sync start received:', msg);
+            console.log('🚀 Starting WebSocket sync with CSV data:', msg.spreadsheetId);
+            
+            // Get CSV data from WebSocket server
+            const response = await fetch(`http://localhost:3001/api/spreadsheets/${msg.spreadsheetId}/sheets/Sheet1`);
+            const sheetData = await response.json();
+            
+            if (sheetData.data && sheetData.data.length > 0) {
+                // Convert sheet data to CSV format for importCSVData function
+                const csvLines = [sheetData.headers.join(',')];
+                sheetData.data.forEach(row => {
+                    csvLines.push(row.map(cell => `"${cell}"`).join(','));
+                });
+                const csvText = csvLines.join('\n');
+                
+                // Create variables using existing importCSVData function
+                const collectionName = msg.collectionId || 'WebSocket Sync';
+                const result = await importCSVData(csvText, collectionName);
+                
+                console.log('✅ WebSocket sync variables created:', result);
+                
+                // Send success message back to UI
+                figma.ui.postMessage({
+                    type: 'websocket-sync-result',
+                    success: true,
+                    rowCount: result.rowCount,
+                    variableCount: result.variableCount
+                });
+                
+                figma.notify(`✅ Created ${result.variableCount} variables from WebSocket sync`);
+            } else {
+                console.log('❌ No data found for spreadsheet:', msg.spreadsheetId);
+                figma.ui.postMessage({
+                    type: 'websocket-sync-result',
+                    success: false,
+                    error: 'No data found in spreadsheet'
+                });
+            }
+        } catch (error) {
+            console.error('❌ WebSocket sync failed:', error);
+            figma.ui.postMessage({
+                type: 'websocket-sync-result',
+                success: false,
+                error: error.message
+            });
+            figma.notify('❌ WebSocket sync failed: ' + error.message);
+        }
     } else if (msg.type === 'cancel') {
         figma.closePlugin();
     }

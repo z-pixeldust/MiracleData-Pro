@@ -1,0 +1,31 @@
+Team Name,City,Logo,Primary Color,Secondary Color,Conference,Division,Notes,Comments,Internal ID,Last Updated
+Lakers,Los Angeles,LA,#552583,#FDB927,Western,Pacific,Great team,Need to update logo,LAK001,2024-01-15
+Warriors,San Francisco,SF,#1D428A,#FFC72C,Western,Pacific,Championship team,Update colors,GSW002,2024-01-15
+Celtics,Boston,BOS,#007A33,#BA9653,Eastern,Atlantic,Historic franchise,Check logo size,BOS003,2024-01-15
+Bulls,Chicago,CHI,#CE1141,#000000,Eastern,Central,Michael Jordan's team,Verify colors,CHI004,2024-01-15
+Heat,Miami,MIA,#98002E,#F9A01B,Eastern,Southeast,South Beach,Update branding,MIA005,2024-01-15
+Knicks,New York,NYC,#006BB6,#F58426,Eastern,Atlantic,Big market,Review logo,NYC006,2024-01-15
+Nets,Brooklyn,BKN,#000000,#FFFFFF,Eastern,Atlantic,Relocated team,Check contrast,BKN007,2024-01-15
+76ers,Philadelphia,PHI,#006BB6,#ED174C,Eastern,Atlantic,Process trust,Update colors,PHI008,2024-01-15
+Raptors,Toronto,TOR,#CE1141,#000000,Eastern,Atlantic,Only Canadian team,Verify logo,TOR009,2024-01-15
+Cavaliers,Cleveland,CLE,#860038,#FDBB30,Eastern,Central,LeBron's team,Update branding,CLE010,2024-01-15
+Pistons,Detroit,DET,#C8102E,#1D42BA,Eastern,Central,Motor City,Check colors,DET011,2024-01-15
+Pacers,Indianapolis,IND,#002D62,#FDBB30,Eastern,Central,Small market,Verify logo,IND012,2024-01-15
+Bucks,Milwaukee,MIL,#00471B,#EEE1C6,Eastern,Central,Giannis team,Update branding,MIL013,2024-01-15
+Hawks,Atlanta,ATL,#E03A3E,#C1D32F,Eastern,Southeast,Trae Young,Check colors,ATL014,2024-01-15
+Hornets,Charlotte,CHA,#1D1160,#00788C,Eastern,Southeast,LaMelo Ball,Verify logo,CHA015,2024-01-15
+Magic,Orlando,ORL,#0077C0,#C4CED4,Eastern,Southeast,Theme park city,Update branding,ORL016,2024-01-15
+Wizards,Washington,DC,#002B5C,#E31837,Eastern,Southeast,Capital city,Check colors,WAS017,2024-01-15
+Mavericks,Dallas,DAL,#00538C,#002B5E,Western,Southwest,Luka team,Verify logo,DAL018,2024-01-15
+Rockets,Houston,HOU,#CE1141,#000000,Western,Southwest,Space city,Update branding,HOU019,2024-01-15
+Grizzlies,Memphis,MEM,#5D76A9,#12173F,Western,Southwest,Ja Morant,Check colors,MEM020,2024-01-15
+Pelicans,New Orleans,NOP,#0C2340,#C8102E,Western,Southwest,Zion team,Verify logo,NOP021,2024-01-15
+Spurs,San Antonio,SAS,#C4CED4,#000000,Western,Southwest,Tim Duncan,Update branding,SAS022,2024-01-15
+Nuggets,Denver,DEN,#0E2240,#FEC524,Western,Northwest,Jokic team,Check colors,DEN023,2024-01-15
+Timberwolves,Minneapolis,MIN,#0C2340,#236192,Western,Northwest,Ant Edwards,Verify logo,MIN024,2024-01-15
+Thunder,Oklahoma City,OKC,#007AC1,#EF3B24,Western,Northwest,Shai team,Update branding,OKC025,2024-01-15
+Trail Blazers,Portland,POR,#E03A3E,#000000,Western,Northwest,Dame time,Check colors,POR026,2024-01-15
+Jazz,Salt Lake City,UTA,#002B5C,#F9A01B,Western,Northwest,Mountain time,Verify logo,UTA027,2024-01-15
+Suns,Phoenix,PHX,#1D1160,#E56020,Western,Pacific,Booker team,Update branding,PHX028,2024-01-15
+Kings,Sacramento,SAC,#5A2D81,#63727A,Western,Pacific,Fox team,Check colors,SAC029,2024-01-15
+Clippers,Los Angeles,LAC,#C8102E,#1D428A,Western,Pacific,Kawhi team,Verify logo,LAC030,2024-01-15
