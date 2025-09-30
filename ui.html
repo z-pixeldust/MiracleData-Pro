@@ -211,7 +211,105 @@
             border: 1px solid #C3E6D4;
             font-weight: 500;
         }
+        
+        .preview-grid {
+            display: grid;
+            gap: 1px;
+            background-color: #E5E5E5;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .preview-cell {
+            background-color: white;
+            padding: 8px;
+            font-size: 12px;
+            border: none;
+            min-height: 32px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .preview-header {
+            background-color: #F5F5F5;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .preview-cell.ignored {
+            background-color: #F8F8F8;
+            color: #999;
+            text-decoration: line-through;
+        }
+        
+        .column-mapping-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 8px;
+            border: 1px solid #E5E5E5;
+            border-radius: 4px;
+            background-color: #FAFAFA;
+        }
+        
+        .column-mapping-item label {
+            flex: 1;
+            margin: 0;
+            font-weight: 500;
+        }
+        
+        .column-mapping-item select {
+            flex: 1;
+            margin-left: 8px;
+            padding: 4px 8px;
+            border: 1px solid #E5E5E5;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .column-mapping-item input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        .ignore-controls {
+            margin-bottom: 16px;
+            padding: 12px;
+            background-color: #F8F9FA;
+            border-radius: 4px;
+            border: 1px solid #E5E5E5;
+        }
+        
+        .ignore-controls h4 {
+            margin: 0 0 8px 0;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .ignore-controls .checkbox-item {
+            margin-bottom: 4px;
+        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        // Check if XLSX library loaded successfully
+        window.addEventListener('load', function() {
+            if (typeof XLSX === 'undefined') {
+                console.error('XLSX library failed to load');
+                // Try alternative CDN
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js';
+                script.onload = function() {
+                    console.log('XLSX library loaded from alternative CDN');
+                };
+                script.onerror = function() {
+                    console.error('Failed to load XLSX library from alternative CDN');
+                };
+                document.head.appendChild(script);
+            } else {
+                console.log('XLSX library loaded successfully');
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -219,6 +317,7 @@
         
         <div class="tab-container">
             <div class="tab active" data-tab="import-sports">Import Sports Data</div>
+            <div class="tab" data-tab="spreadsheet-import">Spreadsheet Import</div>
             <div class="tab" data-tab="duplicate">Duplicate Collections</div>
             <div class="tab" data-tab="import-export">Import/Export JSON</div>
         </div>
@@ -260,6 +359,51 @@
             
             <div id="successMessage" class="success-message" style="display: none;"></div>
             <div id="errorMessage" class="error-message" style="display: none;"></div>
+        </div>
+        
+        <div id="spreadsheet-import" class="tab-content">
+            <div class="section">
+                <h3>Import Spreadsheet Data</h3>
+                <div class="form-group">
+                    <label for="spreadsheetFile">Select File or Enter Google Sheets URL</label>
+                    <input type="file" id="spreadsheetFile" accept=".csv,.xlsx,.xls,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                    <div style="margin: 8px 0; text-align: center; color: #666;">OR</div>
+                    <input type="url" id="googleSheetsUrl" placeholder="https://docs.google.com/spreadsheets/d/...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="collectionName">Collection Name</label>
+                    <input type="text" id="collectionName" placeholder="Enter collection name">
+                </div>
+                
+                <button id="parseSpreadsheet" disabled>Parse Spreadsheet</button>
+            </div>
+            
+            <div id="spreadsheetPreview" class="section" style="display: none;">
+                <h3>Preview & Mapping</h3>
+                <div id="previewGrid" style="max-height: 300px; overflow: auto; border: 1px solid #E5E5E5; border-radius: 4px;">
+                    <!-- Preview grid will be populated here -->
+                </div>
+                
+                <div class="form-group" style="margin-top: 16px;">
+                    <label>Column Mapping</label>
+                    <div id="columnMapping">
+                        <!-- Column mapping will be populated here -->
+                    </div>
+                </div>
+                
+                <button id="importSpreadsheet" disabled>Import to Figma</button>
+                <div class="form-group" style="margin-top: 12px;">
+                    <label>Source Tracking</label>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="rememberSource" checked>
+                        <label for="rememberSource">Remember this spreadsheet URL for this collection</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="spreadsheetError" class="error-message" style="display: none;"></div>
+            <div id="spreadsheetSuccess" class="success-message" style="display: none;"></div>
         </div>
         
         <div id="duplicate" class="tab-content">
@@ -329,6 +473,16 @@
                 // Load collections when switching to duplicate or import/export tab
                 if (tabId === 'duplicate' || tabId === 'import-export') {
                     parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+                }
+                
+                // Reset spreadsheet import state when switching away
+                if (tabId !== 'spreadsheet-import') {
+                    document.getElementById('spreadsheetPreview').style.display = 'none';
+                    document.getElementById('spreadsheetError').style.display = 'none';
+                    document.getElementById('spreadsheetSuccess').style.display = 'none';
+                    spreadsheetData = null;
+                    ignoredColumns.clear();
+                    ignoredRows.clear();
                 }
             });
         });
@@ -642,6 +796,25 @@
                 
             } else if (msg && msg.type === 'import-collection-error') {
                 alert(`Error importing collection: ${msg.message}`);
+            } else if (msg && msg.type === 'spreadsheet-import-success') {
+                // Show success message
+                document.getElementById('spreadsheetSuccess').style.display = 'block';
+                document.getElementById('spreadsheetSuccess').textContent = `Successfully imported ${msg.created} variables!`;
+                
+                // Hide error message if shown
+                document.getElementById('spreadsheetError').style.display = 'none';
+                
+                // Enable import button
+                document.getElementById('importSpreadsheet').disabled = false;
+                
+            } else if (msg && msg.type === 'spreadsheet-import-error') {
+                // Show error message
+                document.getElementById('spreadsheetError').style.display = 'block';
+                document.getElementById('spreadsheetError').textContent = msg.message;
+                
+                // Hide success message if shown
+                document.getElementById('spreadsheetSuccess').style.display = 'none';
+                
             } else if (msg && msg.type === 'variables-api-unavailable') {
                 // Handle case when variables API is not available
                 console.log('Received variables-api-unavailable message:', msg);
@@ -709,8 +882,495 @@
             }
         };
         
+        // Spreadsheet import functionality
+        let spreadsheetData = null;
+        let ignoredColumns = new Set();
+        let ignoredRows = new Set();
+        
+        // Enable parse button when file is selected or URL is entered
+        function updateParseButton() {
+            const fileInput = document.getElementById('spreadsheetFile');
+            const urlInput = document.getElementById('googleSheetsUrl');
+            const parseBtn = document.getElementById('parseSpreadsheet');
+            
+            parseBtn.disabled = !(fileInput.files.length > 0 || urlInput.value.trim());
+        }
+        
+        document.getElementById('spreadsheetFile').addEventListener('change', updateParseButton);
+        document.getElementById('googleSheetsUrl').addEventListener('input', updateParseButton);
+        
+        // Parse spreadsheet button
+        document.getElementById('parseSpreadsheet').addEventListener('click', async () => {
+            const fileInput = document.getElementById('spreadsheetFile');
+            const urlInput = document.getElementById('googleSheetsUrl');
+            const collectionName = document.getElementById('collectionName').value;
+            
+            if (!collectionName.trim()) {
+                alert('Please enter a collection name.');
+                return;
+            }
+            
+            try {
+                let data;
+                
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const fileType = file.name.split('.').pop().toLowerCase();
+                    
+                    if (fileType === 'csv') {
+                        data = await parseCSV(file);
+                    } else if (fileType === 'xlsx' || fileType === 'xls') {
+                        try {
+                            data = await parseXLSX(file);
+                        } catch (xlsxError) {
+                            console.error('XLSX parsing failed:', xlsxError);
+                            // Try alternative parsing method
+                            try {
+                                data = await parseXLSXAlternative(file);
+                            } catch (altError) {
+                                throw new Error(`Failed to parse Excel file: ${xlsxError.message}. Please try converting to CSV format.`);
+                            }
+                        }
+                    } else {
+                        throw new Error('Unsupported file type. Please use CSV, XLS, or XLSX files.');
+                    }
+                } else if (urlInput.value.trim()) {
+                    data = await parseGoogleSheets(urlInput.value.trim());
+                } else {
+                    throw new Error('Please select a file or enter a Google Sheets URL.');
+                }
+                
+                spreadsheetData = data;
+                displayPreview(data);
+                document.getElementById('spreadsheetPreview').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error parsing spreadsheet:', error);
+                document.getElementById('spreadsheetError').style.display = 'block';
+                document.getElementById('spreadsheetError').textContent = 'Error parsing spreadsheet: ' + error.message;
+            }
+        });
+        
+        // CSV parsing function
+        async function parseCSV(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const text = e.target.result;
+                        const lines = text.split('\n').filter(line => line.trim());
+                        
+                        if (lines.length === 0) {
+                            throw new Error('CSV file is empty');
+                        }
+                        
+                        const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+                        const rows = lines.slice(1).map(line => 
+                            line.split(',').map(cell => cell.trim().replace(/"/g, ''))
+                        );
+                        
+                        resolve({ headers, rows });
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                reader.onerror = () => reject(new Error('Failed to read file'));
+                reader.readAsText(file);
+            });
+        }
+        
+        // XLSX parsing function using SheetJS
+        async function parseXLSX(file) {
+            return new Promise((resolve, reject) => {
+                console.log('Starting XLSX parsing for file:', file.name, 'Size:', file.size);
+                
+                // Check if XLSX library is loaded
+                if (typeof XLSX === 'undefined') {
+                    reject(new Error('XLSX library not loaded. Please refresh the page and try again.'));
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        console.log('File read successfully, size:', e.target.result.byteLength);
+                        
+                        const data = new Uint8Array(e.target.result);
+                        console.log('Creating workbook from data...');
+                        
+                        const workbook = XLSX.read(data, { type: 'array' });
+                        console.log('Workbook created, sheet names:', workbook.SheetNames);
+                        
+                        if (!workbook.SheetNames || workbook.SheetNames.length === 0) {
+                            throw new Error('No worksheets found in the file');
+                        }
+                        
+                        // Get the first worksheet
+                        const firstSheetName = workbook.SheetNames[0];
+                        const worksheet = workbook.Sheets[firstSheetName];
+                        
+                        if (!worksheet) {
+                            throw new Error('Could not access the first worksheet');
+                        }
+                        
+                        console.log('Converting worksheet to JSON...');
+                        // Convert to JSON
+                        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                        console.log('JSON data length:', jsonData.length);
+                        
+                        if (jsonData.length === 0) {
+                            throw new Error('XLSX file is empty or contains no data');
+                        }
+                        
+                        // Extract headers and rows
+                        const headers = jsonData[0].map(h => String(h || '').trim());
+                        const rows = jsonData.slice(1).map(row => 
+                            row.map(cell => String(cell || '').trim())
+                        );
+                        
+                        console.log('Parsed headers:', headers);
+                        console.log('Parsed rows count:', rows.length);
+                        
+                        resolve({ headers, rows });
+                    } catch (error) {
+                        console.error('Error parsing XLSX:', error);
+                        reject(new Error('Failed to parse XLSX file: ' + error.message));
+                    }
+                };
+                reader.onerror = () => {
+                    console.error('FileReader error');
+                    reject(new Error('Failed to read file'));
+                };
+                
+                console.log('Reading file as ArrayBuffer...');
+                reader.readAsArrayBuffer(file);
+            });
+        }
+        
+        // Alternative XLSX parsing function
+        async function parseXLSXAlternative(file) {
+            return new Promise((resolve, reject) => {
+                console.log('Trying alternative XLSX parsing...');
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const data = e.target.result;
+                        console.log('Alternative parsing - data type:', typeof data);
+                        
+                        // Try different parsing options
+                        const workbook = XLSX.read(data, { 
+                            type: 'binary',
+                            cellDates: true,
+                            cellNF: false,
+                            cellText: false
+                        });
+                        
+                        console.log('Alternative workbook created, sheet names:', workbook.SheetNames);
+                        
+                        if (!workbook.SheetNames || workbook.SheetNames.length === 0) {
+                            throw new Error('No worksheets found in the file');
+                        }
+                        
+                        const firstSheetName = workbook.SheetNames[0];
+                        const worksheet = workbook.Sheets[firstSheetName];
+                        
+                        if (!worksheet) {
+                            throw new Error('Could not access the first worksheet');
+                        }
+                        
+                        // Try different conversion options
+                        const jsonData = XLSX.utils.sheet_to_json(worksheet, { 
+                            header: 1,
+                            defval: '',
+                            blankrows: false
+                        });
+                        
+                        console.log('Alternative JSON data length:', jsonData.length);
+                        
+                        if (jsonData.length === 0) {
+                            throw new Error('XLSX file is empty or contains no data');
+                        }
+                        
+                        // Extract headers and rows
+                        const headers = jsonData[0].map(h => String(h || '').trim());
+                        const rows = jsonData.slice(1).map(row => 
+                            row.map(cell => String(cell || '').trim())
+                        );
+                        
+                        console.log('Alternative parsing successful');
+                        resolve({ headers, rows });
+                    } catch (error) {
+                        console.error('Alternative XLSX parsing failed:', error);
+                        reject(error);
+                    }
+                };
+                reader.onerror = () => reject(new Error('Failed to read file'));
+                reader.readAsBinaryString(file);
+            });
+        }
+        
+        // Google Sheets parsing function
+        async function parseGoogleSheets(url) {
+            try {
+                // Extract sheet ID from URL
+                const match = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+                if (!match) {
+                    throw new Error('Invalid Google Sheets URL');
+                }
+                
+                const sheetId = match[1];
+                const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+                
+                const response = await fetch(csvUrl);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch Google Sheets data');
+                }
+                
+                const text = await response.text();
+                const lines = text.split('\n').filter(line => line.trim());
+                
+                if (lines.length === 0) {
+                    throw new Error('Google Sheet is empty');
+                }
+                
+                const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+                const rows = lines.slice(1).map(line => 
+                    line.split(',').map(cell => cell.trim().replace(/"/g, ''))
+                );
+                
+                return { headers, rows };
+            } catch (error) {
+                throw new Error('Failed to parse Google Sheets: ' + error.message);
+            }
+        }
+        
+        // Display preview grid
+        function displayPreview(data) {
+            const previewGrid = document.getElementById('previewGrid');
+            const { headers, rows } = data;
+            
+            // Create grid
+            const grid = document.createElement('div');
+            grid.className = 'preview-grid';
+            grid.style.gridTemplateColumns = `repeat(${headers.length}, 1fr)`;
+            
+            // Add headers
+            headers.forEach((header, index) => {
+                const cell = document.createElement('div');
+                cell.className = 'preview-cell preview-header';
+                cell.textContent = header;
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = true;
+                checkbox.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        ignoredColumns.delete(index);
+                    } else {
+                        ignoredColumns.add(index);
+                    }
+                    updatePreview();
+                });
+                
+                cell.appendChild(checkbox);
+                grid.appendChild(cell);
+            });
+            
+            // Add rows (limit to first 10 for preview)
+            const previewRows = rows.slice(0, 10);
+            previewRows.forEach((row, rowIndex) => {
+                row.forEach((cell, colIndex) => {
+                    const cellDiv = document.createElement('div');
+                    cellDiv.className = 'preview-cell';
+                    cellDiv.textContent = cell || '';
+                    grid.appendChild(cellDiv);
+                });
+            });
+            
+            previewGrid.innerHTML = '';
+            previewGrid.appendChild(grid);
+            
+            // Create column mapping
+            createColumnMapping(headers);
+        }
+        
+        // Create column mapping interface
+        function createColumnMapping(headers) {
+            const mappingContainer = document.getElementById('columnMapping');
+            mappingContainer.innerHTML = '';
+            
+            const figmaFields = [
+                'Full Team Name',
+                'Logo',
+                'City', 
+                'Short Name',
+                'TriCode',
+                'Primary Color',
+                'Secondary Color',
+                'Rank'
+            ];
+            
+            headers.forEach((header, index) => {
+                if (ignoredColumns.has(index)) return;
+                
+                const item = document.createElement('div');
+                item.className = 'column-mapping-item';
+                
+                const label = document.createElement('label');
+                label.textContent = header;
+                item.appendChild(label);
+                
+                const select = document.createElement('select');
+                select.innerHTML = '<option value="">-- Select Figma Field --</option>';
+                figmaFields.forEach(field => {
+                    const option = document.createElement('option');
+                    option.value = field;
+                    option.textContent = field;
+                    select.appendChild(option);
+                });
+                item.appendChild(select);
+                
+                mappingContainer.appendChild(item);
+            });
+        }
+        
+        // Update preview when ignore settings change
+        function updatePreview() {
+            if (!spreadsheetData) return;
+            displayPreview(spreadsheetData);
+        }
+        
+        // Import spreadsheet button
+            document.getElementById('importSpreadsheet').addEventListener('click', () => {
+            const collectionName = document.getElementById('collectionName').value;
+            const mappingItems = document.querySelectorAll('.column-mapping-item');
+            
+            const columnMapping = {};
+            const savedMapping = {};
+            mappingItems.forEach(item => {
+                const label = item.querySelector('label').textContent;
+                const select = item.querySelector('select');
+                if (select.value) {
+                    columnMapping[label] = select.value;
+                }
+                savedMapping[label] = select.value || '';
+            });
+            
+            if (Object.keys(columnMapping).length === 0) {
+                alert('Please map at least one column to a Figma field.');
+                return;
+            }
+            
+                const sourceUrl = document.getElementById('googleSheetsUrl').value.trim() || null;
+                const remember = document.getElementById('rememberSource').checked;
+
+                parent.postMessage({
+                pluginMessage: {
+                    type: 'import-spreadsheet',
+                    collectionName: collectionName,
+                    data: spreadsheetData,
+                    columnMapping: columnMapping,
+                        ignoredColumns: Array.from(ignoredColumns),
+                        ignoredRows: Array.from(ignoredRows),
+                        sourceUrl: remember ? sourceUrl : null
+                }
+            }, '*');
+                
+                if (remember && sourceUrl) {
+                    parent.postMessage({
+                        pluginMessage: {
+                            type: 'save-collection-source',
+                            collectionName: collectionName,
+                            source: sourceUrl,
+                            mapping: savedMapping
+                        }
+                    }, '*');
+                }
+        });
+        
         // Initial load of collections for duplicate tab
         parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
+
+        // Auto-sync: if a collection and source are known, poll every 60s
+        let autoSyncInterval = null;
+        function startAutoSync(collectionName) {
+            if (autoSyncInterval) clearInterval(autoSyncInterval);
+            if (!collectionName) return;
+            autoSyncInterval = setInterval(() => {
+                parent.postMessage({ pluginMessage: { type: 'get-collection-source', collectionName } }, '*');
+            }, 60000);
+        }
+
+        // When user enters a collection name, begin auto-sync tracking for convenience
+        document.getElementById('collectionName').addEventListener('input', (e) => {
+            const name = e.target.value.trim();
+            startAutoSync(name);
+        });
+
+        // Receive collection source and trigger background refresh fetch (UI parses and sends to plugin)
+        window.addEventListener('message', async (event) => {
+            const msg = event.data.pluginMessage;
+            if (!msg) return;
+            if (msg.type === 'collection-source' && msg.collectionName) {
+                const src = msg.source;
+                if (src && /^https:\/\/docs.google.com\/spreadsheets\//.test(src)) {
+                    try {
+                        const data = await (async function(url){
+                            // reuse parseGoogleSheets
+                            return await parseGoogleSheets(url);
+                        })(src);
+
+                        // Re-import silently (no UI alerts)
+                        parent.postMessage({
+                            pluginMessage: {
+                                type: 'import-spreadsheet',
+                                collectionName: msg.collectionName,
+                                data: data,
+                                columnMapping: msg.mapping || {},
+                                ignoredColumns: Array.from(ignoredColumns),
+                                ignoredRows: Array.from(ignoredRows),
+                                sourceUrl: src
+                            }
+                        }, '*');
+                    } catch (err) {
+                        console.log('Auto-sync fetch failed:', err);
+                    }
+                }
+            }
+        });
+
+        // Realtime sync via WebSocket
+        let ws;
+        function connectWS() {
+            try {
+                ws = new WebSocket('ws://localhost:8080');
+                ws.onopen = () => {
+                    console.log('WebSocket connected');
+                };
+                ws.onclose = () => {
+                    console.log('WebSocket disconnected, retrying in 3s');
+                    setTimeout(connectWS, 3000);
+                };
+                ws.onerror = (e) => {
+                    console.log('WebSocket error', e);
+                };
+                ws.onmessage = async (evt) => {
+                    try {
+                        const payload = JSON.parse(evt.data || '{}');
+                        if (payload && payload.type === 'sheet-updated' && payload.collectionName) {
+                            // Ask plugin for saved source and mapping, then re-import
+                            parent.postMessage({ pluginMessage: { type: 'get-collection-source', collectionName: payload.collectionName } }, '*');
+                        }
+                    } catch (err) {
+                        console.log('WS message parse error', err);
+                    }
+                };
+            } catch (err) {
+                console.log('WS connect failed', err);
+            }
+        }
+        connectWS();
     </script>
 </body>
 </html>

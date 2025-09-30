@@ -13,7 +13,13 @@
       "https://sports.core.api.espn.com",
       "https://site.web.api.espn.com",
       "https://api.espn.com",
-      "https://cdn.espn.com"
+      "https://cdn.espn.com",
+      "https://cdnjs.cloudflare.com",
+      "https://unpkg.com",
+      "http://localhost:8080",
+      "https://localhost:8080",
+      "ws://localhost:8080",
+      "wss://localhost:8080"
     ]
   },
   "permissions": ["currentuser"],

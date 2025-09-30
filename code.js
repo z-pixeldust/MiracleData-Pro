@@ -525,6 +525,249 @@ async function createTeamModesCollection(teams, leagueName) {
     return createdCount;
 }
 
+// Process spreadsheet data into team objects
+function processSpreadsheetData(data, columnMapping, ignoredColumns, ignoredRows) {
+    const { headers, rows } = data;
+    const processedData = [];
+    
+    // Filter out ignored columns
+    const activeHeaders = headers.filter((_, index) => !ignoredColumns.has(index));
+    const activeColumnMapping = {};
+    
+    // Update column mapping to only include active columns
+    Object.keys(columnMapping).forEach(header => {
+        const originalIndex = headers.indexOf(header);
+        if (originalIndex !== -1 && !ignoredColumns.has(originalIndex)) {
+            activeColumnMapping[header] = columnMapping[header];
+        }
+    });
+    
+    // Process each row
+    rows.forEach((row, rowIndex) => {
+        if (ignoredRows.has(rowIndex)) return;
+        
+        const team = {};
+        let hasValidData = false;
+        
+        // Map each column to team properties
+        Object.keys(activeColumnMapping).forEach(header => {
+            const originalIndex = headers.indexOf(header);
+            if (originalIndex !== -1 && row[originalIndex]) {
+                const value = row[originalIndex].trim();
+                if (value) {
+                    const figmaField = activeColumnMapping[header];
+                    team[figmaField] = value;
+                    hasValidData = true;
+                }
+            }
+        });
+        
+        // Only add if we have valid data
+        if (hasValidData) {
+            // Set default values for missing fields
+            if (!team['Full Team Name']) team['Full Team Name'] = 'Unknown Team';
+            if (!team['Logo']) team['Logo'] = team['Full Team Name'];
+            if (!team['City']) team['City'] = 'Unknown';
+            if (!team['Short Name']) team['Short Name'] = team['Full Team Name'];
+            if (!team['TriCode']) team['TriCode'] = 'UNK';
+            
+            // Process colors
+            if (team['Primary Color']) {
+                team['Primary Color'] = parseColor(team['Primary Color']);
+            } else {
+                team['Primary Color'] = { r: 0.5, g: 0.5, b: 0.5 };
+            }
+            
+            if (team['Secondary Color']) {
+                team['Secondary Color'] = parseColor(team['Secondary Color']);
+            } else {
+                team['Secondary Color'] = { r: 0.8, g: 0.8, b: 0.8 };
+            }
+            
+            processedData.push(team);
+        }
+    });
+    
+    return processedData;
+}
+
+// Parse color string to RGB object
+function parseColor(colorStr) {
+    if (!colorStr) return { r: 0.5, g: 0.5, b: 0.5 };
+    
+    // Handle hex colors
+    if (colorStr.startsWith('#')) {
+        return hexToRgb(colorStr);
+    }
+    
+    // Handle rgb() format
+    const rgbMatch = colorStr.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+    if (rgbMatch) {
+        return {
+            r: parseInt(rgbMatch[1]) / 255,
+            g: parseInt(rgbMatch[2]) / 255,
+            b: parseInt(rgbMatch[3]) / 255
+        };
+    }
+    
+    // Handle named colors (basic set)
+    const namedColors = {
+        'red': { r: 1, g: 0, b: 0 },
+        'green': { r: 0, g: 1, b: 0 },
+        'blue': { r: 0, g: 0, b: 1 },
+        'white': { r: 1, g: 1, b: 1 },
+        'black': { r: 0, g: 0, b: 0 },
+        'yellow': { r: 1, g: 1, b: 0 },
+        'orange': { r: 1, g: 0.5, b: 0 },
+        'purple': { r: 0.5, g: 0, b: 0.5 }
+    };
+    
+    const lowerColor = colorStr.toLowerCase();
+    if (namedColors[lowerColor]) {
+        return namedColors[lowerColor];
+    }
+    
+    // Default fallback
+    return { r: 0.5, g: 0.5, b: 0.5 };
+}
+
+// Create collection from spreadsheet data
+async function createSpreadsheetCollection(teams, collectionName, options = {}) {
+    const { sourceUrl } = options;
+    let createdCount = 0;
+    
+    // Create or get collection
+    let collection;
+    const existingCollections = figma.variables.getLocalVariableCollections();
+    const existingCollection = existingCollections.find(c => c.name === collectionName);
+    
+    if (existingCollection) {
+        collection = existingCollection;
+        console.log(`Using existing ${collectionName} collection`);
+    } else {
+        collection = figma.variables.createVariableCollection(collectionName);
+        console.log(`Created new ${collectionName} collection`);
+    }
+    
+    // Create team modes
+    const teamModeIds = {};
+    teams.forEach(team => {
+        try {
+            const modeName = team['Full Team Name'] || `Team ${createdCount + 1}`;
+            const existingMode = collection.modes.find(mode => mode.name === modeName);
+            let modeId = existingMode ? existingMode.modeId : null;
+            
+            if (!modeId) {
+                modeId = collection.addMode(modeName);
+                console.log(`Created mode for ${modeName}`);
+            }
+            
+            teamModeIds[modeName] = modeId;
+        } catch (modeError) {
+            console.log(`Error creating mode for team:`, modeError);
+        }
+    });
+    
+    // Remove default empty mode if it exists
+    if (collection.modes.length > teams.length) {
+        try {
+            const defaultMode = collection.modes.find(mode => mode.name === 'Mode 1' || mode.name === 'Default');
+            if (defaultMode) {
+                collection.removeMode(defaultMode.modeId);
+                console.log('Removed default empty mode');
+            }
+        } catch (removeError) {
+            console.log('Could not remove default mode:', removeError);
+        }
+    }
+
+    // Ensure a dedicated metadata mode exists
+    let metadataModeId = null;
+    try {
+        const existingMetadataMode = collection.modes.find(mode => mode.name === 'Metadata');
+        metadataModeId = existingMetadataMode ? existingMetadataMode.modeId : collection.addMode('Metadata');
+        if (!existingMetadataMode) {
+            console.log('Created Metadata mode');
+        }
+    } catch (metaModeErr) {
+        console.log('Error ensuring Metadata mode:', metaModeErr);
+    }
+    
+    // Create variables for each field
+    const fieldNames = [
+        'Full Team Name',
+        'Logo',
+        'City',
+        'Short Name',
+        'TriCode',
+        'Primary Color',
+        'Secondary Color',
+        'Rank'
+    ];
+    
+    const fieldTypes = ['STRING', 'STRING', 'STRING', 'STRING', 'STRING', 'COLOR', 'COLOR', 'STRING'];
+    
+    // Check existing variables
+    const existingVariables = figma.variables.getLocalVariables().filter(v => v.variableCollectionId === collection.id);
+    const existingVariableNames = existingVariables.map(v => v.name);
+    
+    for (let i = 0; i < fieldNames.length; i++) {
+        if (!existingVariableNames.includes(fieldNames[i])) {
+            try {
+                const var_ = figma.variables.createVariable(fieldNames[i], collection.id, fieldTypes[i]);
+                
+                // Set values for each team mode
+                teams.forEach(team => {
+                    try {
+                        const modeName = team['Full Team Name'] || `Team ${teams.indexOf(team) + 1}`;
+                        const modeId = teamModeIds[modeName];
+                        if (modeId) {
+                            const value = team[fieldNames[i]];
+                            if (value !== undefined) {
+                                console.log(`Setting ${fieldNames[i]} for ${modeName} to:`, value);
+                                var_.setValueForMode(modeId, value);
+                            }
+                        }
+                    } catch (valueError) {
+                        console.log(`Error setting value for team:`, valueError);
+                    }
+                });
+                
+                createdCount++;
+            } catch (error) {
+                console.log(`Variable ${fieldNames[i]} already exists or error creating:`, error);
+            }
+        } else {
+            console.log(`Variable ${fieldNames[i]} already exists, skipping`);
+        }
+    }
+
+    // Store source URL in collection-level metadata variable
+    if (sourceUrl && metadataModeId) {
+        try {
+            const existingVars = figma.variables.getLocalVariables().filter(v => v.variableCollectionId === collection.id);
+            let sourceVar = existingVars.find(v => v.name === 'Source Spreadsheet URL');
+            if (!sourceVar) {
+                sourceVar = figma.variables.createVariable('Source Spreadsheet URL', collection.id, 'STRING');
+                console.log('Created Source Spreadsheet URL variable');
+            }
+            sourceVar.setValueForMode(metadataModeId, sourceUrl);
+
+            // Optional last sync timestamp
+            let lastSyncVar = existingVars.find(v => v.name === 'Last Synced');
+            if (!lastSyncVar) {
+                lastSyncVar = figma.variables.createVariable('Last Synced', collection.id, 'STRING');
+                console.log('Created Last Synced variable');
+            }
+            lastSyncVar.setValueForMode(metadataModeId, new Date().toISOString());
+        } catch (metaErr) {
+            console.log('Error setting collection metadata variables:', metaErr);
+        }
+    }
+    
+    return createdCount;
+}
+
 // Show the UI
 figma.showUI(__html__, { 
   width: 600, 
@@ -768,6 +1011,69 @@ figma.ui.onmessage = async (msg) => {
         } catch (error) {
             console.error('Error duplicating collection:', error);
             figma.notify('Error duplicating collection: ' + error.message, { error: true });
+        }
+    } else if (msg.type === 'import-spreadsheet') {
+        try {
+            const { collectionName, data, columnMapping, ignoredColumns, ignoredRows, sourceUrl } = msg;
+            
+            console.log('Importing spreadsheet:', { collectionName, data, columnMapping });
+            
+            // Process the spreadsheet data
+            const processedData = processSpreadsheetData(data, columnMapping, ignoredColumns, ignoredRows);
+            
+            if (processedData.length === 0) {
+                figma.notify('No valid data found to import', { error: true });
+                return;
+            }
+            
+            // Create collection with team modes
+            const createdCount = await createSpreadsheetCollection(processedData, collectionName, { sourceUrl });
+            
+            figma.notify(`Successfully imported ${createdCount} variables from spreadsheet!`);
+            
+            figma.ui.postMessage({
+                type: 'spreadsheet-import-success',
+                created: createdCount
+            });
+            
+        } catch (error) {
+            console.error('Error importing spreadsheet:', error);
+            figma.notify('Error importing spreadsheet: ' + error.message, { error: true });
+            figma.ui.postMessage({
+                type: 'spreadsheet-import-error',
+                message: error.message
+            });
+        }
+    } else if (msg.type === 'save-collection-source') {
+        try {
+            const { collectionName, source, mapping } = msg;
+            const key = 'collectionSources';
+            const existing = await figma.clientStorage.getAsync(key) || {};
+            existing[collectionName] = { source, mapping: mapping || {} };
+            await figma.clientStorage.setAsync(key, existing);
+            figma.ui.postMessage({ type: 'collection-source-saved', collectionName });
+        } catch (err) {
+            console.error('Error saving collection source:', err);
+            figma.ui.postMessage({ type: 'collection-source-error', message: err.message });
+        }
+    } else if (msg.type === 'get-collection-source') {
+        try {
+            const { collectionName } = msg;
+            const key = 'collectionSources';
+            const existing = await figma.clientStorage.getAsync(key) || {};
+            let source = null;
+            let mapping = {};
+            const entry = existing[collectionName];
+            if (typeof entry === 'string') {
+                source = entry;
+            } else if (entry && typeof entry === 'object') {
+                source = entry.source || null;
+                mapping = entry.mapping || {};
+            }
+            figma.ui.postMessage({ type: 'collection-source', collectionName, source, mapping });
+        } catch (err) {
+            console.error('Error getting collection source:', err);
+            figma.ui.postMessage({ type: 'collection-source-error', message: err.message });
         }
     } else if (msg.type === 'cancel') {
         figma.closePlugin();
