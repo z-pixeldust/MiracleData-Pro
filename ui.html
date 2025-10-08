@@ -349,6 +349,18 @@
                     <input type="checkbox" id="ncaa" value="NCAA Football">
                     <label for="ncaa">NCAA Football (25 teams)</label>
                 </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="mens-tennis" value="Men's Tennis">
+                    <label for="mens-tennis">Men's Tennis (Top 40 players)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="womens-tennis" value="Women's Tennis">
+                    <label for="womens-tennis">Women's Tennis (Top 40 players)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="mens-golf" value="Men's Golf">
+                    <label for="mens-golf">Men's Golf (Top 40 players)</label>
+                </div>
             </div>
             
             <div class="button-group">
@@ -393,13 +405,6 @@
                 </div>
                 
                 <button id="importSpreadsheet" disabled>Import to Figma</button>
-                <div class="form-group" style="margin-top: 12px;">
-                    <label>Source Tracking</label>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="rememberSource" checked>
-                        <label for="rememberSource">Remember this spreadsheet URL for this collection</label>
-                    </div>
-                </div>
             </div>
             
             <div id="spreadsheetError" class="error-message" style="display: none;"></div>
@@ -656,13 +661,21 @@
                 console.log(`UI received fetch request for: ${request.url}`);
                 
                 // Make the actual fetch request from the UI (browser context)
-                const response = await fetch(request.url);
+                const response = await fetch(request.url, { credentials: 'omit' });
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 
-                const data = await response.json();
+                // Try JSON, fall back to text
+                let data;
+                const contentType = response.headers.get('content-type') || '';
+                if (contentType.includes('application/json')) {
+                    data = await response.json();
+                } else {
+                    const text = await response.text();
+                    data = { __rawText: text };
+                }
                 
                 // Send the data back to the plugin
                 parent.postMessage({
@@ -1208,6 +1221,9 @@
                 'TriCode',
                 'Primary Color',
                 'Secondary Color',
+                'Early Record',
+                'Mid Record',
+                'Late Record',
                 'Rank'
             ];
             
@@ -1262,115 +1278,21 @@
                 return;
             }
             
-                const sourceUrl = document.getElementById('googleSheetsUrl').value.trim() || null;
-                const remember = document.getElementById('rememberSource').checked;
-
-                parent.postMessage({
-                pluginMessage: {
-                    type: 'import-spreadsheet',
-                    collectionName: collectionName,
-                    data: spreadsheetData,
-                    columnMapping: columnMapping,
-                        ignoredColumns: Array.from(ignoredColumns),
-                        ignoredRows: Array.from(ignoredRows),
-                        sourceUrl: remember ? sourceUrl : null
-                }
-            }, '*');
-                
-                if (remember && sourceUrl) {
-                    parent.postMessage({
-                        pluginMessage: {
-                            type: 'save-collection-source',
-                            collectionName: collectionName,
-                            source: sourceUrl,
-                            mapping: savedMapping
-                        }
-                    }, '*');
-                }
+            parent.postMessage({
+            pluginMessage: {
+                type: 'import-spreadsheet',
+                collectionName: collectionName,
+                data: spreadsheetData,
+                columnMapping: columnMapping,
+                ignoredColumns: Array.from(ignoredColumns),
+                ignoredRows: Array.from(ignoredRows)
+            }
+        }, '*');
         });
         
         // Initial load of collections for duplicate tab
         parent.postMessage({ pluginMessage: { type: 'get-collections' } }, '*');
 
-        // Auto-sync: if a collection and source are known, poll every 60s
-        let autoSyncInterval = null;
-        function startAutoSync(collectionName) {
-            if (autoSyncInterval) clearInterval(autoSyncInterval);
-            if (!collectionName) return;
-            autoSyncInterval = setInterval(() => {
-                parent.postMessage({ pluginMessage: { type: 'get-collection-source', collectionName } }, '*');
-            }, 60000);
-        }
-
-        // When user enters a collection name, begin auto-sync tracking for convenience
-        document.getElementById('collectionName').addEventListener('input', (e) => {
-            const name = e.target.value.trim();
-            startAutoSync(name);
-        });
-
-        // Receive collection source and trigger background refresh fetch (UI parses and sends to plugin)
-        window.addEventListener('message', async (event) => {
-            const msg = event.data.pluginMessage;
-            if (!msg) return;
-            if (msg.type === 'collection-source' && msg.collectionName) {
-                const src = msg.source;
-                if (src && /^https:\/\/docs.google.com\/spreadsheets\//.test(src)) {
-                    try {
-                        const data = await (async function(url){
-                            // reuse parseGoogleSheets
-                            return await parseGoogleSheets(url);
-                        })(src);
-
-                        // Re-import silently (no UI alerts)
-                        parent.postMessage({
-                            pluginMessage: {
-                                type: 'import-spreadsheet',
-                                collectionName: msg.collectionName,
-                                data: data,
-                                columnMapping: msg.mapping || {},
-                                ignoredColumns: Array.from(ignoredColumns),
-                                ignoredRows: Array.from(ignoredRows),
-                                sourceUrl: src
-                            }
-                        }, '*');
-                    } catch (err) {
-                        console.log('Auto-sync fetch failed:', err);
-                    }
-                }
-            }
-        });
-
-        // Realtime sync via WebSocket
-        let ws;
-        function connectWS() {
-            try {
-                ws = new WebSocket('ws://localhost:8080');
-                ws.onopen = () => {
-                    console.log('WebSocket connected');
-                };
-                ws.onclose = () => {
-                    console.log('WebSocket disconnected, retrying in 3s');
-                    setTimeout(connectWS, 3000);
-                };
-                ws.onerror = (e) => {
-                    console.log('WebSocket error', e);
-                };
-                ws.onmessage = async (evt) => {
-                    try {
-                        const payload = JSON.parse(evt.data || '{}');
-                        if (payload && payload.type === 'sheet-updated' && payload.collectionName) {
-                            // Ask plugin for saved source and mapping, then re-import
-                            parent.postMessage({ pluginMessage: { type: 'get-collection-source', collectionName: payload.collectionName } }, '*');
-                        }
-                    } catch (err) {
-                        console.log('WS message parse error', err);
-                    }
-                };
-            } catch (err) {
-                console.log('WS connect failed', err);
-            }
-        }
-        connectWS();
     </script>
 </body>
 </html>

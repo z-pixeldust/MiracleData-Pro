@@ -2,6 +2,7 @@
   "name": "MiracleData™",
   "id": "team-data-plugin",
   "api": "1.0.0",
+  "version": "1.1.0",
   "main": "code.js",
   "ui": "ui.html",
   "editorType": [
@@ -13,13 +14,11 @@
       "https://sports.core.api.espn.com",
       "https://site.web.api.espn.com",
       "https://api.espn.com",
+      "https://www.espn.com",
       "https://cdn.espn.com",
+      "https://r.jina.ai",
       "https://cdnjs.cloudflare.com",
-      "https://unpkg.com",
-      "http://localhost:8080",
-      "https://localhost:8080",
-      "ws://localhost:8080",
-      "wss://localhost:8080"
+      "https://unpkg.com"
     ]
   },
   "permissions": ["currentuser"],
